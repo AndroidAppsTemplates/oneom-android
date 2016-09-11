@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@drawable/main_recycler_items_background">
+
+
+
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/link_icon"
+        android:layout_gravity="right"
+        android:id="@+id/pagelink"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="2dp"
+        android:id="@+id/imageframe">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/posterimage"/>
+
+        <ImageView
+            android:src="@drawable/online_item_image_cropper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+
+    <com.iam.oneom.env.widget.text.Text
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:id="@+id/title"
+        android:lines="3" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/playbutton"
+        android:text="Play"
+        android:textColor="@color/white"
+        android:background="@drawable/online_play_button_background"/>
+
+</LinearLayout>

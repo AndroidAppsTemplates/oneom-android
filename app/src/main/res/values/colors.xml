@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- colors -->
+
+    <color name="black">#000000</color>
+    <color name="quart_gray">#444</color>
+    <color name="half_gray">#888</color>
+    <color name="white">#fff</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="half_transparent">#88FFFFFF</color>
+    <color name="quatro_transparent">#CCFFFFFF</color>
+    <color name="greenFont">#5cb85c</color>
+    <color name="greenSeed">#008f0d</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="blueHyperlink">#337ab7</color>
+    <color name="blueFont">#5d7ab7</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="redLeach">#b94309</color>
+
+
+    <!-- named -->
+
+    <color name="episode_window_border">#eedddddd</color>
+    <color name="episode_window_header_top">#eeF4F4F4</color>
+    <color name="episode_window_header_bottom">#eeE8E8E8</color>
+    <color name="episode_window_background">#eeFFFFFF</color>
+    <color name="online_play_button_gradient_top">#3279b5</color>
+    <color name="online_play_button_gradient_bottom">#245580</color>
+</resources>

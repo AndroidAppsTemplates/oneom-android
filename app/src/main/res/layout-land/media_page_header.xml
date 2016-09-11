@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/episode_window_background">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/episode_window_header_backround"
+            android:padding="16dp"
+            android:id="@+id/header">
+            <com.iam.oneom.env.widget.text.Text
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Serial Name"
+                android:textColor="@color/black"
+                android:id="@+id/serialname"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/episode_window_border"
+            android:id="@+id/divider" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mediainfo"
+            android:visibility="gone"/>
+
+        <com.iam.oneom.env.widget.text.Text
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:id="@+id/airdate"
+            android:textColor="@color/black"
+            android:visibility="gone"/>
+
+        <com.iam.oneom.env.widget.text.Text
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:textSize="18sp"
+
+            android:textColor="@color/black"
+            android:id="@+id/episodename"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+</FrameLayout>

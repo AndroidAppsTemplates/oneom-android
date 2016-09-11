@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="episode_info_window_corner_radius">5dp</dimen>
+    <dimen name="media_page_episode_header_search_torrent_item_text_size">10sp</dimen>
+
+
+</resources>

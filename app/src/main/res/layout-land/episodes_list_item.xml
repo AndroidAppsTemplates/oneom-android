@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:id="@+id/frame">
+
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:padding="2dp"
+        android:id="@+id/imageframe">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/image"/>
+
+        <ImageView
+            android:src="@drawable/episode_item_image_cropper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <com.iam.oneom.env.widget.text.Text
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textSize="12dp"
+        android:id="@+id/title"
+        android:lines="2"
+        android:layout_below="@+id/imageframe"
+        android:layout_margin="4dp" />
+    <com.iam.oneom.env.widget.TagBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tagBar"
+        android:layout_below="@+id/title"
+        android:layout_margin="4dp" />
+
+</RelativeLayout>
