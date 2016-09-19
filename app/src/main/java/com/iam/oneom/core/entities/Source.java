@@ -218,15 +218,17 @@ public class Source extends  Entity implements Parcelable, Named {
         vodlocker,
         piratebay,
         extratorrent,
-        torrentdownloads,
         kickasstorrents,
+        opensubtitles,
+        rarbg,
         eztv,
+        // TODO make a handler
+        torrentdownloads,
+        tracker1337x,
         rutor,
         rutracker,
         bitsnoop,
-        torrentz,
-        opensubtitles,
-        rarbg;
+        torrentz;
     }
 
 }
