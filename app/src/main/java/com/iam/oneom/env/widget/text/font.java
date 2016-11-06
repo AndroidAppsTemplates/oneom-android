@@ -1,10 +1,11 @@
 package com.iam.oneom.env.widget.text;
 
+import android.content.Context;
 import android.graphics.Typeface;
 
 import com.iam.oneom.pages.OneOm;
 
-public enum font implements TextStyle {
+public enum font {
 
     font133("regular", "fonts/133.ttf"),
     font133b("bold", "fonts/133b.ttf"),
@@ -18,21 +19,11 @@ public enum font implements TextStyle {
         this.resource = resource;
     }
 
-    public Typeface typeface() {
-        return Typeface.createFromAsset(OneOm.assetManager, resource);
+    public Typeface typeface(Context context) {
+        return Typeface.createFromAsset(context.getAssets(), resource);
     }
 
     private String resource;
     private String style;
-
-    @Override
-    public String getFontAsset() {
-        return resource;
-    }
-
-    @Override
-    public String getName() {
-        return style;
-    }
 }
 

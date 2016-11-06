@@ -22,7 +22,7 @@ public class QualityGroup extends Entity implements Parcelable, Named {
         try {
             name = jsonObject.getString("name");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "QualityGroup main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "QualityGroup main constructor");
             e.printStackTrace();
         }
     }

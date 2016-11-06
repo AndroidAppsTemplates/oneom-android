@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.Episode;
+import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDecoration;
@@ -133,6 +134,13 @@ public class EpisodePageActivity extends AppCompatActivity {
         recycler.addItemDecoration(new SpacesBetweenItemsDecoration((int) Decorator.dipToPixels(this, 8)));
         recycler.setLayoutManager(layoutManager);
     }
+
+    @Override
+    public void onBackPressed() {
+        Search.instance().reset();
+        super.onBackPressed();
+    }
+
     private void loadBackground(String url) {
         Glide
                 .with(this)

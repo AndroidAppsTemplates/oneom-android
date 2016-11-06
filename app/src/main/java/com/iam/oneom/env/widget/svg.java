@@ -52,7 +52,7 @@ public enum svg {
         try {
             svg = SVG.getFromResource(context, resourse);
         } catch (SVGParseException e) {
-            OneOm.handleError(Thread.currentThread(), e, "svg.drawable() failed for " + name);
+//            OneOm.handleError(Thread.currentThread(), e, "svg.drawable() failed for " + name);
             e.printStackTrace();
         }
 

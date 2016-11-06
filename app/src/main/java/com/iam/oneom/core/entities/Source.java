@@ -47,7 +47,7 @@ public class Source extends  Entity implements Parcelable, Named {
                 search = search.replaceFirst("http", "https");
             }
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Source main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Source main constructor");
             e.printStackTrace();
         }
     }

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
 public class Country extends Entity implements Parcelable, Named {
 
     private static ArrayList<Country> countries = new ArrayList<>();
@@ -23,7 +24,7 @@ public class Country extends Entity implements Parcelable, Named {
         try {
             name = jsonObject.getString("name");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Country main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Country main constructor");
 
             e.printStackTrace();
         }

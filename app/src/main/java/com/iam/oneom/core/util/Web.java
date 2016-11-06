@@ -119,7 +119,7 @@ public class Web {
             Log.i("http post response", conn.getHeaderFields().toString());
             Log.i("http post response", postData);
         } catch (Exception e) {
-            OneOm.handleError(Thread.currentThread(), e, "Web.httpPost(String,String)");
+//            OneOm.handleError(Thread.currentThread(), e, "Web.httpPost(String,String)");
             e.printStackTrace();
         }
         return builder.toString();
@@ -156,7 +156,7 @@ public class Web {
         try {
             url = new URL(Web.url.domain + content_type + "/" + id);
         } catch (MalformedURLException exception) {
-            OneOm.handleError(Thread.currentThread(), exception, "Web.httpDelete(String,String) MalformedURLException");
+//            OneOm.handleError(Thread.currentThread(), exception, "Web.httpDelete(String,String) MalformedURLException");
             exception.printStackTrace();
         }
         HttpURLConnection httpURLConnection = null;
@@ -170,7 +170,7 @@ public class Web {
             httpURLConnection.connect();
             httpURLConnection.getResponseCode();
         } catch (IOException exception) {
-            OneOm.handleError(Thread.currentThread(), exception, "Web.httpDelete(String,String) IOException");
+//            OneOm.handleError(Thread.currentThread(), exception, "Web.httpDelete(String,String) IOException");
             exception.printStackTrace();
         } finally {
             if (httpURLConnection != null) {
@@ -209,7 +209,7 @@ public class Web {
             bufferedReader.close();
             return content.toString();
         } catch (IOException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Web.GET(String,boolean,SocketAddress) IOException");
+//            OneOm.handleError(Thread.currentThread(), e, "Web.GET(String,boolean,SocketAddress) IOException");
             e.printStackTrace();
         }
         return null;
@@ -286,12 +286,17 @@ public class Web {
                 content.append(line);
             }
             bufferedReader.close();
-            Log.i("response in search", urlConnection.getResponseCode() + "");
             String result = content.toString();
+            Log.i("response in search", urlConnection.getResponseCode() + "");
+            Log.i("response in search", url.getPath());
+            Log.i("response in search", result);
+            Log.i("response in search", urlConnection.getResponseMessage());
+            Log.i("response in search", urlConnection.getHeaderFields().toString());
+            System.out.println(result);
 //            ACache.get(OneOm.context).put(searchPageURL, result, time);
             return result;
         } catch (IOException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Web.search(Origin,ArrayList<String>,int,boolean) IOException");
+//            OneOm.handleError(Thread.currentThread(), e, "Web.search(Origin,ArrayList<String>,int,boolean) IOException");
             e.printStackTrace();
         }
         return null;
@@ -359,7 +364,7 @@ public class Web {
         try {
             service.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Web.lookOverProxies(String) InterruptedException");
+//            OneOm.handleError(Thread.currentThread(), e, "Web.lookOverProxies(String) InterruptedException");
             e.printStackTrace();
         }
 
@@ -424,13 +429,11 @@ public class Web {
 
 
         } catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Web.disableSSLSertificateChecking()");
+//            OneOm.handleError(Thread.currentThread(), e, "Web.disableSSLSertificateChecking()");
             e.printStackTrace();
         }
         return s;
     }
-
-
 
     public static String POST(String requestURL, HashMap<String, String> postDataParams) {
 
@@ -468,7 +471,7 @@ public class Web {
                 response="";
             }
         } catch (Exception e) {
-            OneOm.handleError(Thread.currentThread(), e, "Web.POST(String, Map<String,String>)");
+//            OneOm.handleError(Thread.currentThread(), e, "Web.POST(String, Map<String,String>)");
             e.printStackTrace();
         }
 
@@ -511,7 +514,7 @@ public class Web {
                 response="";
             }
         } catch (Exception e) {
-            OneOm.handleError(Thread.currentThread(), e, "Web.POST(String,String)");
+//            OneOm.handleError(Thread.currentThread(), e, "Web.POST(String,String)");
             e.printStackTrace();
         }
 

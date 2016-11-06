@@ -62,7 +62,7 @@ public class Online extends Entity implements Parcelable {
             url = json.getString("url");
             videoUrl = json.getString("video_url");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Online main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Online main constructor");
             e.printStackTrace();
         }
     }

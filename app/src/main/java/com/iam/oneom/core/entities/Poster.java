@@ -31,7 +31,7 @@ public class Poster extends Entity implements Parcelable, Named {
             this.type = data.getString("type");
             this.size = data.getLong("size");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Poster main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Poster main constructor");
             e.printStackTrace();
         }
     }

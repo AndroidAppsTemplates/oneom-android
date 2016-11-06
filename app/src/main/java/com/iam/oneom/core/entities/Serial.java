@@ -107,7 +107,7 @@ public class Serial extends Entity implements Parcelable {
                 }
             }
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Serial main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Serial main constructor");
             e.printStackTrace();
         }
     }

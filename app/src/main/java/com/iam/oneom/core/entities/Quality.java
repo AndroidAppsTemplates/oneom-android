@@ -36,7 +36,7 @@ public class Quality extends Entity implements Parcelable, Named {
             name = data.getString("name");
             qualityGroupId = data.getString("quality_group_id");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Quality main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Quality main constructor");
             e.printStackTrace();
         }
         qualityGroup = QualityGroup.getByID(qualityGroupId);

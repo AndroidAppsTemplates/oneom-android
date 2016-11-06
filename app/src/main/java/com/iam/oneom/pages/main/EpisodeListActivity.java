@@ -25,7 +25,15 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.*;
+import com.iam.oneom.core.entities.Country;
+import com.iam.oneom.core.entities.Episode;
+import com.iam.oneom.core.entities.Genre;
+import com.iam.oneom.core.entities.Lang;
+import com.iam.oneom.core.entities.Network;
+import com.iam.oneom.core.entities.Quality;
+import com.iam.oneom.core.entities.QualityGroup;
+import com.iam.oneom.core.entities.Source;
+import com.iam.oneom.core.entities.Torrent;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Editor;
 import com.iam.oneom.core.util.Web;
@@ -67,7 +75,7 @@ public class EpisodeListActivity extends AppCompatActivity {
     ImageView searchIcon;
     RelativeLayout searchView;
 
-    ArrayList<Episode> episodes;
+    ArrayList<Episode> episodes = new ArrayList<>();
     RecyclerView episodesGrid;
     GridLayoutManager recyclerLayoutManager;
     EpisodesAdapter adapter;
@@ -117,7 +125,7 @@ public class EpisodeListActivity extends AppCompatActivity {
                             try {
                                 searchString = URLEncoder.encode(params[0], "UTF-8");
                             } catch (UnsupportedEncodingException e) {
-                                OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task doInBackground");
+//                                OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task doInBackground");
                                 e.printStackTrace();
                             }
                             String result = Web.GET(Web.url.domain + Web.url.serial + Web.url.search + "/" + searchString, true);
@@ -139,7 +147,7 @@ public class EpisodeListActivity extends AppCompatActivity {
 
                                 showPopup(ss);
                             } catch (JSONException e) {
-                                OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task onPostExecute");
+//                                OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task onPostExecute");
                                 e.printStackTrace();
                             }
                         }
@@ -176,7 +184,7 @@ public class EpisodeListActivity extends AppCompatActivity {
         public static final int EPISODE = 1;
 
         LayoutInflater inflater;
-        ArrayList<Episode> episodes;
+        ArrayList<Episode> episodes = new ArrayList<>();
 
         public EpisodesAdapter(ArrayList<Episode> episodes, AppCompatActivity context) {
             if (context != null) inflater = context.getLayoutInflater();
@@ -307,7 +315,7 @@ public class EpisodeListActivity extends AppCompatActivity {
                                     try {
                                         searchString = URLEncoder.encode(params[0], "UTF-8");
                                     } catch (UnsupportedEncodingException e) {
-                                        OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task doInBackground");
+//                                        OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task doInBackground");
                                         e.printStackTrace();
                                     }
                                     String result = Web.GET(Web.url.domain + Web.url.serial + Web.url.search + "/" + searchString, true);
@@ -329,7 +337,7 @@ public class EpisodeListActivity extends AppCompatActivity {
 
                                         showPopup(ss);
                                     } catch (JSONException e) {
-                                        OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task onPostExecute");
+//                                        OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task onPostExecute");
                                         e.printStackTrace();
                                     }
                                 }
@@ -414,7 +422,7 @@ public class EpisodeListActivity extends AppCompatActivity {
 
             private void setTitle(View itemView) {
                 title = (Text) itemView.findViewById(R.id.title);
-                title.setTypeface(font.font133sb.typeface());
+                title.setTypeface(font.font133sb.typeface(EpisodeListActivity.this));
                 title.setTextColor(Decorator.TXTBLUE);
             }
 
@@ -571,6 +579,7 @@ public class EpisodeListActivity extends AppCompatActivity {
     }
     private void initStaticEntities(String data) {
         try {
+            System.out.println(data);
             JSONObject staticData = new JSONObject(data);
 
             Lang.init(staticData);

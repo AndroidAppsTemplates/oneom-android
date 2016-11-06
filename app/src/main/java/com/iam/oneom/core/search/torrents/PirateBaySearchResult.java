@@ -20,7 +20,9 @@ public class PirateBaySearchResult extends SearchResult {
     @Override
     public ArrayList<HashMap<Key, String>> parse() {
         ArrayList<HashMap<Key, String>> result = new ArrayList<>();
-        Elements pirateBayTable = document.select("table").get(0).select("tbody");
+        System.out.println("doc " + document);
+        Elements pirateBayTable = document.select("table");//.select("tbody");
+        System.out.println(pirateBayTable.toString() + "\n\n");
         Elements pirateBayTableRows = pirateBayTable.select("tr");
         System.out.println("rows count " + pirateBayTableRows.size());
         for (int i = 1; i < pirateBayTableRows.size(); i++) { //first row is the col names so skip it.

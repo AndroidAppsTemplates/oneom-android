@@ -8,26 +8,48 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.iam.oneom.pages.OneOm;
+import com.iam.oneom.core.entities.Entity;
+import com.iam.oneom.core.search.Search;
+import com.iam.oneom.env.widget.CircleProgressBar;
 
-import java.lang.*;
+import java.util.ArrayList;
 
-public class Device {
-    public static final String SDK = Build.VERSION.SDK;
-    public static final String MODEL = Build.MODEL;
-    public static final String BRAND = Build.BRAND;
-    public static final String CPU = Build.CPU_ABI;
+public class   Device {
 
-    public static String osVersion() {
-        return Build.VERSION.RELEASE;
+    private static volatile Device instance;
+
+    public static Device instance() {
+        Device localInstance = instance;
+        if (localInstance == null) {
+            synchronized (Device.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new Device();
+                }
+            }
+        }
+        return localInstance;
     }
 
-    public static String osType() {
-        return "Android";
+    public static void init(Context context) {
+        instance = instance();
+        instance.DEVICE_TYPE = deviceType(context);
+        instance.RAM_MEGABYTES = ramMegabyes(context);
+        instance.DISPLAY_INFO = displayInfo(context);
     }
 
-    public static String deviceType() {
-        Context context = OneOm.context;
+    public final String SDK = Build.VERSION.SDK;
+    public final String MODEL = Build.MODEL;
+    public final String BRAND = Build.BRAND;
+    public final String CPU = Build.CPU_ABI;
+    public final String OS_VERSION = Build.VERSION.RELEASE;
+    public final String OS_TYPE = "Android";
+    public String DEVICE_TYPE;
+    public String DISPLAY_INFO;
+    public long RAM_MEGABYTES;
+
+
+    public static String deviceType(Context context) {
         DisplayMetrics metrics = new DisplayMetrics();
         ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
         int widthPixels = metrics.widthPixels;
@@ -42,15 +64,15 @@ public class Device {
 
     }
 
-    public static long ramMegabyes() {
+    public static long ramMegabyes(Context context) {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) OneOm.context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
         return mi.totalMem / 1048576L;
     }
 
-    public static String displayInfo() {
-        WindowManager wm = (WindowManager) OneOm.context.getSystemService(Context.WINDOW_SERVICE);
+    public static String displayInfo(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         Display display = wm.getDefaultDisplay();
         display.getMetrics(metrics);

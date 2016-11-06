@@ -72,6 +72,11 @@ public class Search {
         return localInstance;
     }
 
+    public void reset() {
+        page = 0;
+        result = new HashMap<>();
+    }
+
     public void clearResults() {
         result = new HashMap<>();
     }

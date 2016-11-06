@@ -263,7 +263,7 @@ public class GridLayoutManager extends android.support.v7.widget.GridLayoutManag
         try {
             child = recycler.getViewForPosition(position);
         } catch (IndexOutOfBoundsException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Measure child in GridLayoutManager", "IMPORTANT!", "Handled exception");
+//            OneOm.handleError(Thread.currentThread(), e, "Measure child in GridLayoutManager", "IMPORTANT!", "Handled exception");
             if (BuildConfig.DEBUG) {
                 Log.w("LinearLayoutManager", "LinearLayoutManager doesn't work well with animations. Consider switching them off", e);
             }

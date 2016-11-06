@@ -51,7 +51,7 @@ public class Logger {
                     try {
                         Log.i(tag, key + " " + object.getString(key));
                     } catch (JSONException e) {
-                        OneOm.handleError(Thread.currentThread(), e, "LogJSONObject");
+//                        OneOm.handleError(Thread.currentThread(), e, "LogJSONObject");
                         e.printStackTrace();
                     }
                 }

@@ -76,7 +76,7 @@ public class EpisodeInfoWindow extends LinearLayout {
         torrentsHeader = new Text(getContext());
         MarginLayoutParams params = new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
         torrentsHeader.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        torrentsHeader.setTypeface(font.font133sb.typeface());
+        torrentsHeader.setTypeface(font.font133sb.typeface(getContext()));
         torrentsHeader.setTextColor(Decorator.BLACK);
         torrentsHeader.setPadding(16, 8, 16, 16);
         torrentsHeader.setLayoutParams(params);
@@ -97,7 +97,7 @@ public class EpisodeInfoWindow extends LinearLayout {
     private void setEpisodeNameView() {
         episodeName = new Text(getContext());
         MarginLayoutParams params = new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
-        episodeName.setTypeface(font.font133.typeface());
+        episodeName.setTypeface(font.font133.typeface(getContext()));
         episodeName.setTextColor(Decorator.BLACK);
         episodeName.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         episodeName.setPadding(16, 32, 16, 8);
@@ -114,7 +114,7 @@ public class EpisodeInfoWindow extends LinearLayout {
         serialName = new Text(getContext());
         serialName.setTextColor(Decorator.BLACK);
         MarginLayoutParams params = new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
-        serialName.setTypeface(font.font133sb.typeface());
+        serialName.setTypeface(font.font133sb.typeface(getContext()));
         serialName.setPadding(16,16,16,16);
         serialName.setLayoutParams(params);
         header.addView(serialName);

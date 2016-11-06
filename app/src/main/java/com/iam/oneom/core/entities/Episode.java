@@ -52,7 +52,7 @@ public class Episode extends Entity implements Parcelable {
             updatedAt = json.getString("updated_at");
             deletedAt = json.getString("deleted_at");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Episode main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Episode main constructor");
             e.printStackTrace();
         }
     }

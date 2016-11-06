@@ -145,7 +145,7 @@ public class Editor {
                 result.append("=");
                 result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                OneOm.handleError(Thread.currentThread(), e, "Creating pairs array from Map for POST Editor.httpDataPairsToString(Map<String, String> params)");
+//                OneOm.handleError(Thread.currentThread(), e, "Creating pairs array from Map for POST Editor.httpDataPairsToString(Map<String, String> params)");
                 e.printStackTrace();
             }
         }

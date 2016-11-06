@@ -27,8 +27,8 @@ public class Text extends TextView {
         this(context, attrs);
     }
 
-    public void setTextStyle(TextStyle textStyle) {
-        setTypeface(textStyle.typeface());
+    public void setTextStyle(font font) {
+        setTypeface(font.typeface(getContext()));
     }
 
     public float getSpacing() {

@@ -38,7 +38,7 @@ public class Lang extends Entity implements Parcelable, Named {
             shortName = json.getString("short");
             name = json.getString("name");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Lang main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Lang main constructor");
             e.printStackTrace();
         }
     }

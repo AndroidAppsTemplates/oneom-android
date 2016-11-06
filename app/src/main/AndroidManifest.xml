@@ -11,6 +11,8 @@
         android:label="@string/app_name"
         android:icon="@drawable/kopimi"
         android:supportsRtl="true"
+        android:screenOrientation="landscape"
+        android:configChanges="orientation|keyboardHidden"
         android:theme="@style/AppTheme">
 
         <activity

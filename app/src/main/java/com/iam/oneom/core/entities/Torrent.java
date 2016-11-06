@@ -36,7 +36,7 @@ public class Torrent extends Entity implements Parcelable {
             vkPostId = data.getString("vk_post_id");
             value = data.getString("value");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Torrent main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Torrent main constructor");
             e.printStackTrace();
         }
     }

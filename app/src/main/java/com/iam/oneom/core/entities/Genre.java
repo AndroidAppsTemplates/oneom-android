@@ -22,7 +22,7 @@ public class Genre extends Entity implements Parcelable, Named {
         try {
             name = jGenre.getString("name");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Genre main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Genre main constructor");
             e.printStackTrace();
         }
     }

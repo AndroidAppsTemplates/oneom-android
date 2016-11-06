@@ -84,7 +84,7 @@ public class SerialPageActivity extends AppCompatActivity {
                     Serial.add(serial);
 
                 } catch (JSONException e) {
-                    OneOm.handleError(Thread.currentThread(), e, "onPostExecute in SerialPageActivity serial parsing");
+//                    OneOm.handleError(Thread.currentThread(), e, "onPostExecute in SerialPageActivity serial parsing");
                     e.printStackTrace();}
                 loadBackground(serial.posterURL());
                 configureRecycler();
@@ -364,7 +364,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
             private void setTitle(View itemView) {
                 title = (Text) itemView.findViewById(R.id.title);
-                title.setTypeface(font.font133sb.typeface());
+                title.setTypeface(font.font133sb.typeface(SerialPageActivity.this));
                 title.setTextColor(Decorator.TXTBLUE);
             }
 

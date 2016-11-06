@@ -23,7 +23,7 @@ public class Status extends Entity implements Parcelable, Named {
         try {
             name = jStatus.getString("name");
         } catch (JSONException e) {
-            OneOm.handleError(Thread.currentThread(), e, "Status main constructor");
+//            OneOm.handleError(Thread.currentThread(), e, "Status main constructor");
             e.printStackTrace(); }
     }
 
