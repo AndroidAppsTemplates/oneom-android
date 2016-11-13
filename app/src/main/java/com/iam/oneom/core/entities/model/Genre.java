@@ -8,7 +8,7 @@ import io.realm.annotations.PrimaryKey;
 public class Genre extends RealmObject implements Named {
 
     @PrimaryKey
-    private int id;
+    private long id;
 
     private String name;
 
@@ -17,4 +17,11 @@ public class Genre extends RealmObject implements Named {
         return name;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

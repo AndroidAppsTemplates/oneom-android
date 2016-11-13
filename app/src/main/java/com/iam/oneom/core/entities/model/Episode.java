@@ -1,5 +1,6 @@
 package com.iam.oneom.core.entities.model;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -11,14 +12,14 @@ public class Episode extends RealmObject {
 
     private RealmList<Torrent> torrent;
     private RealmList<Online> online;
-    private int ep;
-    private int season;
-    private Subtitle subtitle;
+    private RealmList<Subtitle> subtitle;
+    private RealmList<Description> description;
     private Serial serial;
+    private String ep;
+    private String season;
     private String rait;
     private String title;
     private String vkPostId;
-    private String description;
     private String airdate;
     private String videoStreamUrl;
 
@@ -35,15 +36,15 @@ public class Episode extends RealmObject {
         this.online = online;
     }
 
-    public void setEp(int ep) {
+    public void setEp(String ep) {
         this.ep = ep;
     }
 
-    public void setSeason(int season) {
+    public void setSeason(String season) {
         this.season = season;
     }
 
-    public void setSubtitle(Subtitle subtitle) {
+    public void setSubtitle(RealmList<Subtitle> subtitle) {
         this.subtitle = subtitle;
     }
 
@@ -63,7 +64,7 @@ public class Episode extends RealmObject {
         this.vkPostId = vkPostId;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(RealmList<Description> description) {
         this.description = description;
     }
 

@@ -8,9 +8,8 @@ import io.realm.annotations.PrimaryKey;
 public class Quality extends RealmObject implements Named {
 
     @PrimaryKey
-    private int id;
+    private long id;
     private String name;
-    private String qualityGroupId;
     private QualityGroup qualityGroup;
 
     @Override
@@ -18,4 +17,15 @@ public class Quality extends RealmObject implements Named {
         return name;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQualityGroup(QualityGroup qualityGroup) {
+        this.qualityGroup = qualityGroup;
+    }
 }
