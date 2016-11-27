@@ -18,6 +18,18 @@ public class Lang extends RealmObject implements Named {
         return name;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getOpenSubtitlesShort() {
+        return openSubtitlesShort;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

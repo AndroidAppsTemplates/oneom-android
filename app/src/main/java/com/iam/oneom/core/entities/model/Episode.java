@@ -1,6 +1,5 @@
 package com.iam.oneom.core.entities.model;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -23,6 +22,57 @@ public class Episode extends RealmObject {
     private String airdate;
     private String videoStreamUrl;
 
+    public long getId() {
+        return id;
+    }
+
+    public RealmList<Torrent> getTorrent() {
+        return torrent;
+    }
+
+    public RealmList<Online> getOnline() {
+        return online;
+    }
+
+    public RealmList<Subtitle> getSubtitle() {
+        return subtitle;
+    }
+
+    public RealmList<Description> getDescription() {
+        return description;
+    }
+
+    public Serial getSerial() {
+        return serial;
+    }
+
+    public String getEp() {
+        return ep;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+
+    public String getRait() {
+        return rait;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getVkPostId() {
+        return vkPostId;
+    }
+
+    public String getAirdate() {
+        return airdate;
+    }
+
+    public String getVideoStreamUrl() {
+        return videoStreamUrl;
+    }
 
     public void setId(long id) {
         this.id = id;

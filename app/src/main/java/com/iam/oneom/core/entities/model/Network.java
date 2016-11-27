@@ -18,6 +18,14 @@ public class Network extends RealmObject implements Named {
         return name;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

@@ -33,6 +33,102 @@ public class Serial extends RealmObject {
     private String timezone;
     private String vkGroupUpdate;
 
+    public long getId() {
+        return id;
+    }
+
+    public Poster getPoster() {
+        return poster;
+    }
+
+    public RealmList<Genre> getGenre() {
+        return genre;
+    }
+
+    public RealmList<Country> getCountry() {
+        return country;
+    }
+
+    public RealmList<Network> getNetwork() {
+        return network;
+    }
+
+    public RealmList<Episode> getEpisode() {
+        return episode;
+    }
+
+    public RealmList<Description> getDescription() {
+        return description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getHide() {
+        return hide;
+    }
+
+    public int getTvrageId() {
+        return tvrageId;
+    }
+
+    public int getTvmazeId() {
+        return tvmazeId;
+    }
+
+    public int getMdbId() {
+        return mdbId;
+    }
+
+    public int getTvdbId() {
+        return tvdbId;
+    }
+
+    public int getVkGroupId() {
+        return vkGroupId;
+    }
+
+    public String getImbbId() {
+        return imbbId;
+    }
+
+    public String getImdbRating() {
+        return imdbRating;
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public String getAirtime() {
+        return airtime;
+    }
+
+    public String getAirday() {
+        return airday;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public String getVkGroupUpdate() {
+        return vkGroupUpdate;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

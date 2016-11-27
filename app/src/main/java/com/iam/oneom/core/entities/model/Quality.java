@@ -12,6 +12,14 @@ public class Quality extends RealmObject implements Named {
     private String name;
     private QualityGroup qualityGroup;
 
+    public long getId() {
+        return id;
+    }
+
+    public QualityGroup getQualityGroup() {
+        return qualityGroup;
+    }
+
     @Override
     public String getName() {
         return name;

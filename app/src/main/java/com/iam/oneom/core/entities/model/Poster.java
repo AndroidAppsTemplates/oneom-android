@@ -22,6 +22,34 @@ public class Poster extends RealmObject implements Named {
         return name;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getAlt() {
+        return alt;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

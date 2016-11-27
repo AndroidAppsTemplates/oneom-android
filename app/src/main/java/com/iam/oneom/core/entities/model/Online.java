@@ -16,6 +16,42 @@ public class Online extends RealmObject {
     private String videoUrl;
     private String posterUrl;
 
+    public long getId() {
+        return id;
+    }
+
+    public Source getSource() {
+        return source;
+    }
+
+    public Lang getLang() {
+        return lang;
+    }
+
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getEmbedCode() {
+        return embedCode;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

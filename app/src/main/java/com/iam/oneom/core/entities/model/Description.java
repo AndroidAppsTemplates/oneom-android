@@ -32,4 +32,24 @@ public class Description extends RealmObject {
     public void setLang(Lang lang) {
         this.lang = lang;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getAssocId() {
+        return assocId;
+    }
+
+    public long getAssocType() {
+        return assocType;
+    }
+
+    public long getTypeId() {
+        return typeId;
+    }
+
+    public Lang getLang() {
+        return lang;
+    }
 }
