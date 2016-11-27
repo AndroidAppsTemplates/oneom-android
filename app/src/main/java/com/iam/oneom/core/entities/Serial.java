@@ -199,7 +199,7 @@ public class Serial extends Entity implements Parcelable {
     public String genres() { return Editor.namesByComma(genres); }
     public String networks() { return Editor.namesByComma(networks); }
     public String countries() { return Editor.namesByComma(countries); }
-    public String status() { return status.name(); }
+    public String status() { return status.getName(); }
     public String airstart() { return start == null ? "" : start; }
     public String airend() { return end == null ? "" : end; }
     public String title() { return title; }

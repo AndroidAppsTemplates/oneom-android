@@ -76,7 +76,8 @@ public class Poster extends Entity implements Parcelable, Named {
         }
     };
 
-    public String name() {
+    @Override
+    public String getName() {
         return name;
     }
 

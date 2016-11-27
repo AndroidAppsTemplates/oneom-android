@@ -12,6 +12,7 @@ import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,8 @@ import java.util.List;
 import java.util.Map;
 
 public class EpisodeListActivity extends AppCompatActivity {
+
+    private static final String TAG = EpisodeListActivity.class.getSimpleName();
 
     private CircleProgressBar progressBar;
 
@@ -175,7 +178,27 @@ public class EpisodeListActivity extends AppCompatActivity {
             makeEpisodesList(data);
             invalidateRecycler();
         }
-        startupTask.execute();
+        Log.d(TAG, "onCreate: ");
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                for (int i = 1000000; i < 1300000; i += 99){
+                    try {
+                        String s = Web.GET(Web.url.domain + Web.url.episodes + "/" + i, true);
+                        JSONObject jEp = new JSONObject(s);
+                        Log.d(TAG, "doInBackground: " + i);
+                        JSONArray jSubtitle = jEp.getJSONArray("subtitle");
+                        if (jSubtitle.length() > 0) {
+                            Log.d(TAG, "doInBackground: ep wth subt = " + i + " founded");
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
+                }
+                return null;
+            }
+        }.execute();
+//        startupTask.execute();
     }
 
     class EpisodesAdapter extends RecyclerView.Adapter<BindableViewHolder> {

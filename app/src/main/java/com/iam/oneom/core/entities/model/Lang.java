@@ -14,7 +14,7 @@ public class Lang extends RealmObject implements Named {
     private String name;
 
     @Override
-    public String name() {
+    public String getName() {
         return name;
     }
 

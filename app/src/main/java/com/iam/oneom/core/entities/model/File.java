@@ -1,11 +1,10 @@
 package com.iam.oneom.core.entities.model;
 
-import com.iam.oneom.core.entities.interfaces.Named;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Poster extends RealmObject implements Named {
+
+public class File extends RealmObject {
 
     @PrimaryKey
     private long id;
@@ -17,40 +16,67 @@ public class Poster extends RealmObject implements Named {
     private String type;
     private long size;
 
-    @Override
-    public String getName() {
-        return name;
+    public long getId() {
+        return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setAlt(String alt) {
-        this.alt = alt;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getAlt() {
+        return alt;
+    }
+
+    public void setAlt(String alt) {
+        this.alt = alt;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getOriginal() {
+        return original;
+    }
+
     public void setOriginal(String original) {
         this.original = original;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void setPath(String path) {
         this.path = path;
     }
 
-    public void setSize(long size) {
-        this.size = size;
+    public String getType() {
+        return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
     }
 }

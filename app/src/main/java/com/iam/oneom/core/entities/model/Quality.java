@@ -13,7 +13,7 @@ public class Quality extends RealmObject implements Named {
     private QualityGroup qualityGroup;
 
     @Override
-    public String name() {
+    public String getName() {
         return name;
     }
 

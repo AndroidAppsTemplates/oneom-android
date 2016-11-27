@@ -126,7 +126,7 @@ public class Editor {
     public static String namesByComma(ArrayList<? extends Named> namedEntities) {
         String[] names = new String[namedEntities.size()];
         for (int i = 0, l = names.length; i < l; i++) {
-            names[i] = namedEntities.get(i).name();
+            names[i] = namedEntities.get(i).getName();
         }
 
         return names.length == 0 ? "" : Editor.arrayWithoutBraces(names);

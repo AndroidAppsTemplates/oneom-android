@@ -119,8 +119,8 @@ class SubtitlesSearchVH extends BindableViewHolder {
     }
 
     private void setTexts() {
-        selectSource.setText(Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).name());
-        selectLang.setText(Lang.lang(selectedSubtitleLanguagePosition).name());
+        selectSource.setText(Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).getName());
+        selectLang.setText(Lang.lang(selectedSubtitleLanguagePosition).getName());
     }
 
     @Override

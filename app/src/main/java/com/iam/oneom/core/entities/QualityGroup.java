@@ -60,7 +60,7 @@ public class QualityGroup extends Entity implements Parcelable, Named {
     public static ArrayList<String> names() {
         ArrayList<String> names = new ArrayList<>();
         for (QualityGroup qg : groups) {
-            names.add(qg.name());
+            names.add(qg.getName());
         }
         return names;
     }
@@ -106,7 +106,7 @@ public class QualityGroup extends Entity implements Parcelable, Named {
     };
 
     @Override
-    public String name() {
+    public String getName() {
         return name;
     }
 }

@@ -14,7 +14,7 @@ public class Network extends RealmObject implements Named {
     private Country country;
 
     @Override
-    public String name() {
+    public String getName() {
         return name;
     }
 

@@ -62,7 +62,7 @@ public class Quality extends Entity implements Parcelable, Named {
     public static Quality getByHtml(String html) {
 //        Document doc = Jsoup.parse(html);
         for (Quality q : qualities) {
-            if (html.toLowerCase().contains(q.name().toLowerCase())) return q;
+            if (html.toLowerCase().contains(q.getName().toLowerCase())) return q;
         }
         return getByHtml("webdl");
     }
@@ -106,7 +106,10 @@ public class Quality extends Entity implements Parcelable, Named {
         }
     };
 
-    public String name() { return name; }
+    @Override
+    public String getName() {
+        return name;
+    }
 
     public static Quality getByID(String id) throws RuntimeException {
         for (Quality quality : qualities) {

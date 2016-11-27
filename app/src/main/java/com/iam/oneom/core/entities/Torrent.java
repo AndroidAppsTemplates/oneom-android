@@ -153,6 +153,6 @@ public class Torrent extends Entity implements Parcelable {
     public String value() { return value; }
 
     public String tagInfo() {
-        return quality.name() + " " + lang.shortName();
+        return quality.getName() + " " + lang.shortName();
     }
 }

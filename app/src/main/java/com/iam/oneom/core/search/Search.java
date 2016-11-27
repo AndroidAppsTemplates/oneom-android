@@ -126,7 +126,7 @@ public class Search {
 
     public void find(Source source, String searchString) {
 
-        Source.Origin origin = Source.Origin.valueOf(source.name().toLowerCase());
+        Source.Origin origin = Source.Origin.valueOf(source.getName().toLowerCase());
         if (this.origin == null || origin != this.origin) {
             result = new HashMap<>();
             page = 0;

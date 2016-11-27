@@ -20,6 +20,7 @@ public enum GsonMapper {
     GsonMapper() {
         try {
             gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd")
                     .registerTypeAdapter(Class.forName(Country.class.getCanonicalName()), new CountrySerializer())
                     .registerTypeAdapter(Class.forName(Country.class.getCanonicalName()), new CountryDeserializer())
                     .create();

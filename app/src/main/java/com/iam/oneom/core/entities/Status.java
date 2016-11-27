@@ -60,7 +60,7 @@ public class Status extends Entity implements Parcelable, Named {
         for (int i = 0; i < lStatuses; i++) {
             Status status = new Status(statuses.getJSONObject(i));
             Status.add(status);
-            if (status.name().equalsIgnoreCase("unknown")) UNKNOWN_STATUS_ID = status.id() + "";
+            if (status.getName().equalsIgnoreCase("unknown")) UNKNOWN_STATUS_ID = status.id() + "";
         }
     }
 
@@ -93,7 +93,7 @@ public class Status extends Entity implements Parcelable, Named {
     };
 
     @Override
-    public String name() {
+    public String getName() {
         return name;
     }
 

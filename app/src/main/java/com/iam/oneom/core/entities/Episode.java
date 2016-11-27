@@ -2,10 +2,8 @@ package com.iam.oneom.core.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.iam.oneom.core.util.Time;
-import com.iam.oneom.pages.OneOm;
 
 import org.json.JSONArray;
 import org.json.JSONException;

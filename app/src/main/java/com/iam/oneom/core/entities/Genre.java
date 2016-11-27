@@ -28,7 +28,7 @@ public class Genre extends Entity implements Parcelable, Named {
     }
 
     @Override
-    public String name() {
+    public String getName() {
         return name;
     }
 

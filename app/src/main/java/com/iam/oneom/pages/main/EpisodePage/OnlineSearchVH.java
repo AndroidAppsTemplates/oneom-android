@@ -123,8 +123,8 @@ class OnlineSearchVH extends BindableViewHolder {
     }
 
     private void setTexts() {
-        selectSource.setText(Source.getByType(Source.Type.Online, selectedOnlineSourcePosition).name());
-        selectLang.setText(Lang.lang(selectedOnlineLanguagePosition).name());
+        selectSource.setText(Source.getByType(Source.Type.Online, selectedOnlineSourcePosition).getName());
+        selectLang.setText(Lang.lang(selectedOnlineLanguagePosition).getName());
     }
 
     @Override

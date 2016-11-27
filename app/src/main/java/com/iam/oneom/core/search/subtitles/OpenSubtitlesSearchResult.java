@@ -53,7 +53,7 @@ public class OpenSubtitlesSearchResult extends SearchResult {
             parseTuple.put(Key.Name, name);
             parseTuple.put(Key.Download, "http://dl.opensubtitles.org/en/download/sub/vrf-" + id);
             parseTuple.put(Key.Uploaded, time);
-            parseTuple.put(Key.Language, (lang.name()));
+            parseTuple.put(Key.Language, (lang.getName()));
 
             result.add(parseTuple);
         }

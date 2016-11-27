@@ -20,12 +20,12 @@ public class Country extends RealmObject implements Named {
         this.name = name;
     }
 
-    @Override
-    public String name() {
-        return name;
+    public long getId() {
+        return id;
     }
 
-    public long id() {
-        return id;
+    @Override
+    public String getName() {
+        return name;
     }
 }

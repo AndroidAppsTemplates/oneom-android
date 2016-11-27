@@ -130,9 +130,9 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
     }
 
     private void setTexts() {
-        selectTracker.setText(Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition).name());
-        selectQualityGroup.setText(QualityGroup.group(selectedQualityGroupPosition).name());
-        selectLang.setText(Lang.lang(selectedLanguagePosition).name());
+        selectTracker.setText(Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition).getName());
+        selectQualityGroup.setText(QualityGroup.group(selectedQualityGroupPosition).getName());
+        selectLang.setText(Lang.lang(selectedLanguagePosition).getName());
     }
 
     @Override

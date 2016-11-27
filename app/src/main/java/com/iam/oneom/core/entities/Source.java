@@ -98,7 +98,12 @@ public class Source extends  Entity implements Parcelable, Named {
     public String searchPage() { return searchPage; }
     public String search() { return search; }
     public String searchStep() { return searchStep; }
-    public String name() { return name; }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
     public String data() { return data; }
     public String login() { return login; }
     public String url() { return url; }
@@ -198,7 +203,7 @@ public class Source extends  Entity implements Parcelable, Named {
         }
         for (Source s : sources) {
             if (s.typeId == t) {
-                names.add(s.name());
+                names.add(s.getName());
             }
         }
         return names;

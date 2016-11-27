@@ -14,8 +14,8 @@ public class CountrySerializer implements JsonSerializer<Country> {
     @Override
     public JsonElement serialize(Country country, Type typeOfSrc, JsonSerializationContext context) {
         final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", country.id());
-        jsonObject.addProperty("name", country.name());
+        jsonObject.addProperty("id", country.getId());
+        jsonObject.addProperty("name", country.getName());
         return jsonObject;
     }
 }

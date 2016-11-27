@@ -1,6 +1,9 @@
 package com.iam.oneom.core.entities.model;
 
+import android.support.annotation.Nullable;
+
 import com.iam.oneom.core.entities.interfaces.Named;
+import com.iam.oneom.core.util.ErrorHandler;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -8,17 +11,100 @@ import io.realm.annotations.PrimaryKey;
 public class Source extends RealmObject implements Named {
 
     @PrimaryKey
-    private int id;
+    private long id;
     private int typeId; // TODO implement into deserializer
+    private int active;
     private String searchPage;
     private String search;
     private String searchStep;
     private String name;
     private String data;
-    private String login;
+    private int login;
     private String url;
-    private Origin origin;
-    private Type type;
+//    private Origin origin;
+//    private Type type;
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setType(int typeId) {
+        this.typeId = typeId;
+//        this.type = Type.byId(typeId);
+    }
+
+    public String getSearchPage() {
+        return searchPage;
+    }
+
+    public void setSearchPage(String searchPage) {
+        this.searchPage = searchPage;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getSearchStep() {
+        return searchStep;
+    }
+
+    public void setSearchStep(String searchStep) {
+        this.searchStep = searchStep;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public int getLogin() {
+        return login;
+    }
+
+    public void setLogin(int login) {
+        this.login = login;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
 
     public enum Type {
         Torrent(1),
@@ -29,12 +115,22 @@ public class Source extends RealmObject implements Named {
             this.type = type;
         }
 
-        private int type;
-    }
+        @Nullable
+        private static Type byId(int type_id) {
+            for (Type type : values()) {
+                if (type.type == type_id) {
+                    return type;
+                }
+            }
+            try {
+                throw new RuntimeException("Unknown source type " + type_id);
+            } catch (Exception e) {
+                ErrorHandler.handleError(Thread.currentThread(), e);
+            }
+            return null;
+        }
 
-    @Override
-    public String name() {
-        return name;
+        private int type;
     }
 
     public enum Origin {

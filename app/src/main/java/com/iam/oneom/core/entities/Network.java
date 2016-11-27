@@ -65,9 +65,11 @@ public class Network extends Entity implements Parcelable, Named {
         }
     }
 
-    public String name() {
+    @Override
+    public String getName() {
         return name;
     }
+
     public Country country() { return country; }
 
     protected Network(Parcel in) {

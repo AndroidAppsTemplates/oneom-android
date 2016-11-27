@@ -100,7 +100,7 @@ public class Lang extends Entity implements Parcelable, Named {
     public static ArrayList<String> names() {
         ArrayList<String> names = new ArrayList<>();
         for (Lang l : langs) {
-            names.add(l.name());
+            names.add(l.getName());
         }
         return names;
     }
@@ -139,5 +139,7 @@ public class Lang extends Entity implements Parcelable, Named {
 
     public String openSubtitlesShort() { return openSubtitlesShort; }
     public String shortName() { return shortName; }
-    public String name() { return name; }
+
+    @Override
+    public String getName() { return name; }
 }
