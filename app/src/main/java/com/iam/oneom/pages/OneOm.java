@@ -21,6 +21,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
 
+import io.realm.Realm;
+
 public class OneOm extends Application {
 
     @Override
@@ -28,6 +30,7 @@ public class OneOm extends Application {
         super.onCreate();
         Hawk.init(this).build();
         Device.init(this);
+        Realm.init(this);
         svg.init(getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override

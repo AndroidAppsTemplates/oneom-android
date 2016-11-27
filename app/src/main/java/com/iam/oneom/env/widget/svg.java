@@ -14,6 +14,7 @@ import com.iam.oneom.pages.OneOm;
 public enum svg {
 
     down("idown", R.raw.idown),
+    logo("logo", R.raw.logo),
     search("isearch", R.raw.isearch);
 
     svg(String name, int resourse) {
