@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Episode;
+import com.iam.oneom.core.entities.old.Episode;
 import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;

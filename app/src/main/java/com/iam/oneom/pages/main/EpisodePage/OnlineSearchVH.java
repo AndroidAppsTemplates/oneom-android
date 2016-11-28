@@ -18,10 +18,10 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Episode;
-import com.iam.oneom.core.entities.Lang;
-import com.iam.oneom.core.entities.Online;
-import com.iam.oneom.core.entities.Source;
+import com.iam.oneom.core.entities.old.Episode;
+import com.iam.oneom.core.entities.old.Lang;
+import com.iam.oneom.core.entities.old.Online;
+import com.iam.oneom.core.entities.old.Source;
 import com.iam.oneom.core.search.Key;
 import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;

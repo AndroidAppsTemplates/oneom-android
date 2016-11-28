@@ -26,15 +26,16 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Country;
-import com.iam.oneom.core.entities.Episode;
-import com.iam.oneom.core.entities.Genre;
-import com.iam.oneom.core.entities.Lang;
-import com.iam.oneom.core.entities.Network;
-import com.iam.oneom.core.entities.Quality;
-import com.iam.oneom.core.entities.QualityGroup;
-import com.iam.oneom.core.entities.Source;
-import com.iam.oneom.core.entities.Torrent;
+import com.iam.oneom.core.entities.old.Country;
+import com.iam.oneom.core.entities.old.Episode;
+import com.iam.oneom.core.entities.old.Genre;
+import com.iam.oneom.core.entities.old.Lang;
+import com.iam.oneom.core.entities.old.Network;
+import com.iam.oneom.core.entities.old.Quality;
+import com.iam.oneom.core.entities.old.QualityGroup;
+import com.iam.oneom.core.entities.old.Source;
+import com.iam.oneom.core.entities.old.Torrent;
+import com.iam.oneom.core.entities.old.Status;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Editor;
 import com.iam.oneom.core.util.Web;
@@ -46,7 +47,6 @@ import com.iam.oneom.env.widget.TagBar;
 import com.iam.oneom.env.widget.svg;
 import com.iam.oneom.env.widget.text.Text;
 import com.iam.oneom.env.widget.text.font;
-import com.iam.oneom.pages.OneOm;
 import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
 
 import org.json.JSONArray;
@@ -612,7 +612,7 @@ public class EpisodeListActivity extends AppCompatActivity {
             Country.init(staticData);
             Genre.init(staticData);
             Network.init(staticData);
-            com.iam.oneom.core.entities.Status.init(staticData);
+            Status.init(staticData);
 
         } catch (JSONException e) {
             e.printStackTrace();

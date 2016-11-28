@@ -1,10 +1,9 @@
-package com.iam.oneom.core.entities;
+package com.iam.oneom.core.entities.old;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.iam.oneom.core.util.Editor;
-import com.iam.oneom.pages.OneOm;
 
 import org.json.JSONException;
 import org.json.JSONObject;

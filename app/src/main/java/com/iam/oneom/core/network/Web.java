@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.iam.oneom.core.GsonMapper;
 import com.iam.oneom.core.network.request.DataConfigRequest;
+import com.iam.oneom.core.network.request.EpsRequest;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +24,7 @@ public enum Web {
 
     private final String TAG = Web.class.getSimpleName();
 
+    private DownloadProgressListener progressListener;
     private final WebInterface webInterface;
     private OkHttpClient mClient;
     private Retrofit mRetrofit;
@@ -36,12 +38,12 @@ public enum Web {
 
 
         mClient = new OkHttpClient.Builder()
-//                .addNetworkInterceptor(chain -> {
-//                    Response originalResponse = chain.proceed(chain.request());
-//                    return originalResponse.newBuilder()
-//                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-//                            .build();
-//                })
+                .addNetworkInterceptor(chain -> {
+                    Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                            .build();
+                })
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(chain -> {
@@ -75,6 +77,11 @@ public enum Web {
 
     public Call<DataConfigRequest> getInitialData() {
         return webInterface.getInitialData();
+    }
+
+    public Call<EpsRequest> getLastEpisodes(DownloadProgressListener progressListener) {
+        this.progressListener = progressListener;
+        return webInterface.getLastEpisodes();
     }
 
 }

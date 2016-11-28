@@ -22,7 +22,7 @@ public class QualitySerializer implements JsonSerializer<Quality> {
 
         jsonObject.addProperty("id", quality.getId());
         jsonObject.addProperty("name", quality.getName());
-        jsonObject.addProperty("quality_group_id", quality.getQualityGroup() == null ? 0 : quality.getQualityGroup().getId());
+        jsonObject.addProperty("quality_group_id", quality.getQualityGroupId());
 
         return jsonObject;
     }

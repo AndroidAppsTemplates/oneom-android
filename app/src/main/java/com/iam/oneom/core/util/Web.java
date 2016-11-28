@@ -9,11 +9,8 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Source;
-import com.iam.oneom.pages.OneOm;
+import com.iam.oneom.core.entities.old.Source;
 import com.iam.oneom.pages.main.WebViewActivity;
-
-import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +23,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.URL;

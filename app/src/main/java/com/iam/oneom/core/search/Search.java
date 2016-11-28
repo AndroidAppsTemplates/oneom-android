@@ -4,11 +4,11 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Toast;
 
-import com.iam.oneom.core.entities.Entity;
-import com.iam.oneom.core.entities.Episode;
-import com.iam.oneom.core.entities.Lang;
-import com.iam.oneom.core.entities.QualityGroup;
-import com.iam.oneom.core.entities.Source;
+import com.iam.oneom.core.entities.old.Entity;
+import com.iam.oneom.core.entities.old.Episode;
+import com.iam.oneom.core.entities.old.Lang;
+import com.iam.oneom.core.entities.old.QualityGroup;
+import com.iam.oneom.core.entities.old.Source;
 import com.iam.oneom.core.search.onlines.VodlockerSearchResult;
 import com.iam.oneom.core.search.subtitles.OpenSubtitlesSearchResult;
 import com.iam.oneom.core.search.torrents.EZTVSearchResult;

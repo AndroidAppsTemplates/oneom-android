@@ -1,9 +1,6 @@
 package com.iam.oneom.core.entities.model;
 
-import android.support.annotation.Nullable;
-
 import com.iam.oneom.core.entities.interfaces.Named;
-import com.iam.oneom.core.util.ErrorHandler;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -106,47 +103,47 @@ public class Source extends RealmObject implements Named {
         this.active = active;
     }
 
-    public enum Type {
-        Torrent(1),
-        Online(3),
-        Subtitle(2);
-
-        Type(int type) {
-            this.type = type;
-        }
-
-        @Nullable
-        private static Type byId(int type_id) {
-            for (Type type : values()) {
-                if (type.type == type_id) {
-                    return type;
-                }
-            }
-            try {
-                throw new RuntimeException("Unknown source type " + type_id);
-            } catch (Exception e) {
-                ErrorHandler.handleError(Thread.currentThread(), e);
-            }
-            return null;
-        }
-
-        private int type;
-    }
-
-    public enum Origin {
-        vodlocker,
-        piratebay,
-        extratorrent,
-        kickasstorrents,
-        opensubtitles,
-        rarbg,
-        eztv,
-        // TODO make a handler
-        torrentdownloads,
-        tracker1337x,
-        rutor,
-        rutracker,
-        bitsnoop,
-        torrentz;
-    }
+//    public enum Type {
+//        Torrent(1),
+//        Online(3),
+//        Subtitle(2);
+//
+//        Type(int type) {
+//            this.type = type;
+//        }
+//
+//        @Nullable
+//        private static Type byId(int type_id) {
+//            for (Type type : values()) {
+//                if (type.type == type_id) {
+//                    return type;
+//                }
+//            }
+//            try {
+//                throw new RuntimeException("Unknown source type " + type_id);
+//            } catch (Exception e) {
+//                ErrorHandler.handleError(Thread.currentThread(), e);
+//            }
+//            return null;
+//        }
+//
+//        private int type;
+//    }
+//
+//    public enum Origin {
+//        vodlocker,
+//        piratebay,
+//        extratorrent,
+//        kickasstorrents,
+//        opensubtitles,
+//        rarbg,
+//        eztv,
+//        // TODO make a handler
+//        torrentdownloads,
+//        tracker1337x,
+//        rutor,
+//        rutracker,
+//        bitsnoop,
+//        torrentz;
+//    }
 }

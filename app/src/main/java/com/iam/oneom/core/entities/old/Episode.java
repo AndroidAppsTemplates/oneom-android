@@ -1,4 +1,4 @@
-package com.iam.oneom.core.entities;
+package com.iam.oneom.core.entities.old;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -19,7 +19,7 @@ public class DescriptionSerializer implements JsonSerializer<Description> {
         jsonObject.addProperty("assoc_id", description.getAssocId());
         jsonObject.addProperty("assoc_type", description.getAssocType());
         jsonObject.addProperty("type_id", description.getTypeId());
-        jsonObject.addProperty("lang_id", description.getLang().getId());
+        jsonObject.addProperty("lang_id", description.getLang());
         return jsonObject;
     }
 }

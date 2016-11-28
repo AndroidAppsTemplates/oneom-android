@@ -16,9 +16,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Episode;
-import com.iam.oneom.core.entities.Serial;
-import com.iam.oneom.core.entities.Torrent;
+import com.iam.oneom.core.entities.old.Episode;
+import com.iam.oneom.core.entities.old.Serial;
+import com.iam.oneom.core.entities.old.Torrent;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Logger;
 import com.iam.oneom.core.util.Web;
@@ -31,10 +31,8 @@ import com.iam.oneom.env.widget.TagBar;
 import com.iam.oneom.env.widget.svg;
 import com.iam.oneom.env.widget.text.Text;
 import com.iam.oneom.env.widget.text.font;
-import com.iam.oneom.pages.OneOm;
 import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

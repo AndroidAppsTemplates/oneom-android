@@ -20,7 +20,6 @@ public class QualityDeserializer implements JsonDeserializer<Quality> {
         final Quality quality = new Quality();
         final JsonObject json = (JsonObject) jsonElement;
         JsonElement tmpElem;
-        Realm realm = Realm.getDefaultInstance();
         if ((tmpElem = json.get("id")) != null && !tmpElem.isJsonNull()) {
             quality.setId(tmpElem.getAsLong());
         }
@@ -28,12 +27,9 @@ public class QualityDeserializer implements JsonDeserializer<Quality> {
             quality.setName(tmpElem.getAsString());
         }
         if ((tmpElem = json.get("quality_group_id")) != null && !tmpElem.isJsonNull()) {
-            if (realm != null) {
-                quality.setQualityGroup(realm.where(QualityGroup.class).equalTo("id", tmpElem.getAsLong()).findFirst());
-            }
+            quality.setQualityGroupId(tmpElem.getAsLong());
         }
 
-        realm.close();
         return quality;
     }
 

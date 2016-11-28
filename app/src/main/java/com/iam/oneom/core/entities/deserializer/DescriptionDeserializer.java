@@ -5,13 +5,9 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.iam.oneom.core.entities.model.Country;
 import com.iam.oneom.core.entities.model.Description;
-import com.iam.oneom.core.entities.model.Lang;
 
 import java.lang.reflect.Type;
-
-import io.realm.Realm;
 
 public class DescriptionDeserializer implements JsonDeserializer<Description> {
 
@@ -27,25 +23,18 @@ public class DescriptionDeserializer implements JsonDeserializer<Description> {
             description.setAssocId(tmpElem.getAsLong());
         }
         if ((tmpElem = json.get("assoc_type")) != null && !tmpElem.isJsonNull()) {
-            description.setAssocType(tmpElem.getAsLong());
+            description.setAssocType(tmpElem.getAsString());
+        }
+        if ((tmpElem = json.get("body")) != null && !tmpElem.isJsonNull()) {
+            description.setBody(tmpElem.getAsString());
         }
         if ((tmpElem = json.get("type_id")) != null && !tmpElem.isJsonNull()) {
             description.setTypeId(tmpElem.getAsLong());
         }
         if ((tmpElem = json.get("lang_id")) != null && !tmpElem.isJsonNull()) {
-            long asLong = tmpElem.getAsLong();
-
-            Realm realm = Realm.getDefaultInstance();
-            Lang lang = realm.where(Lang.class).equalTo("id", asLong).findFirst();
-            realm.close();
-
-            description.setLang(lang);
+            description.setLangId(tmpElem.getAsLong());
         }
         return description;
     }
-
-//    if ((tmpElem = json.get("lang_id")) != null && !tmpElem.isJsonNull()) {
-//        description.setLang(context.deserialize(tmpElem, CardSkin.class));
-//    }
 
 }

@@ -26,7 +26,6 @@ public class SerialDeserializer implements JsonDeserializer<Serial> {
     @Override
     public Serial deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         Serial serial = new Serial();
-        Realm realm = Realm.getDefaultInstance();
 
         final JsonObject jsonObject = (JsonObject) jsonElement;
 
@@ -53,7 +52,7 @@ public class SerialDeserializer implements JsonDeserializer<Serial> {
         if (cArray != null && !cArray.isJsonNull()) {
             final RealmList<Country> countries = new RealmList<>();
             for (int i = 0; i < cArray.size(); ++i) {
-                countries.add(realm.where(Country.class).equalTo("id", tmpElem.getAsLong()).findFirst());
+                countries.add(context.deserialize(cArray.get(i), Country.class));
             }
             serial.setCountry(countries);
         }
@@ -62,7 +61,7 @@ public class SerialDeserializer implements JsonDeserializer<Serial> {
         if (nArray != null && !nArray.isJsonNull()) {
             final RealmList<Network> networks = new RealmList<>();
             for (int i = 0; i < nArray.size(); ++i) {
-                networks.add(realm.where(Network.class).equalTo("id", tmpElem.getAsLong()).findFirst());
+                networks.add(context.deserialize(nArray.get(i), Country.class));
             }
             serial.setNetwork(networks);
         }
@@ -86,9 +85,7 @@ public class SerialDeserializer implements JsonDeserializer<Serial> {
         }
 
         if ((tmpElem = jsonObject.get("status")) != null && !tmpElem.isJsonNull()) {
-            serial.setStatus(realm.where(Status.class).equalTo("name", tmpElem.getAsString()).findFirst());
-        } else {
-            serial.setStatus(realm.where(Status.class).equalTo("name", "Unknown").findFirst());
+            serial.setStatus(context.deserialize(tmpElem, Status.class));
         }
 
         if ((tmpElem = jsonObject.get("title")) != null && !tmpElem.isJsonNull()) {
@@ -160,7 +157,6 @@ public class SerialDeserializer implements JsonDeserializer<Serial> {
         }
 
 
-        realm.close();
         return serial;
     }
 

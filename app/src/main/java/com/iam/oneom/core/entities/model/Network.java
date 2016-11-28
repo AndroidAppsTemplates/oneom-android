@@ -11,7 +11,15 @@ public class Network extends RealmObject implements Named {
     @PrimaryKey
     private long id;
     private String name;
-    private Country country;
+    private long countryId;
+
+    public long getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(long countryId) {
+        this.countryId = countryId;
+    }
 
     @Override
     public String getName() {
@@ -22,10 +30,6 @@ public class Network extends RealmObject implements Named {
         return id;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -34,7 +38,4 @@ public class Network extends RealmObject implements Named {
         this.name = name;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
-    }
 }

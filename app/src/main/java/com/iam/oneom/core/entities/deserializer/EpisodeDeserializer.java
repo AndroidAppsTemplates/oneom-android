@@ -23,7 +23,6 @@ public class EpisodeDeserializer implements JsonDeserializer<Episode> {
     @Override
     public Episode deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         Episode episode = new Episode();
-        Realm realm = Realm.getDefaultInstance();
 
         final JsonObject jsonObject = (JsonObject) json;
 
@@ -36,7 +35,7 @@ public class EpisodeDeserializer implements JsonDeserializer<Episode> {
         JsonArray tArray = (JsonArray) jsonObject.get("torrent");
         if (tArray != null && !tArray.isJsonNull()) {
             final RealmList<Torrent> torrent = new RealmList<>();
-            for(int i = 0; i < tArray.size(); ++i) {
+            for (int i = 0; i < tArray.size(); ++i) {
                 torrent.add(context.deserialize(tArray.get(i), Torrent.class));
             }
             episode.setTorrent(torrent);
@@ -45,7 +44,7 @@ public class EpisodeDeserializer implements JsonDeserializer<Episode> {
         JsonArray oArray = (JsonArray) jsonObject.get("online");
         if (oArray != null && !oArray.isJsonNull()) {
             final RealmList<Online> online = new RealmList<>();
-            for(int i = 0; i < oArray.size(); ++i) {
+            for (int i = 0; i < oArray.size(); ++i) {
                 online.add(context.deserialize(oArray.get(i), Online.class));
             }
             episode.setOnline(online);
@@ -62,25 +61,16 @@ public class EpisodeDeserializer implements JsonDeserializer<Episode> {
         JsonArray subtArray = (JsonArray) jsonObject.get("subtitle");
         if (subtArray != null && !subtArray.isJsonNull()) {
             final RealmList<Subtitle> subtitles = new RealmList<>();
-            for(int i = 0; i < subtArray.size(); ++i) {
+            for (int i = 0; i < subtArray.size(); ++i) {
                 subtitles.add(context.deserialize(subtArray.get(i), Subtitle.class));
             }
             episode.setSubtitle(subtitles);
         }
 
-        if ((tmpElem = jsonObject.get("serial_id")) != null && !tmpElem.isJsonNull()) {
-
-            if (realm != null) {
-                Serial serial = realm.where(Serial.class).equalTo("id", tmpElem.getAsLong()).findFirst();
-                if (serial != null) {
-                    episode.setSerial(serial);
-                } else {
-                    if ((tmpElem = jsonObject.get("serial")) != null && !tmpElem.isJsonNull()) {
-                        episode.setSerial(context.deserialize(tmpElem, Serial.class));
-                    }
-                }
-            }
+        if ((tmpElem = jsonObject.get("serial")) != null && !tmpElem.isJsonNull()) {
+            episode.setSerial(context.deserialize(tmpElem, Serial.class));
         }
+
 
         if ((tmpElem = jsonObject.get("rait")) != null && !tmpElem.isJsonNull()) {
             episode.setRait(tmpElem.getAsString());
@@ -97,7 +87,7 @@ public class EpisodeDeserializer implements JsonDeserializer<Episode> {
         JsonArray dArray = (JsonArray) jsonObject.get("description");
         if (dArray != null && !dArray.isJsonNull()) {
             final RealmList<Description> descriptions = new RealmList<>();
-            for(int i = 0; i < dArray.size(); ++i) {
+            for (int i = 0; i < dArray.size(); ++i) {
                 descriptions.add(context.deserialize(dArray.get(i), Description.class));
             }
             episode.setDescription(descriptions);
@@ -110,8 +100,6 @@ public class EpisodeDeserializer implements JsonDeserializer<Episode> {
         if ((tmpElem = jsonObject.get("video_stream_url")) != null && !tmpElem.isJsonNull()) {
             episode.setVideoStreamUrl(tmpElem.getAsString());
         }
-
-        realm.close();
 
         return episode;
     }

@@ -8,6 +8,7 @@ import com.iam.oneom.core.entities.deserializer.CountryDeserializer;
 import com.iam.oneom.core.entities.deserializer.DataConfigRequestDeserializer;
 import com.iam.oneom.core.entities.deserializer.DescriptionDeserializer;
 import com.iam.oneom.core.entities.deserializer.EpisodeDeserializer;
+import com.iam.oneom.core.entities.deserializer.EpsRequestDeserializer;
 import com.iam.oneom.core.entities.deserializer.FileDeserializer;
 import com.iam.oneom.core.entities.deserializer.GenreDeserializer;
 import com.iam.oneom.core.entities.deserializer.LangDeserializer;
@@ -18,6 +19,7 @@ import com.iam.oneom.core.entities.deserializer.QualityDeserializer;
 import com.iam.oneom.core.entities.deserializer.QualityGroupDeserializer;
 import com.iam.oneom.core.entities.deserializer.SerialDeserializer;
 import com.iam.oneom.core.entities.deserializer.SourceDeserializer;
+import com.iam.oneom.core.entities.deserializer.StatusDeserializer;
 import com.iam.oneom.core.entities.deserializer.SubtitleDeserializer;
 import com.iam.oneom.core.entities.deserializer.TorrentDeserializer;
 import com.iam.oneom.core.entities.model.Country;
@@ -53,6 +55,7 @@ import com.iam.oneom.core.entities.serializer.StatusSerializer;
 import com.iam.oneom.core.entities.serializer.SubtitleSerializer;
 import com.iam.oneom.core.entities.serializer.TorrentSerializer;
 import com.iam.oneom.core.network.request.DataConfigRequest;
+import com.iam.oneom.core.network.request.EpsRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,6 +77,7 @@ public enum GsonMapper {
                     .registerTypeAdapter(Class.forName(Description.class.getCanonicalName()), new DescriptionSerializer())
                     .registerTypeAdapter(Class.forName(Episode.class.getCanonicalName()), new EpisodeDeserializer())
                     .registerTypeAdapter(Class.forName(Episode.class.getCanonicalName()), new EpisodeSerializer())
+                    .registerTypeAdapter(Class.forName(EpsRequest.class.getCanonicalName()), new EpsRequestDeserializer())
                     .registerTypeAdapter(Class.forName(File.class.getCanonicalName()), new FileDeserializer())
                     .registerTypeAdapter(Class.forName(File.class.getCanonicalName()), new FileSerializer())
                     .registerTypeAdapter(Class.forName(Genre.class.getCanonicalName()), new GenreDeserializer())
@@ -94,7 +98,7 @@ public enum GsonMapper {
                     .registerTypeAdapter(Class.forName(Serial.class.getCanonicalName()), new SerialSerializer())
                     .registerTypeAdapter(Class.forName(Source.class.getCanonicalName()), new SourceDeserializer())
                     .registerTypeAdapter(Class.forName(Source.class.getCanonicalName()), new SourceSerializer())
-                    .registerTypeAdapter(Class.forName(Status.class.getCanonicalName()), new StatusSerializer())
+                    .registerTypeAdapter(Class.forName(Status.class.getCanonicalName()), new StatusDeserializer())
                     .registerTypeAdapter(Class.forName(Status.class.getCanonicalName()), new StatusSerializer())
                     .registerTypeAdapter(Class.forName(Subtitle.class.getCanonicalName()), new SubtitleDeserializer())
                     .registerTypeAdapter(Class.forName(Subtitle.class.getCanonicalName()), new SubtitleSerializer())

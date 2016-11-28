@@ -1,9 +1,7 @@
-package com.iam.oneom.core.entities;
+package com.iam.oneom.core.entities.old;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.iam.oneom.core.util.Logger;
-import com.iam.oneom.pages.OneOm;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +10,6 @@ import org.jsoup.select.Elements;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 public class Torrent extends Entity implements Parcelable {
 

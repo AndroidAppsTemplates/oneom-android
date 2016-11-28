@@ -20,7 +20,6 @@ public class NetworkDeserializer implements JsonDeserializer<Network> {
         final Network network = new Network();
         final JsonObject json = (JsonObject) jsonElement;
         JsonElement tmpElem;
-        Realm realm = Realm.getDefaultInstance();
         if ((tmpElem = json.get("id")) != null && !tmpElem.isJsonNull()) {
             network.setId(tmpElem.getAsLong());
         }
@@ -28,11 +27,9 @@ public class NetworkDeserializer implements JsonDeserializer<Network> {
             network.setName(tmpElem.getAsString());
         }
         if ((tmpElem = json.get("country_id")) != null && !tmpElem.isJsonNull()) {
-            if (realm != null) {
-                network.setCountry(realm.where(Country.class).equalTo("id", tmpElem.getAsLong()).findFirst());
-            }
+            network.setCountryId(tmpElem.getAsLong());
+
         }
-        realm.close();
         return network;
     }
 

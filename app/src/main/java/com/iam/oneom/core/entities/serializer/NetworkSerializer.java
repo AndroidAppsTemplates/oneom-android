@@ -18,7 +18,7 @@ public class NetworkSerializer implements JsonSerializer<Network> {
 
         jsonObject.addProperty("id", network.getId());
         jsonObject.addProperty("name", network.getName());
-        jsonObject.addProperty("country_id", network.getCountry() == null ? 0 : network.getCountry().getId());
+        jsonObject.addProperty("country_id", network.getCountryId());
 
         return jsonObject;
     }

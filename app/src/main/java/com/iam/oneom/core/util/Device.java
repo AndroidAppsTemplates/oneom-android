@@ -8,12 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.iam.oneom.core.entities.Entity;
-import com.iam.oneom.core.search.Search;
-import com.iam.oneom.env.widget.CircleProgressBar;
-
-import java.util.ArrayList;
-
 public class   Device {
 
     private static volatile Device instance;

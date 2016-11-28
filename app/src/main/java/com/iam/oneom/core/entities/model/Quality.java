@@ -10,14 +10,18 @@ public class Quality extends RealmObject implements Named {
     @PrimaryKey
     private long id;
     private String name;
-    private QualityGroup qualityGroup;
+    private long qualityGroupId;
 
     public long getId() {
         return id;
     }
 
-    public QualityGroup getQualityGroup() {
-        return qualityGroup;
+    public long getQualityGroupId() {
+        return qualityGroupId;
+    }
+
+    public void setQualityGroupId(long qualityGroupId) {
+        this.qualityGroupId = qualityGroupId;
     }
 
     @Override
@@ -33,7 +37,4 @@ public class Quality extends RealmObject implements Named {
         this.name = name;
     }
 
-    public void setQualityGroup(QualityGroup qualityGroup) {
-        this.qualityGroup = qualityGroup;
-    }
 }

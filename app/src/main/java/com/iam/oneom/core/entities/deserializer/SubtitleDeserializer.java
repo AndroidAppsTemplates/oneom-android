@@ -11,14 +11,11 @@ import com.iam.oneom.core.entities.model.Subtitle;
 
 import java.lang.reflect.Type;
 
-import io.realm.Realm;
-
 public class SubtitleDeserializer implements JsonDeserializer<Subtitle> {
 
     @Override
     public Subtitle deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final Subtitle subtitle = new Subtitle();
-        final Realm realm = Realm.getDefaultInstance();
 
         final JsonObject json = (JsonObject) jsonElement;
         JsonElement tmpElem;
@@ -30,12 +27,12 @@ public class SubtitleDeserializer implements JsonDeserializer<Subtitle> {
             subtitle.setTitle(tmpElem.getAsString());
         }
 
-        if ((tmpElem = json.get("lang_id")) != null && !tmpElem.isJsonNull()) {
-            subtitle.setLang(realm.where(Lang.class).equalTo("id", tmpElem.getAsLong()).findFirst());
+        if ((tmpElem = json.get("lang")) != null && !tmpElem.isJsonNull()) {
+            subtitle.setLang(context.deserialize(tmpElem, Lang.class));
         }
 
-        if ((tmpElem = json.get("source_id")) != null && !tmpElem.isJsonNull()) {
-            subtitle.setSource(realm.where(Source.class).equalTo("id", tmpElem.getAsLong()).findFirst());
+        if ((tmpElem = json.get("source")) != null && !tmpElem.isJsonNull()) {
+            subtitle.setSource(context.deserialize(tmpElem, Source.class));
         }
 
         if ((tmpElem = json.get("file_id")) != null && !tmpElem.isJsonNull()) {
@@ -50,7 +47,6 @@ public class SubtitleDeserializer implements JsonDeserializer<Subtitle> {
             subtitle.setAssocType(tmpElem.getAsString());
         }
 
-        realm.close();
         return subtitle;
     }
 

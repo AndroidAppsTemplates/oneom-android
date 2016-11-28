@@ -7,8 +7,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Episode;
-import com.iam.oneom.core.entities.Torrent;
+import com.iam.oneom.core.entities.old.Episode;
+import com.iam.oneom.core.entities.old.Torrent;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.widget.text.Text;
 import com.iam.oneom.env.widget.text.font;

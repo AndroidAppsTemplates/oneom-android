@@ -20,8 +20,6 @@ public class SourceDeserializer implements JsonDeserializer<Source> {
         final JsonObject json = (JsonObject) jsonElement;
         JsonElement tmpElem;
 
-        Realm realm = Realm.getDefaultInstance();
-
         if ((tmpElem = json.get("id")) != null && !tmpElem.isJsonNull()) {
             source.setId(tmpElem.getAsLong());
         }
@@ -59,14 +57,9 @@ public class SourceDeserializer implements JsonDeserializer<Source> {
         }
 
         if ((tmpElem = json.get("type_id")) != null && !tmpElem.isJsonNull()) {
-            if (realm != null) {
-                source.setType(tmpElem.getAsInt());
-            }
+            source.setType(tmpElem.getAsInt());
         }
 
-
-
-        realm.close();
         return source;
     }
 

@@ -8,7 +8,6 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Episode;
 
 public class PlayerActivity extends AppCompatActivity {
 

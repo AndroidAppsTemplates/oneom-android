@@ -8,19 +8,15 @@ import com.google.gson.JsonParseException;
 import com.iam.oneom.core.entities.model.Lang;
 import com.iam.oneom.core.entities.model.Quality;
 import com.iam.oneom.core.entities.model.Source;
-import com.iam.oneom.core.entities.model.Subtitle;
 import com.iam.oneom.core.entities.model.Torrent;
 
 import java.lang.reflect.Type;
-
-import io.realm.Realm;
 
 public class TorrentDeserializer implements JsonDeserializer<Torrent> {
 
     @Override
     public Torrent deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final Torrent torrent = new Torrent();
-        final Realm realm = Realm.getDefaultInstance();
 
         final JsonObject json = (JsonObject) jsonElement;
         JsonElement tmpElem;
@@ -32,16 +28,16 @@ public class TorrentDeserializer implements JsonDeserializer<Torrent> {
             torrent.setTitle(tmpElem.getAsString());
         }
 
-        if ((tmpElem = json.get("lang_id")) != null && !tmpElem.isJsonNull()) {
-            torrent.setLang(realm.where(Lang.class).equalTo("id", tmpElem.getAsLong()).findFirst());
+        if ((tmpElem = json.get("lang")) != null && !tmpElem.isJsonNull()) {
+            torrent.setLang(context.deserialize(tmpElem, Lang.class));
         }
 
-        if ((tmpElem = json.get("source_id")) != null && !tmpElem.isJsonNull()) {
-            torrent.setSource(realm.where(Source.class).equalTo("id", tmpElem.getAsLong()).findFirst());
+        if ((tmpElem = json.get("source")) != null && !tmpElem.isJsonNull()) {
+            torrent.setSource(context.deserialize(tmpElem, Source.class));
         }
 
-        if ((tmpElem = json.get("quality_id")) != null && !tmpElem.isJsonNull()) {
-            torrent.setQuality(realm.where(Quality.class).equalTo("id", tmpElem.getAsLong()).findFirst());
+        if ((tmpElem = json.get("quality")) != null && !tmpElem.isJsonNull()) {
+            torrent.setQuality(context.deserialize(tmpElem, Quality.class));
         }
 
         if ((tmpElem = json.get("vk_post_id")) != null && !tmpElem.isJsonNull()) {
@@ -56,7 +52,6 @@ public class TorrentDeserializer implements JsonDeserializer<Torrent> {
             torrent.setUrl(tmpElem.getAsString());
         }
 
-        realm.close();
         return torrent;
     }
 
