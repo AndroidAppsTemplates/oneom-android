@@ -18,6 +18,8 @@ import com.iam.oneom.core.entities.deserializer.PosterDeserializer;
 import com.iam.oneom.core.entities.deserializer.QualityDeserializer;
 import com.iam.oneom.core.entities.deserializer.QualityGroupDeserializer;
 import com.iam.oneom.core.entities.deserializer.SerialDeserializer;
+import com.iam.oneom.core.entities.deserializer.SerialSearchRequestDeserializer;
+import com.iam.oneom.core.entities.deserializer.SerialSearchResultDeserializer;
 import com.iam.oneom.core.entities.deserializer.SourceDeserializer;
 import com.iam.oneom.core.entities.deserializer.StatusDeserializer;
 import com.iam.oneom.core.entities.deserializer.SubtitleDeserializer;
@@ -56,6 +58,8 @@ import com.iam.oneom.core.entities.serializer.SubtitleSerializer;
 import com.iam.oneom.core.entities.serializer.TorrentSerializer;
 import com.iam.oneom.core.network.request.DataConfigRequest;
 import com.iam.oneom.core.network.request.EpsRequest;
+import com.iam.oneom.core.network.request.SerialSearchResult;
+import com.iam.oneom.core.network.request.SerialsSearchRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +100,8 @@ public enum GsonMapper {
                     .registerTypeAdapter(Class.forName(QualityGroup.class.getCanonicalName()), new QualityGroupSerializer())
                     .registerTypeAdapter(Class.forName(Serial.class.getCanonicalName()), new SerialDeserializer())
                     .registerTypeAdapter(Class.forName(Serial.class.getCanonicalName()), new SerialSerializer())
+                    .registerTypeAdapter(Class.forName(SerialSearchResult.class.getCanonicalName()), new SerialSearchResultDeserializer())
+                    .registerTypeAdapter(Class.forName(SerialsSearchRequest.class.getCanonicalName()), new SerialSearchRequestDeserializer())
                     .registerTypeAdapter(Class.forName(Source.class.getCanonicalName()), new SourceDeserializer())
                     .registerTypeAdapter(Class.forName(Source.class.getCanonicalName()), new SourceSerializer())
                     .registerTypeAdapter(Class.forName(Status.class.getCanonicalName()), new StatusDeserializer())

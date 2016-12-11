@@ -22,6 +22,15 @@ public class Editor {
         public static String vodlockerTotalSearchResults = "\\d+";
     }
 
+    public static String encodeToUTF8(String string) {
+        try {
+            return URLEncoder.encode(string, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
     public static String arrayWithoutBraces(Object[] objects) {
         return Arrays.toString(objects).replaceAll(pattern.squareBraces, "");
     }

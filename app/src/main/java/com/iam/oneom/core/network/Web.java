@@ -6,7 +6,10 @@ import android.util.Log;
 import com.iam.oneom.core.GsonMapper;
 import com.iam.oneom.core.network.request.DataConfigRequest;
 import com.iam.oneom.core.network.request.EpsRequest;
+import com.iam.oneom.core.network.request.SerialsSearchRequest;
+import com.iam.oneom.core.util.Editor;
 
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -17,6 +20,9 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public enum Web {
 
@@ -38,12 +44,13 @@ public enum Web {
 
 
         mClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(chain -> {
-                    Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                            .build();
-                })
+//                .addInterceptor(chain -> {
+//                    Response originalResponse = chain.proceed(chain.request());
+//
+//                    return originalResponse.newBuilder()
+//                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+//                            .build();
+//                })
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(chain -> {
@@ -51,7 +58,8 @@ public enum Web {
                     Request original = chain.request();
 
                     // Request customization: add request headers
-                    Request.Builder requestBuilder = original.newBuilder()
+                    Request.Builder requestBuilder = original
+                            .newBuilder()
                             .method(original.method(), original.body());
 
                     requestBuilder.addHeader("Accept", "application/json");
@@ -60,7 +68,9 @@ public enum Web {
                     Request request = requestBuilder.build();
                     Response response = chain.proceed(request);
 
-                    return response;
+                    return response.newBuilder()
+                            .body(new ProgressResponseBody(response.body(), progressListener))
+                            .build();
                 })
                 .build();
 
@@ -79,9 +89,15 @@ public enum Web {
         return webInterface.getInitialData();
     }
 
-    public Call<EpsRequest> getLastEpisodes(DownloadProgressListener progressListener) {
-        this.progressListener = progressListener;
-        return webInterface.getLastEpisodes();
+    public Call<SerialsSearchRequest> searchSerials(String searchString) {
+        return webInterface.searchSerials(Editor.encodeToUTF8(searchString));
     }
 
+    public Observable<EpsRequest> getLastEpisodes(DownloadProgressListener progressListener) {
+        this.progressListener = progressListener;
+        return webInterface.getLastEpisodes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
+    }
 }

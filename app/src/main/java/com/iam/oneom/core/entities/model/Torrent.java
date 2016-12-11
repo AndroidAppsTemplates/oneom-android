@@ -1,9 +1,12 @@
 package com.iam.oneom.core.entities.model;
 
+import com.iam.oneom.core.entities.Tagged;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.internal.KeepMember;
 
-public class Torrent extends RealmObject {
+public class Torrent extends RealmObject implements Tagged {
 
     @PrimaryKey
     private long id;
@@ -23,6 +26,7 @@ public class Torrent extends RealmObject {
         this.id = id;
     }
 
+    @Override
     public Lang getLang() {
         return lang;
     }
@@ -31,6 +35,7 @@ public class Torrent extends RealmObject {
         this.lang = lang;
     }
 
+    @Override
     public Quality getQuality() {
         return quality;
     }

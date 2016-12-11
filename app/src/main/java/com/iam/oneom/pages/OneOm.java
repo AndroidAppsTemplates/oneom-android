@@ -22,6 +22,7 @@ import java.net.URLDecoder;
 import java.util.Date;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class OneOm extends Application {
 
@@ -31,6 +32,7 @@ public class OneOm extends Application {
         Hawk.init(this).build();
         Device.init(this);
         Realm.init(this);
+
         svg.init(getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override

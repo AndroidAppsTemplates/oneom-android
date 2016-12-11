@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
@@ -26,16 +25,11 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.old.Country;
-import com.iam.oneom.core.entities.old.Episode;
-import com.iam.oneom.core.entities.old.Genre;
-import com.iam.oneom.core.entities.old.Lang;
-import com.iam.oneom.core.entities.old.Network;
-import com.iam.oneom.core.entities.old.Quality;
-import com.iam.oneom.core.entities.old.QualityGroup;
-import com.iam.oneom.core.entities.old.Source;
-import com.iam.oneom.core.entities.old.Torrent;
-import com.iam.oneom.core.entities.old.Status;
+import com.iam.oneom.core.entities.Util;
+import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Torrent;
+import com.iam.oneom.core.network.request.SerialSearchResult;
+import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Editor;
 import com.iam.oneom.core.util.Web;
@@ -49,37 +43,38 @@ import com.iam.oneom.env.widget.text.Text;
 import com.iam.oneom.env.widget.text.font;
 import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EpisodeListActivity extends AppCompatActivity {
 
     private static final String TAG = EpisodeListActivity.class.getSimpleName();
 
-    private CircleProgressBar progressBar;
-
-    private InitTask startupTask;
-
-    private String data;
-    private String staticData;
-
     ListPopupWindow popupWindow;
 
+    @BindView(R.id.progress)
+    CircleProgressBar progressBar;
+    @BindView(R.id.search_et)
     EditText searchET;
+    @BindView(R.id.search_icon)
     ImageView searchIcon;
+    @BindView(R.id.searchHeader)
     RelativeLayout searchView;
-
-    ArrayList<Episode> episodes = new ArrayList<>();
+    @BindView(R.id.mainrecycler)
     RecyclerView episodesGrid;
+
+    List<Episode> episodes = new ArrayList<>();
+
     GridLayoutManager recyclerLayoutManager;
     EpisodesAdapter adapter;
 
@@ -87,18 +82,17 @@ public class EpisodeListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.episodes_list_activity);
+        ButterKnife.bind(this);
 
-        searchView = (RelativeLayout) findViewById(R.id.searchHeader);
-        searchIcon = (ImageView) findViewById(R.id.search_icon);
+        episodes = Realm.getDefaultInstance().where(Episode.class).findAll();
+
         searchIcon.setImageDrawable(svg.search.drawable());
-        searchET = (EditText) findViewById(R.id.search_et);
         searchET.addTextChangedListener(new TextWatcher() {
 
             AsyncTask<String, Void, String> task;
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                cancelStartupTask();
                 if (task != null) {
                     hideProgressBar();
                     task.cancel(true);
@@ -116,127 +110,49 @@ public class EpisodeListActivity extends AppCompatActivity {
             public void afterTextChanged(final Editable s) {
                 if (s != null && s.length() > 0) {
                     adapter.filterOnSearch(Editor.splitTOWords(s.toString()));
-                    task = new AsyncTask<String, Void, String>() {
+                    com.iam.oneom.core.network.Web.instance.searchSerials(s.toString()).enqueue(new Callback<SerialsSearchRequest>() {
                         @Override
-                        protected void onPreExecute() {
-                            showProgressBar();
+                        public void onResponse(Call<SerialsSearchRequest> call, Response<SerialsSearchRequest> response) {
+                            showPopup(response.body().getResults());
                         }
 
                         @Override
-                        protected String doInBackground(String... params) {
-                            String searchString = null;
-                            try {
-                                searchString = URLEncoder.encode(params[0], "UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-//                                OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task doInBackground");
-                                e.printStackTrace();
-                            }
-                            String result = Web.GET(Web.url.domain + Web.url.serial + Web.url.search + "/" + searchString, true);
+                        public void onFailure(Call<SerialsSearchRequest> call, Throwable t) {
 
-                            return result;
                         }
-
-                        @Override
-                        protected void onPostExecute(String s) {
-                            hideProgressBar();
-                            try {
-                                JSONArray serials = new JSONObject(s).getJSONArray("serials");
-                                int l = serials.length();
-                                LinkedHashMap<String, String> ss = new LinkedHashMap<>();
-                                for (int i = 0; i < l; i++) {
-                                    JSONObject serial = serials.getJSONObject(i);
-                                    ss.put(serial.getString("title"), serial.getString("id"));
-                                }
-
-                                showPopup(ss);
-                            } catch (JSONException e) {
-//                                OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task onPostExecute");
-                                e.printStackTrace();
-                            }
-                        }
-                    }.execute(s.toString());
+                    });
                 } else {
-                    adapter.filterOnSearch(new ArrayList<String>());
+                    adapter.filterOnSearch(new ArrayList<>());
                 }
             }
         });
 
-        startupTask = new InitTask();
-
 //        Decorator.configureActionBar(this);
 
-        Decorator.init(this);
-        progressBar = (CircleProgressBar) findViewById(R.id.progress);
-        episodesGrid = (RecyclerView) findViewById(R.id.mainrecycler);
-        episodesGrid.addItemDecoration(new EqualSpaceItemDecoration((int)Decorator.dipToPixels(this, 5)));
 
-        staticData = PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.main_static_entities), "");
-        data = PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.main_episode_list), "");
+        episodesGrid.addItemDecoration(new EqualSpaceItemDecoration((int) Decorator.dipToPixels(this, 5)));
 
-        if (!data.equals("")) {
-            initStaticEntities(staticData);
-            makeEpisodesList(data);
-            invalidateRecycler();
-        }
-        Log.d(TAG, "onCreate: ");
-        new AsyncTask<Void,Void,Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                for (int i = 1000000; i < 1300000; i += 99){
-                    try {
-                        String s = Web.GET(Web.url.domain + Web.url.episodes + "/" + i, true);
-                        JSONObject jEp = new JSONObject(s);
-                        Log.d(TAG, "doInBackground: " + i);
-                        JSONArray jSubtitle = jEp.getJSONArray("subtitle");
-                        if (jSubtitle.length() > 0) {
-                            Log.d(TAG, "doInBackground: ep wth subt = " + i + " founded");
-                        }
-                    } catch (Exception e) {
-                        continue;
-                    }
-                }
-                return null;
-            }
-        }.execute();
-//        startupTask.execute();
+        invalidateRecycler();
     }
 
     class EpisodesAdapter extends RecyclerView.Adapter<BindableViewHolder> {
 
-        public static final int SEARCH = 0;
-        public static final int EPISODE = 1;
-
         LayoutInflater inflater;
-        ArrayList<Episode> episodes = new ArrayList<>();
+        List<Episode> episodes = new ArrayList<>();
 
-        public EpisodesAdapter(ArrayList<Episode> episodes, AppCompatActivity context) {
+        public EpisodesAdapter(List<Episode> episodes, AppCompatActivity context) {
             if (context != null) inflater = context.getLayoutInflater();
             this.episodes = episodes;
         }
 
         @Override
         public BindableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            switch (viewType) {
-                case EPISODE:
-                    return new EpisodeVH(inflater.inflate(R.layout.episodes_list_item, parent, false));
-                case SEARCH:
-                    return new SearchVH(inflater.inflate(R.layout.episodes_list_header, parent, false));
-            }
-            throw new RuntimeException("EpisodesAdapter in EpisodeListActivity has not item with view type " + viewType);
+            return new EpisodeVH(inflater.inflate(R.layout.episodes_list_item, parent, false));
         }
 
         @Override
         public void onBindViewHolder(BindableViewHolder holder, int position) {
             holder.onBind(position);
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-//            if (isHeader(position)) {
-//                return SEARCH;
-//            } else {
-                return EPISODE;
-//            }
         }
 
         public void filterOnSearch(ArrayList<String> matchStrings) {
@@ -248,7 +164,7 @@ public class EpisodeListActivity extends AppCompatActivity {
             for (Episode e : EpisodeListActivity.this.episodes) {
                 int containsCount = 0;
                 for (String s : matchStrings) {
-                    if (e.serial().title().toLowerCase().contains(s.toLowerCase())) {
+                    if (e.getSerial().getTitle().toLowerCase().contains(s.toLowerCase())) {
                         containsCount++;
                     }
                 }
@@ -272,146 +188,14 @@ public class EpisodeListActivity extends AppCompatActivity {
 
             notifyDataSetChanged();
 
-//            final SearchVH svh = (SearchVH) episodesGrid.findViewHolderForLayoutPosition(0);
-  //          if (svh != null) {
-                /*svh.*/requestEditTextFocus();
-    //        }
+            requestEditTextFocus();
 
             hideProgressBar();
-        }
-
-        public boolean isHeader(int position) {
-            return position == 0;
         }
 
         @Override
         public int getItemCount() {
             return episodes.size();// + 1;
-        }
-
-        class SearchVH extends BindableViewHolder {
-
-            ImageView icon;
-            EditText editText;
-
-            View view;
-
-            public SearchVH (View view) {
-                super(view);
-                this.view = view;
-                icon = (ImageView) view.findViewById(R.id.search_icon);
-                icon.setImageDrawable(svg.search.drawable());
-                editText = (EditText) view.findViewById(R.id.search_et);
-                editText.addTextChangedListener(new TextWatcher() {
-
-                    AsyncTask<String, Void, String> task;
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                        cancelStartupTask();
-                        if (task != null) {
-                            hideProgressBar();
-                            task.cancel(true);
-                        }
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (popupWindow != null && popupWindow.isShowing()) {
-                            popupWindow.dismiss();
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(final Editable s) {
-                        if (s != null && s.length() > 0) {
-                            adapter.filterOnSearch(Editor.splitTOWords(s.toString()));
-                            task = new AsyncTask<String, Void, String>() {
-                                @Override
-                                protected void onPreExecute() {
-                                    showProgressBar();
-                                }
-
-                                @Override
-                                protected String doInBackground(String... params) {
-                                    String searchString = null;
-                                    try {
-                                        searchString = URLEncoder.encode(params[0], "UTF-8");
-                                    } catch (UnsupportedEncodingException e) {
-//                                        OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task doInBackground");
-                                        e.printStackTrace();
-                                    }
-                                    String result = Web.GET(Web.url.domain + Web.url.serial + Web.url.search + "/" + searchString, true);
-
-                                    return result;
-                                }
-
-                                @Override
-                                protected void onPostExecute(String s) {
-                                    hideProgressBar();
-                                    try {
-                                        JSONArray serials = new JSONObject(s).getJSONArray("serials");
-                                        int l = serials.length();
-                                        LinkedHashMap<String, String> ss = new LinkedHashMap<>();
-                                        for (int i = 0; i < l; i++) {
-                                            JSONObject serial = serials.getJSONObject(i);
-                                            ss.put(serial.getString("title"), serial.getString("id"));
-                                        }
-
-                                        showPopup(ss);
-                                    } catch (JSONException e) {
-//                                        OneOm.handleError(Thread.currentThread(), e, "in serial names for entered text task onPostExecute");
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }.execute(s.toString());
-                        } else {
-                            adapter.filterOnSearch(new ArrayList<String>());
-                        }
-                    }
-                });
-            }
-
-            public void showPopup(final LinkedHashMap<String, String> serials) {
-                if (serials != null && serials.size() > 0) {
-
-                    popupWindow = new ListPopupWindow(EpisodeListActivity.this);
-
-                    final ArrayList<String> names = new ArrayList<>(serials.size());
-                    ArrayList<String> ids = new ArrayList<>(serials.size());
-                    for (Map.Entry<String, String> entry : serials.entrySet()) {
-                        names.add(entry.getKey());
-                        ids.add(entry.getValue());
-                    }
-
-                    PopupAdapter adapter = new PopupAdapter(EpisodeListActivity.this, R.layout.popup_item, names, ids);
-
-                    popupWindow.setAdapter(adapter);
-                    popupWindow.setModal(false);
-                    popupWindow.setWidth((int) (Decorator.getScreenWidth() * 0.9));
-                    popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-                    popupWindow.setAnchorView(SearchVH.this.view);
-                    popupWindow.show();
-                }
-
-                requestEditTextFocus();
-            }
-
-            public void requestEditTextFocus() {
-                SearchVH.this.editText.post(new Runnable() {
-                    public void run() {
-                        SearchVH.this.editText.requestFocusFromTouch();
-                        InputMethodManager lManager = (InputMethodManager) EpisodeListActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        lManager.showSoftInput(SearchVH.this.editText, 0);
-                    }
-                });
-            }
-
-            @Override
-            public void onBind(int position) {
-                view.setTag(adapter);
-            }
-
         }
 
         class EpisodeVH extends BindableViewHolder {
@@ -435,7 +219,7 @@ public class EpisodeListActivity extends AppCompatActivity {
 
             private void setFrame(View itemView) {
                 frame = (RelativeLayout) itemView.findViewById(R.id.frame);
-                int a = (int)Decorator.dipToPixels(EpisodeListActivity.this, 8);
+                int a = (int) Decorator.dipToPixels(EpisodeListActivity.this, 8);
                 frame.setPadding(a, a, a, a);
             }
 
@@ -452,32 +236,30 @@ public class EpisodeListActivity extends AppCompatActivity {
             private void setImage(View itemView) {
                 image = (ImageView) itemView.findViewById(R.id.image);
                 frameLayout = (FrameLayout) itemView.findViewById(R.id.imageframe);
-                Decorator.setSquareSize(frameLayout, Decorator.getSizeForTable(3) - (int)Decorator.dipToPixels(EpisodeListActivity.this, 8) * 2);
+                Decorator.setSquareSize(frameLayout, Decorator.getSizeForTable(3) - (int) Decorator.dipToPixels(EpisodeListActivity.this, 8) * 2);
                 image.setBackgroundResource(R.drawable.episode_item_image_cropper);
             }
 
             @Override
             public void onBind(final int position) {
                 final Episode ep = episodes.get(position);
-                String titleText = ep.serial().title() + " " + ep.episodeInSeason();
+                String titleText = ep.getSerial().getTitle() + " " + Util.episodeInSeason(ep);
                 title.setText(titleText);
                 ArrayList<String> tags = new ArrayList<>();
-                for (Torrent torrent : ep.torrent()) {
-                    tags.add(torrent.tagInfo());
+                for (Torrent torrent : ep.getTorrent()) {
+                    tags.add(Util.qualityTag(torrent));
                 }
                 tagbar.addTags(tags);
                 Glide
                         .with(view.getContext())
-                        .load(ep.posterURL())
+                        .load(ep.getSerial() == null ? "null" : ep.getSerial().getPoster().getOriginal())
                         .into(image);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        cancelStartupTask();
-
                         Intent intent = new Intent(getApplicationContext(), EpisodePageActivity.class);
-                        intent.putExtra(getString(R.string.media_page_episode_intent), episodes.get(position));
+                        intent.putExtra(getString(R.string.media_page_episode_intent), episodes.get(position).getId());
                         startActivity(intent);
                     }
                 });
@@ -488,13 +270,13 @@ public class EpisodeListActivity extends AppCompatActivity {
     class PopupAdapter extends ArrayAdapter<String> {
 
         List<String> names;
-        List<String> ids;
+        List<Long> ids;
         LayoutInflater inflater;
         int resource;
 
-        public PopupAdapter(Context context, int resource, List<String> objects, List<String> ids) {
+        public PopupAdapter(Context context, int resource, List<String> objects, List<Long> ids) {
             super(context, resource, objects);
-            inflater = ((AppCompatActivity)context).getLayoutInflater();
+            inflater = ((AppCompatActivity) context).getLayoutInflater();
             this.ids = ids;
             this.names = objects;
             this.resource = resource;
@@ -541,8 +323,6 @@ public class EpisodeListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        cancelStartupTask();
-
                         Intent intent = new Intent(EpisodeListActivity.this, SerialPageActivity.class);
                         intent.putExtra(getString(R.string.media_page_serial_intent), ids.get(position));
                         startActivity(intent);
@@ -553,95 +333,16 @@ public class EpisodeListActivity extends AppCompatActivity {
         }
     }
 
-    class InitTask extends AsyncTask<Void, Void, String[]> {
-
-        @Override
-        protected void onPreExecute() {
-            if (data.equals("")) showProgressBar();
-        }
-
-        @Override
-        protected String[] doInBackground(Void[] params) {
-            String sStaticData = Web.disableSSLCertificateChecking(Web.url.domain + Web.url.startupData, true);
-//            String sStaticData = Web.GET(Web.url.domain + Web.url.startupData, true);
-
-            String data = Web.disableSSLCertificateChecking(Web.url.domain + Web.url.episodes, true);
-//            String data = Web.GET(Web.url.domain + Web.url.episodes, true);
-
-            return new String[]{data, sStaticData};
-        }
-
-        @Override
-        protected void onPostExecute(String[] aVoid) {
-
-            if (!aVoid[0].equals(data)) {
-                if (!aVoid[1].equals(staticData)) {
-                    PreferenceManager
-                            .getDefaultSharedPreferences(EpisodeListActivity.this)
-                            .edit()
-                            .putString(getString(R.string.main_static_entities), aVoid[1])
-                            .apply();
-                    initStaticEntities(aVoid[1]);
-                }
-
-                PreferenceManager
-                        .getDefaultSharedPreferences(EpisodeListActivity.this)
-                        .edit()
-                        .putString(getString(R.string.main_episode_list), aVoid[0])
-                        .apply();
-                makeEpisodesList(aVoid[0]);
-                invalidateRecycler();
-            }
-
-            hideProgressBar();
-        }
-    }
-
-    private void cancelStartupTask() {
-        startupTask.cancel(true);
-    }
-    private void initStaticEntities(String data) {
-        try {
-            System.out.println(data);
-            JSONObject staticData = new JSONObject(data);
-
-            Lang.init(staticData);
-            QualityGroup.init(staticData);
-            Quality.init(staticData);
-            Source.init(staticData);
-            Country.init(staticData);
-            Genre.init(staticData);
-            Network.init(staticData);
-            Status.init(staticData);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-    private void makeEpisodesList(String data) {
-        try {
-            JSONObject resp = new JSONObject(data);
-            JSONArray eps = resp.getJSONArray("eps");
-            int len = eps.length();
-            episodes = new ArrayList<>();
-            for (int i = 0; i < len; i++) {
-                episodes.add(new Episode(eps.getJSONObject(i)));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void showPopup(final LinkedHashMap<String, String> serials) {
+    public void showPopup(final List<SerialSearchResult> serials) {
         if (serials != null && serials.size() > 0) {
 
             popupWindow = new ListPopupWindow(EpisodeListActivity.this);
 
             final ArrayList<String> names = new ArrayList<>(serials.size());
-            ArrayList<String> ids = new ArrayList<>(serials.size());
-            for (Map.Entry<String, String> entry : serials.entrySet()) {
-                names.add(entry.getKey());
-                ids.add(entry.getValue());
+            ArrayList<Long> ids = new ArrayList<>(serials.size());
+            for (SerialSearchResult serial : serials) {
+                names.add(serial.getTitle());
+                ids.add(serial.getId());
             }
 
             PopupAdapter adapter = new PopupAdapter(EpisodeListActivity.this, R.layout.popup_item, names, ids);
@@ -672,13 +373,6 @@ public class EpisodeListActivity extends AppCompatActivity {
         episodesGrid.setLayoutManager(recyclerLayoutManager);
         adapter = new EpisodesAdapter(episodes, this);
         episodesGrid.addOnScrollListener(episodesRecyclerViewOnScrollListener());
-
-//        recyclerLayoutManager.setSpanSizeLookup(new android.support.v7.widget.GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//                return adapter.isHeader(position) ? recyclerLayoutManager.getSpanCount() : 1;
-//            }
-//        });
         episodesGrid.setAdapter(adapter);
     }
 
@@ -728,9 +422,11 @@ public class EpisodeListActivity extends AppCompatActivity {
             }
         };
     }
+
     private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
+
     private void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
     }
