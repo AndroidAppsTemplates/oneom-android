@@ -3,7 +3,6 @@ package com.iam.oneom.pages.main;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +15,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.old.Episode;
-import com.iam.oneom.core.entities.old.Serial;
-import com.iam.oneom.core.entities.old.Torrent;
+import com.iam.oneom.core.entities.Util;
+import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Serial;
+import com.iam.oneom.core.entities.model.Torrent;
+import com.iam.oneom.core.network.Web;
 import com.iam.oneom.core.util.Decorator;
-import com.iam.oneom.core.util.Logger;
-import com.iam.oneom.core.util.Web;
+import com.iam.oneom.core.util.Editor;
+import com.iam.oneom.core.util.Time;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
@@ -33,62 +34,45 @@ import com.iam.oneom.env.widget.text.Text;
 import com.iam.oneom.env.widget.text.font;
 import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.realm.Realm;
 
 public class SerialPageActivity extends AppCompatActivity {
 
-    String serial_id;
+    long serial_id;
     Serial serial;
 
+    @BindView(R.id.poster)
     ImageView posterImage;
+    @BindView(R.id.progress)
     CircleProgressBar cpb;
+    @BindView(R.id.recycler)
     RecyclerView recycler;
+
     GridLayoutManager layoutManager;
     SerialAdapter serialAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Decorator.configureActionBar(this);
-
-        serial_id = getIntent().getStringExtra(getString(R.string.media_page_serial_intent));
-
         setContentView(R.layout.media_page_activity);
-        cpb = (CircleProgressBar) findViewById(R.id.progress);
-        posterImage = (ImageView) findViewById(R.id.poster);
-        recycler = (RecyclerView) findViewById(R.id.recycler);
 
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected void onPreExecute() {
-                showProgressBar();
-            }
+        ButterKnife.bind(this);
 
-            @Override
-            protected String doInBackground(Void... params) {
-                String result = Web.GET(Web.url.domain + Web.url.serial + "/" + serial_id, true);
-                return result;
-            }
+        serial_id = getIntent().getLongExtra(getString(R.string.media_page_serial_intent), 0);
 
-            @Override
-            protected void onPostExecute(String string) {
-                try {
-                    JSONObject jSerial = new JSONObject(string).getJSONObject("serial");
-                    Logger.logJSONObject("serial", jSerial.getJSONArray("description").getJSONObject(0));
-                    serial = new Serial(jSerial);
-                    Serial.add(serial);
-
-                } catch (JSONException e) {
-//                    OneOm.handleError(Thread.currentThread(), e, "onPostExecute in SerialPageActivity serial parsing");
-                    e.printStackTrace();}
-                loadBackground(serial.posterURL());
-                configureRecycler();
-                hideProgressBar();
-            }
-        }.execute();
+        showProgressBar();
+        Web.instance.getSerial(serial_id)
+                .subscribe(s -> {
+                    Realm.getDefaultInstance().executeTransaction(realm -> realm.insertOrUpdate(s.getSerial()));
+                    this.serial = s.getSerial();
+                    loadBackground(Util.posterUrl(serial));
+                    configureRecycler();
+                    hideProgressBar();
+                });
     }
 
     class SerialAdapter extends RecyclerView.Adapter<BindableViewHolder> {
@@ -102,11 +86,12 @@ public class SerialPageActivity extends AppCompatActivity {
         LayoutInflater inflater;
 
         SerialAdapter(Context context) {
-            expandedSeasons = new boolean[serial.seasonsCount()];
-            for (int i = 0, l = serial.seasonsCount(); i < l; i++) {
+            int episodesCountForSerial = Util.seasonsCountForSerial(serial);
+            expandedSeasons = new boolean[episodesCountForSerial];
+            for (int i = 0, l = episodesCountForSerial; i < l; i++) {
                 expandedSeasons[i] = false;
             }
-            inflater = ((Activity)context).getLayoutInflater();
+            inflater = ((Activity) context).getLayoutInflater();
         }
 
         @Override
@@ -131,7 +116,8 @@ public class SerialPageActivity extends AppCompatActivity {
         public int getItemCount() {
             int res = 1; // header by default
             for (int i = 0, l = expandedSeasons.length; i < l; i++) {
-                if (expandedSeasons[i]) res += serial.episodesBySeason(i + 1).size(); // if expanded go through the episodes view holders
+                if (expandedSeasons[i])
+                    res += Util.episodesForSeasonList(serial, i + 1).size(); // if expanded go through the episodes view holders
                 res += 1; // as view holder for serial number is always here
             }
 
@@ -160,7 +146,7 @@ public class SerialPageActivity extends AppCompatActivity {
                     pointer += 1; // as view holder for serial number is always here
                     // if expanded - go through the episodes view holders
                     if (expandedSeasons[i - 1]) {
-                        pointer += serial.episodesBySeason(i).size();
+                        pointer += Util.episodesForSeasonList(serial, i).size();
                     }
                     if (pointer == position) return true;
                 }
@@ -215,7 +201,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 int after = position;
                 for (int i = 0, l = expandedSeasons.length; i < l; i++) {
                     if (expandedSeasons[i]) {
-                        after -= serial.episodesBySeason(i + 1).size();
+                        after -= Util.episodesForSeasonList(serial, i + 1).size();
                     }
                     if (after < 0) res = before;
                     else before = after;
@@ -248,7 +234,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
             @Override
             public void onBind(int position) {
-                serialName.setText(serial.title());
+                serialName.setText(serial.getTitle());
                 if (infoRecyclerView.getAdapter() == null) {
                     infoAdapter = new InfoAdapter(SerialPageActivity.this);
                     linearLayoutManager = new LinearLayoutManager(SerialPageActivity.this);
@@ -265,7 +251,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 private static final int HYPERLINK = 2;
 
                 public InfoAdapter(Context context) {
-                    inflater = ((AppCompatActivity)context).getLayoutInflater();
+                    inflater = ((AppCompatActivity) context).getLayoutInflater();
                 }
 
                 @Override
@@ -306,14 +292,38 @@ public class SerialPageActivity extends AppCompatActivity {
                     @Override
                     public void onBind(int position) {
                         switch (position) {
-                            case 0: title.setText("IMDB"); value.setText(serial.imdbRating()); break;
-                            case 1: title.setText("Runtime"); value.setText(serial.runtime()); break;
-                            case 2: title.setText("Genre"); value.setText(serial.genres()); break;
-                            case 3: title.setText("Network"); value.setText(serial.networks()); break;
-                            case 4: title.setText("Country"); value.setText(serial.countries()); break;
-                            case 5: title.setText("Status"); value.setText(serial.status()); break;
-                            case 6: title.setText("Air Start"); value.setText(serial.airstart()); break;
-                            case 7: title.setText("Air End"); value.setText(serial.airend()); break;
+                            case 0:
+                                title.setText("IMDB");
+                                value.setText(serial.getImdbRating());
+                                break;
+                            case 1:
+                                title.setText("Runtime");
+                                value.setText(String.valueOf(serial.getRuntime()));
+                                break;
+                            case 2:
+                                title.setText("Genre");
+                                value.setText(Editor.namesByComma(serial.getGenre()));
+                                break;
+                            case 3:
+                                title.setText("Network");
+                                value.setText(Editor.namesByComma(serial.getNetwork()));
+                                break;
+                            case 4:
+                                title.setText("Country");
+                                value.setText(Editor.namesByComma(serial.getCountry()));
+                                break;
+                            case 5:
+                                title.setText("Status");
+                                value.setText(Util.serialStatusName(serial));
+                                break;
+                            case 6:
+                                title.setText("Air Start");
+                                value.setText(Time.format(serial.getStart(), Time.TimeFormat.IDN));
+                                break;
+                            case 7:
+                                title.setText("Air End");
+                                value.setText(Time.format(serial.getEnd(), Time.TimeFormat.IDN));
+                                break;
                         }
                     }
                 }
@@ -331,11 +341,21 @@ public class SerialPageActivity extends AppCompatActivity {
                     @Override
                     public void onBind(int position) {
                         switch (position) {
-                            case 8: hyperlink.setText("TVDB"); break;
-                            case 9: hyperlink.setText("TNDb"); break;
-                            case 10: hyperlink.setText("TVRAGE"); break;
-                            case 11: hyperlink.setText("TVMAZE"); break;
-                            case 12: hyperlink.setText("VK Group"); break;
+                            case 8:
+                                hyperlink.setText("TVDB");
+                                break;
+                            case 9:
+                                hyperlink.setText("TNDb");
+                                break;
+                            case 10:
+                                hyperlink.setText("TVRAGE");
+                                break;
+                            case 11:
+                                hyperlink.setText("TVMAZE");
+                                break;
+                            case 12:
+                                hyperlink.setText("VK Group");
+                                break;
                         }
                     }
                 }
@@ -369,7 +389,7 @@ public class SerialPageActivity extends AppCompatActivity {
             private void setImage(View itemView) {
                 image = (ImageView) itemView.findViewById(R.id.image);
                 frameLayout = (FrameLayout) itemView.findViewById(R.id.imageframe);
-                Decorator.setSquareSize(frameLayout, Decorator.getSizeForTable(3) - (int)Decorator.dipToPixels(SerialPageActivity.this, 8) * 2);
+                Decorator.setSquareSize(frameLayout, Decorator.getSizeForTable(3) - (int) Decorator.dipToPixels(SerialPageActivity.this, 8) * 2);
                 image.setBackgroundResource(R.drawable.episode_item_image_cropper);
             }
 
@@ -377,25 +397,21 @@ public class SerialPageActivity extends AppCompatActivity {
             public void onBind(final int position) {
 
                 final Episode ep = episodeAtPosition(position);// = episodes.get(position - 1);
-                String titleText = ep.title() + " " + ep.episodeInSeason();
+                String titleText = ep.getTitle() + " " + Util.episodeInSeasonString(ep);
                 title.setText(titleText);
                 ArrayList<String> tags = new ArrayList<>();
-                for (Torrent torrent : ep.torrent()) {
-                    tags.add(torrent.tagInfo());
+                for (Torrent torrent : ep.getTorrent()) {
+                    tags.add(Util.qualityTag(torrent));
                 }
                 tagbar.addTags(tags);
                 Glide
                         .with(view.getContext())
-                        .load(ep.posterURL())
+                        .load(Util.posterUrl(ep))
                         .into(image);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent intent = new Intent(getApplicationContext(), EpisodePageActivity.class);
-                        intent.putExtra(getString(R.string.media_page_episode_intent), ep);
-                        startActivity(intent);
-                    }
+                view.setOnClickListener(v -> {
+                    Intent intent = new Intent(getApplicationContext(), EpisodePageActivity.class);
+                    intent.putExtra(getString(R.string.media_page_episode_intent), ep.getId());
+                    startActivity(intent);
                 });
             }
 
@@ -414,7 +430,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
                     // find incomplete season
                     if (expandedSeasons[i]) {
-                        after -= serial.episodesBySeason(i + 1).size();
+                        after -= Util.episodesForSeasonList(serial, i + 1).size();
                     }
 
                     // if find - set params
@@ -428,7 +444,7 @@ public class SerialPageActivity extends AppCompatActivity {
                     else before = after;
                 }
 
-                return serial.episodesBySeason(season).get(epNumber);
+                return Util.episodesForSeasonList(serial, season).get(epNumber);
             }
         }
 

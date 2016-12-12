@@ -26,12 +26,14 @@ import io.realm.RealmConfiguration;
 
 public class OneOm extends Application {
 
+    private static final long SCHEMA_VERSION = 1;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Hawk.init(this).build();
         Device.init(this);
-        Realm.init(this);
+        initRealm();
 
         svg.init(getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -42,5 +44,13 @@ public class OneOm extends Application {
                 ErrorHandler.handleError(thread, ex);
             }
         });
+    }
+
+    private void initRealm() {
+        Realm.init(this);
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder()
+                .schemaVersion(SCHEMA_VERSION)
+                .deleteRealmIfMigrationNeeded()
+                .build());
     }
 }

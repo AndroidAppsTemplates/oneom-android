@@ -11,7 +11,6 @@ import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,6 @@ import com.iam.oneom.core.network.request.SerialSearchResult;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Editor;
-import com.iam.oneom.core.util.Web;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.EqualSpaceItemDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
@@ -45,7 +43,6 @@ import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -127,9 +124,6 @@ public class EpisodeListActivity extends AppCompatActivity {
             }
         });
 
-//        Decorator.configureActionBar(this);
-
-
         episodesGrid.addItemDecoration(new EqualSpaceItemDecoration((int) Decorator.dipToPixels(this, 5)));
 
         invalidateRecycler();
@@ -156,7 +150,6 @@ public class EpisodeListActivity extends AppCompatActivity {
         }
 
         public void filterOnSearch(ArrayList<String> matchStrings) {
-            showProgressBar();
 
             HashMap<Episode, Integer> epsWithMatchCount = new HashMap<>();
             ArrayList<Episode> resultEpisodesList = new ArrayList<>();
@@ -189,8 +182,6 @@ public class EpisodeListActivity extends AppCompatActivity {
             notifyDataSetChanged();
 
             requestEditTextFocus();
-
-            hideProgressBar();
         }
 
         @Override
@@ -243,7 +234,7 @@ public class EpisodeListActivity extends AppCompatActivity {
             @Override
             public void onBind(final int position) {
                 final Episode ep = episodes.get(position);
-                String titleText = ep.getSerial().getTitle() + " " + Util.episodeInSeason(ep);
+                String titleText = ep.getSerial().getTitle() + " " + Util.episodeInSeasonString(ep);
                 title.setText(titleText);
                 ArrayList<String> tags = new ArrayList<>();
                 for (Torrent torrent : ep.getTorrent()) {
@@ -254,14 +245,10 @@ public class EpisodeListActivity extends AppCompatActivity {
                         .with(view.getContext())
                         .load(ep.getSerial() == null ? "null" : ep.getSerial().getPoster().getOriginal())
                         .into(image);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent intent = new Intent(getApplicationContext(), EpisodePageActivity.class);
-                        intent.putExtra(getString(R.string.media_page_episode_intent), episodes.get(position).getId());
-                        startActivity(intent);
-                    }
+                view.setOnClickListener(v -> {
+                    Intent intent = new Intent(getApplicationContext(), EpisodePageActivity.class);
+                    intent.putExtra(getString(R.string.media_page_episode_intent), episodes.get(position).getId());
+                    startActivity(intent);
                 });
             }
         }
@@ -319,14 +306,10 @@ public class EpisodeListActivity extends AppCompatActivity {
 
             public void onBind(final int position) {
                 text.setText(names.get(position));
-                text.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent intent = new Intent(EpisodeListActivity.this, SerialPageActivity.class);
-                        intent.putExtra(getString(R.string.media_page_serial_intent), ids.get(position));
-                        startActivity(intent);
-                    }
+                text.setOnClickListener(v -> {
+                    Intent intent = new Intent(EpisodeListActivity.this, SerialPageActivity.class);
+                    intent.putExtra(getString(R.string.media_page_serial_intent), ids.get(position));
+                    startActivity(intent);
                 });
             }
 

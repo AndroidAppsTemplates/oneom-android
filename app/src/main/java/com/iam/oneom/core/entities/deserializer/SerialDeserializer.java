@@ -61,7 +61,7 @@ public class SerialDeserializer implements JsonDeserializer<Serial> {
         if (nArray != null && !nArray.isJsonNull()) {
             final RealmList<Network> networks = new RealmList<>();
             for (int i = 0; i < nArray.size(); ++i) {
-                networks.add(context.deserialize(nArray.get(i), Country.class));
+                networks.add(context.deserialize(nArray.get(i), Network.class));
             }
             serial.setNetwork(networks);
         }

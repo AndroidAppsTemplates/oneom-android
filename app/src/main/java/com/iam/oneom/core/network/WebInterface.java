@@ -2,8 +2,10 @@ package com.iam.oneom.core.network;
 
 
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.network.request.DataConfigRequest;
 import com.iam.oneom.core.network.request.EpsRequest;
+import com.iam.oneom.core.network.request.SerialRequest;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
 
 import retrofit2.Call;
@@ -20,6 +22,10 @@ public interface WebInterface {
 
     @GET("/ep")
     Observable<EpsRequest> getLastEpisodes();
+
+
+    @GET("/serial/{id}")
+    Observable<SerialRequest> getSerial(@Path("id") long id);
 
     @GET("/serial/search/{searchString}")
     Call<SerialsSearchRequest> searchSerials(@Path("searchString") String searchString);

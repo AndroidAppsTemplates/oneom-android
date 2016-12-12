@@ -1,11 +1,17 @@
 package com.iam.oneom.core.entities;
 
+import android.content.Intent;
+
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Serial;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
 
     // Returns formatted episode in season number EQ: S03E24
-    public static String episodeInSeason(Episode episode) {
+    public static String episodeInSeasonString(Episode episode) {
         String s = episode.getSeason();
         String e = episode.getEp();
 
@@ -24,6 +30,71 @@ public class Util {
         return String.format("S%02dE%02d", Integer.parseInt(s), Integer.parseInt(e));
     }
 
+    public static String posterUrl(Episode episode) {
+        if (episode.getSerial() == null) {
+            return "";
+        }
+
+        return posterUrl(episode.getSerial());
+    }
+
+    public static String posterUrl(Serial serial) {
+
+        if (serial == null) {
+            return "";
+        }
+
+        if (serial.getPoster() == null) {
+            return "";
+        }
+
+        return serial.getPoster().getOriginal();
+    }
+
+    public static String serialStatusName(Serial serial) {
+        if (serial == null || serial.getStatus() == null) {
+            return "Unknown";
+        }
+        return serial.getStatus().getName();
+    }
+
+    public static List<Episode> episodesForSeasonList(Serial serial, int seasonNumber) {
+        List<Episode> res = new ArrayList<>();
+
+        for (Episode e : serial.getEpisode()) {
+            if (Integer.parseInt(e.getSeason()) == seasonNumber) res.add(e);
+        }
+        return res;
+    }
+
+    public static int seasonsCountForSerial(Serial serial) {
+        int epCount = 0;
+
+        if (serial.getEpisode() == null) {
+            return 0;
+        }
+
+        for (Episode episode : serial.getEpisode()) {
+
+            if (episode.getSeason() == null) {
+                return 0;
+            }
+
+            int i = Integer.parseInt(episode.getSeason());
+
+            if (i <= epCount) {
+                continue;
+            }
+
+            if (i > epCount) {
+                epCount = i;
+            }
+        }
+
+        return epCount;
+    }
+
+    // Returns tag text like Web 720p
     public static String qualityTag(Tagged tagged) {
         return tagged.getQuality().getName() + " " + tagged.getLang().getShortName();
     }

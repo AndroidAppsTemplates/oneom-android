@@ -7,9 +7,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import retrofit2.http.Path;
 
 public class Editor {
 
@@ -132,7 +135,11 @@ public class Editor {
         }
     }
 
-    public static String namesByComma(ArrayList<? extends Named> namedEntities) {
+    public static String namesByComma(List<? extends Named> namedEntities) {
+        if (namedEntities == null) {
+            return "";
+        }
+
         String[] names = new String[namedEntities.size()];
         for (int i = 0, l = names.length; i < l; i++) {
             names[i] = namedEntities.get(i).getName();

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import retrofit2.http.Path;
+
 public final class Time {
 
     public enum TimeFormat {
@@ -27,6 +29,15 @@ public final class Time {
         }
 
         SimpleDateFormat sdf;
+    }
+
+    public static String format(Date date, TimeFormat out) {
+
+        if (date == null) {
+            return "";
+        }
+
+        return out.dateFormat().format(date);
     }
 
     public static String format(String date, TimeFormat in, TimeFormat out) throws ParseException {
