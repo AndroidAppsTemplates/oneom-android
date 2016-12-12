@@ -13,7 +13,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.old.Episode;
+import com.iam.oneom.core.entities.Util;
+import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
@@ -21,14 +22,21 @@ import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDec
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.realm.Realm;
+
 
 public class EpisodePageActivity extends AppCompatActivity {
 
     Episode episode;
     String searchString;
 
+    @BindView(R.id.poster)
     ImageView posterImage;
+    @BindView(R.id.progress)
     CircleProgressBar cpb;
+    @BindView(R.id.recycler)
     RecyclerView recycler;
     GridLayoutManager layoutManager;
     EpisodePageAdapter episodePageAdapter;
@@ -36,18 +44,14 @@ public class EpisodePageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        Decorator.configureActionBar(this);
-
         setContentView(R.layout.media_page_activity);
-        cpb = (CircleProgressBar) findViewById(R.id.progress);
-        posterImage = (ImageView) findViewById(R.id.poster);
-        recycler = (RecyclerView) findViewById(R.id.recycler);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        episode = intent.getExtras().getParcelable(getString(R.string.media_page_episode_intent));
-        loadBackground(episode.posterURL());
-        searchString = episode.serial().title();
+        long id = intent.getExtras().getLong(getString(R.string.media_page_episode_intent), 0);
+        episode = Realm.getDefaultInstance().where(Episode.class).equalTo("id", id).findFirst();
+        loadBackground(Util.posterUrl(episode));
+        searchString = episode.getSerial().getTitle();
         configureRecycler();
     }
 
@@ -63,7 +67,6 @@ public class EpisodePageActivity extends AppCompatActivity {
         EpisodePageAdapter(Context context, Episode episode) {
             inflater = ((Activity)context).getLayoutInflater();
         }
-
 
         @Override
         public BindableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

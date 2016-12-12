@@ -16,11 +16,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.iam.oneom.R;
+import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.search.Key;
 import com.iam.oneom.core.search.Search;
-import com.iam.oneom.core.entities.old.Episode;
-import com.iam.oneom.core.entities.old.Lang;
-import com.iam.oneom.core.entities.old.Source;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;
 import com.iam.oneom.core.util.Web;
@@ -61,7 +59,7 @@ class SubtitlesSearchVH extends BindableViewHolder {
     public SubtitlesSearchVH(View itemView, CircleProgressBar cpb, Episode episode) {
         super(itemView);
         this.episode = episode;
-        this.searchString = episode.serial().title();
+        this.searchString = episode.getSerial().getTitle();
         this.cpb = cpb;
         this.view = itemView;
         this.context = view.getContext();
@@ -85,33 +83,33 @@ class SubtitlesSearchVH extends BindableViewHolder {
 
     private void setClickListeners() {
 
-        selectSource.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Decorator.configurePopup(selectSource, spw, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedSubtitleSourcePosition = position;
-                        spw.dismiss();
-                        resetViewHolder();
-                    }
-                }, Source.names(Source.Type.Subtitle));
-            }
-        });
+//        selectSource.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Decorator.configurePopup(selectSource, spw, new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        selectedSubtitleSourcePosition = position;
+//                        spw.dismiss();
+//                        resetViewHolder();
+//                    }
+//                }, Source.names(Source.Type.Subtitle));
+//            }
+//        });
 
-        selectLang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedSubtitleLanguagePosition = position;
-                        lpw.dismiss();
-                        resetViewHolder();
-                    }
-                }, Lang.names());
-            }
-        });
+//        selectLang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        selectedSubtitleLanguagePosition = position;
+//                        lpw.dismiss();
+//                        resetViewHolder();
+//                    }
+//                }, Lang.names());
+//            }
+//        });
     }
 
     private void resetViewHolder() {
@@ -119,8 +117,8 @@ class SubtitlesSearchVH extends BindableViewHolder {
     }
 
     private void setTexts() {
-        selectSource.setText(Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).getName());
-        selectLang.setText(Lang.lang(selectedSubtitleLanguagePosition).getName());
+//        selectSource.setText(Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).getName());
+//        selectLang.setText(Lang.lang(selectedSubtitleLanguagePosition).getName());
     }
 
     @Override
@@ -145,7 +143,7 @@ class SubtitlesSearchVH extends BindableViewHolder {
             headers.put(Key.Language, "Lang");
             headers.put(Key.Download, "Download");
 
-            reloadData(currentOrigin());
+//            reloadData(currentOrigin());
 
             inflater = ((AppCompatActivity)context).getLayoutInflater();
         }
@@ -168,12 +166,12 @@ class SubtitlesSearchVH extends BindableViewHolder {
 
         @Override
         public int getItemCount() {
-            return list.size() <= 1 ? 1 : list.size() + 1;
+            return 0;//list.size() <= 1 ? 1 : list.size() + 1;
         }
 
-        public void reloadData(Source.Origin origin) {
-            list = Search.instance().results(searchString, origin);
-        }
+//        public void reloadData(Source.Origin origin) {
+//            list = Search.instance().results(searchString, origin);
+//        }
 
         class SubtitleVH extends BindableViewHolder {
 
@@ -247,19 +245,19 @@ class SubtitlesSearchVH extends BindableViewHolder {
             public FooterVH(View itemView) {
                 super(itemView);
                 search = (Text) itemView.findViewById(R.id.search);
-                search.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.d("url source", Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).searchPage());
-                        Search.engine(cpb, new Search.OnSearchListener() {
-                            @Override
-                            public void onSearchResult() {
-                                adapter.reloadData(currentOrigin());
-                                adapter.notifyDataSetChanged();
-                            }
-                        }, episode, Lang.lang(selectedSubtitleLanguagePosition)).find(Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition), searchString);
-                    }
-                });
+//                search.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Log.d("url source", Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).searchPage());
+//                        Search.engine(cpb, new Search.OnSearchListener() {
+//                            @Override
+//                            public void onSearchResult() {
+//                                adapter.reloadData(currentOrigin());
+//                                adapter.notifyDataSetChanged();
+//                            }
+//                        }, episode, Lang.lang(selectedSubtitleLanguagePosition)).find(Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition), searchString);
+//                    }
+//                });
             }
 
             @Override
@@ -274,7 +272,7 @@ class SubtitlesSearchVH extends BindableViewHolder {
         }
     }
 
-    private Source.Origin currentOrigin() {
-        return Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).origin();
-    }
+//    private Source.Origin currentOrigin() {
+//        return Source.getByType(Source.Type.Subtitle, selectedSubtitleSourcePosition).origin();
+//    }
 }

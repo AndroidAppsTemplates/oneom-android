@@ -16,12 +16,9 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.iam.oneom.R;
+import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.search.Key;
 import com.iam.oneom.core.search.Search;
-import com.iam.oneom.core.entities.old.Episode;
-import com.iam.oneom.core.entities.old.Lang;
-import com.iam.oneom.core.entities.old.QualityGroup;
-import com.iam.oneom.core.entities.old.Source;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Web;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
@@ -59,7 +56,7 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
         super(view);
         this.cpb = cpb;
         this.episode = episode;
-        this.searchString = episode.serial().title();
+        this.searchString = episode.getSerial().getTitle();
         this.context = view.getContext();
         tpw = new ListPopupWindow(view.getContext());
         qgpw = new ListPopupWindow(view.getContext());
@@ -73,67 +70,67 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
         searchResults.setLayoutManager(manager);
         searchResults.setAdapter(adapter);
 
-        setTexts();
+//        setTexts();
         setClickListeners();
     }
 
     private void setClickListeners() {
 
-        selectTracker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Decorator.configurePopup(selectTracker, tpw, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedTorrentSourcePosition = position;
-                        Search.instance().clearResults();
-                        tpw.dismiss();
-                        resetViewHolder();
-                    }
-                }, Source.names(Source.Type.Torrent));
-            }
-        });
+//        selectTracker.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Decorator.configurePopup(selectTracker, tpw, new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        selectedTorrentSourcePosition = position;
+//                        Search.instance().clearResults();
+//                        tpw.dismiss();
+//                        resetViewHolder();
+//                    }
+//                }, Source.names(Source.Type.Torrent));
+//            }
+//        });
 
-        selectQualityGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Decorator.configurePopup(selectQualityGroup, qgpw, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedQualityGroupPosition = position;
-                        qgpw.dismiss();
-                        Search.instance().clearResults();
-                        resetViewHolder();
-                    }
-                }, QualityGroup.names());
-            }
-        });
+//        selectQualityGroup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Decorator.configurePopup(selectQualityGroup, qgpw, new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        selectedQualityGroupPosition = position;
+//                        qgpw.dismiss();
+//                        Search.instance().clearResults();
+//                        resetViewHolder();
+//                    }
+//                }, QualityGroup.names());
+//            }
+//        });
 
-        selectLang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedLanguagePosition = position;
-                        lpw.dismiss();
-                        Search.instance().clearResults();
-                        resetViewHolder();
-                    }
-                }, Lang.names());
-            }
-        });
+//        selectLang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        selectedLanguagePosition = position;
+//                        lpw.dismiss();
+//                        Search.instance().clearResults();
+//                        resetViewHolder();
+//                    }
+//                }, Lang.names());
+//            }
+//        });
     }
 
-    private void resetViewHolder() {
-        setTexts();
-    }
+//    private void resetViewHolder() {
+//        setTexts();
+//    }
 
-    private void setTexts() {
-        selectTracker.setText(Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition).getName());
-        selectQualityGroup.setText(QualityGroup.group(selectedQualityGroupPosition).getName());
-        selectLang.setText(Lang.lang(selectedLanguagePosition).getName());
-    }
+//    private void setTexts() {
+//        selectTracker.setText(Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition).getName());
+//        selectQualityGroup.setText(QualityGroup.group(selectedQualityGroupPosition).getName());
+//        selectLang.setText(Lang.lang(selectedLanguagePosition).getName());
+//    }
 
     @Override
     public void onBind(int position) {
@@ -142,7 +139,7 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
 
     @Override
     public void onSearchResult() {
-        adapter.reloadData(currentOrigin());
+//        adapter.reloadData(currentOrigin());
         adapter.notifyDataSetChanged();
     }
 
@@ -161,13 +158,13 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
             headers.put(Key.Seeds, "S");
             headers.put(Key.Leachs, "L");
             headers.put(Key.Size, "Size");
-            list = Search.instance().results(searchString, currentOrigin());
+//            list = Search.instance().results(searchString, currentOrigin());
             inflater = ((AppCompatActivity)context).getLayoutInflater();
         }
 
-        public void reloadData(Source.Origin origin) {
-            list = Search.instance().results(searchString, origin);
-        }
+//        public void reloadData(Source.Origin origin) {
+//            list = Search.instance().results(searchString, origin);
+//        }
 
         @Override
         public BindableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -188,7 +185,7 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
 
         @Override
         public int getItemCount() {
-            return list.size() == 0 ? 1 : list.size() + 2;
+            return 0;// list.size() == 0 ? 1 : list.size() + 2;
         }
 
         class TorrentVH extends BindableViewHolder {
@@ -258,18 +255,18 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
             public FooterVH(View itemView) {
                 super(itemView);
                 search = (Text) itemView.findViewById(R.id.search);
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Search.engine(
-                                cpb,
-                                TorrentSearchVH.this,
-                                episode,
-                                Lang.lang(selectedLanguagePosition),
-                                QualityGroup.qualityGroup(selectedQualityGroupPosition)
-                        ).find(Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition), searchString);
-                    }
-                });
+//                itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Search.engine(
+//                                cpb,
+//                                TorrentSearchVH.this,
+//                                episode,
+//                                Lang.lang(selectedLanguagePosition),
+//                                QualityGroup.qualityGroup(selectedQualityGroupPosition)
+//                        ).find(Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition), searchString);
+//                    }
+//                });
             }
 
             @Override
@@ -290,7 +287,7 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
         }
     }
 
-    private Source.Origin currentOrigin() {
-        return Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition).origin();
-    }
+//    private Source.Origin currentOrigin() {
+//        return Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition).origin();
+//    }
 }

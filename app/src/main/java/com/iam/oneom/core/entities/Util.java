@@ -31,7 +31,7 @@ public class Util {
     }
 
     public static String posterUrl(Episode episode) {
-        if (episode.getSerial() == null) {
+        if (episode == null || episode.getSerial() == null) {
             return "";
         }
 
@@ -99,4 +99,7 @@ public class Util {
         return tagged.getQuality().getName() + " " + tagged.getLang().getShortName();
     }
 
+    public static int episodesCountForSeason(Serial serial, int selected) {
+        return episodesForSeasonList(serial, selected).size();
+    }
 }

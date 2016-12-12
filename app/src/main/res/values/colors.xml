@@ -15,13 +15,14 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="blueHyperlink">#337ab7</color>
-    <color name="blueFont">#5d7ab7</color>
+    <color name="blueFont">#1963ff</color>
     <color name="colorAccent">#FF4081</color>
     <color name="redLeach">#b94309</color>
 
 
     <!-- named -->
 
+    <color name="hyperlink_background">#44888888</color>
     <color name="episode_window_border">#eedddddd</color>
     <color name="episode_window_header_top">#eeF4F4F4</color>
     <color name="episode_window_header_bottom">#eeE8E8E8</color>

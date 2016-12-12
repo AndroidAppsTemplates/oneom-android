@@ -8,21 +8,13 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.network.DownloadProgressListener;
 import com.iam.oneom.core.network.Web;
-import com.iam.oneom.core.network.request.DataConfigRequest;
-import com.iam.oneom.core.network.request.EpsRequest;
 import com.iam.oneom.core.util.Decorator;
-import com.iam.oneom.env.widget.SimpleProgressView;
 import com.iam.oneom.env.widget.svg;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 

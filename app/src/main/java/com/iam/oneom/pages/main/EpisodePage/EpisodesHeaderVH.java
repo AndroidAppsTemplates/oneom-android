@@ -5,8 +5,9 @@ import android.content.Intent;
 import android.view.View;
 
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.old.Episode;
-import com.iam.oneom.core.entities.old.Torrent;
+import com.iam.oneom.core.entities.Util;
+import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Torrent;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.widget.text.Text;
 import com.iam.oneom.pages.main.SerialPageActivity;
@@ -37,29 +38,29 @@ class EpisodesHeaderVH extends BindableViewHolder {
 
     private void makeInfo() {
         if (info.size() == 0) {
-            info.add(episode.airdate());
-            info.add(episode.title() + " " + episode.episodeInSeason());
-            if (episode.torrent() != null && episode.torrent().size() > 0) {
-                for (Torrent torrent : episode.torrent()) {
-                    info.add(torrent.tagInfo());
+            info.add(episode.getAirdate());
+            info.add(episode.getTitle() + " " + Util.episodeInSeasonString(episode));
+            if (episode.getTorrent() != null && episode.getTorrent().size() > 0) {
+                for (Torrent torrent : episode.getTorrent()) {
+                    info.add(Util.qualityTag(torrent));
                 }
             }
         }
     }
 
     public void onBind(int position) {
-        serialName.setText(episode.serial().title());
+        serialName.setText(episode.getSerial().getTitle());
         serialName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Context context = view.getContext();
                 Intent intent = new Intent(context, SerialPageActivity.class);
-                intent.putExtra(context.getString(R.string.media_page_serial_intent), episode.serial().id() + "");
+                intent.putExtra(context.getString(R.string.media_page_serial_intent), episode.getSerial().getId() + "");
                 context.startActivity(intent);
             }
         });
-        episodeName.setText(episode.episodeInSeason() + " " + episode.title());
-        airdate.setText(episode.airdate());
+        episodeName.setText(Util.episodeInSeasonString(episode) + " " + episode.getTitle());
+        airdate.setText(episode.getAirdate());
     }
 }

@@ -18,10 +18,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.old.Episode;
-import com.iam.oneom.core.entities.old.Lang;
-import com.iam.oneom.core.entities.old.Online;
-import com.iam.oneom.core.entities.old.Source;
+import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.search.Key;
 import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;
@@ -60,7 +57,7 @@ class OnlineSearchVH extends BindableViewHolder {
     public OnlineSearchVH(View itemView, CircleProgressBar cpb, Episode episode) {
         super(itemView);
         this.episode = episode;
-        this.searchString = episode.serial().title();
+        this.searchString = episode.getSerial().getTitle();
         this.cpb = cpb;
         this.view = itemView;
         this.context = view.getContext();
@@ -89,33 +86,33 @@ class OnlineSearchVH extends BindableViewHolder {
 
     private void setClickListeners() {
 
-        selectSource.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Decorator.configurePopup(selectSource, spw, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedOnlineSourcePosition = position;
-                        spw.dismiss();
-                        resetViewHolder();
-                    }
-                }, Source.names(Source.Type.Online));
-            }
-        });
+//        selectSource.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Decorator.configurePopup(selectSource, spw, new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        selectedOnlineSourcePosition = position;
+//                        spw.dismiss();
+//                        resetViewHolder();
+//                    }
+//                }, Source.names(Source.Type.Online));
+//            }
+//        });
 
-        selectLang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedOnlineLanguagePosition = position;
-                        lpw.dismiss();
-                        resetViewHolder();
-                    }
-                }, Lang.names());
-            }
-        });
+//        selectLang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        selectedOnlineLanguagePosition = position;
+//                        lpw.dismiss();
+//                        resetViewHolder();
+//                    }
+//                }, Lang.names());
+//            }
+//        });
     }
 
     private void resetViewHolder() {
@@ -123,8 +120,8 @@ class OnlineSearchVH extends BindableViewHolder {
     }
 
     private void setTexts() {
-        selectSource.setText(Source.getByType(Source.Type.Online, selectedOnlineSourcePosition).getName());
-        selectLang.setText(Lang.lang(selectedOnlineLanguagePosition).getName());
+//        selectSource.setText(Source.getByType(Source.Type.Online, selectedOnlineSourcePosition).getName());
+//        selectLang.setText(Lang.lang(selectedOnlineLanguagePosition).getName());
     }
 
     @Override
@@ -145,13 +142,13 @@ class OnlineSearchVH extends BindableViewHolder {
             inflater = ((AppCompatActivity)context).getLayoutInflater();
             list = new ArrayList<>();
             HashMap<Key, String> d = new HashMap<>();
-            for (Online o : episode.online()) {
-                d.put(Key.Name, o.title());
-                d.put(Key.VideoLink, o.videoUrl());
-                d.put(Key.PosterUrl, o.posterURL());
-                d.put(Key.Page, o.url());
-                list.add(d);
-            }
+//            for (Online o : episode.online()) {
+//                d.put(Key.Name, o.title());
+//                d.put(Key.VideoLink, o.videoUrl());
+//                d.put(Key.PosterUrl, o.posterURL());
+//                d.put(Key.Page, o.url());
+//                list.add(d);
+//            }
         }
 
         @Override
@@ -166,9 +163,9 @@ class OnlineSearchVH extends BindableViewHolder {
             throw new RuntimeException("OnlineSearchAdapter hasn't view type vith value " + viewType);
         }
 
-        public void reloadData(Source.Origin origin) {
-            list = Search.instance().results(searchString, origin);
-        }
+//        public void reloadData(Source.Origin origin) {
+//            list = Search.instance().results(searchString, origin);
+//        }
 
         @Override
         public void onBindViewHolder(BindableViewHolder holder, int position) {
@@ -177,7 +174,7 @@ class OnlineSearchVH extends BindableViewHolder {
 
         @Override
         public int getItemCount() {
-            return list.size() + 1;
+            return 0;//list.size() + 1;
         }
 
         @Override
@@ -243,7 +240,7 @@ class OnlineSearchVH extends BindableViewHolder {
                                     Web.POST(Web.url.domain + Web.url.videoIndex, data);
                                     return null;
                                 }
-                            }.execute(episode.id() + "", data.get(Key.VideoLink));
+                            }.execute(episode.getId() + "", data.get(Key.VideoLink));
                         } else {
                             new AsyncTask<Void, Void, Void>() {
 
@@ -254,12 +251,12 @@ class OnlineSearchVH extends BindableViewHolder {
 
                                 @Override
                                 protected Void doInBackground(Void... params) {
-                                    data.put(Key.VideoLink, Online.extractVideoLink(
-                                            Web.GET(
-                                                    data.get(Key.Page), false
-                                            ),
-                                            currentOrigin()
-                                    ));
+//                                    data.put(Key.VideoLink, Online.extractVideoLink(
+//                                            Web.GET(
+//                                                    data.get(Key.Page), false
+//                                            ),
+//                                            currentOrigin()
+//                                    ));
                                     return null;
                                 }
 
@@ -288,19 +285,19 @@ class OnlineSearchVH extends BindableViewHolder {
             public FooterVH(View itemView) {
                 super(itemView);
                 this.search = (Text) itemView.findViewById(R.id.search);
-                search.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Search.engine(cpb, new Search.OnSearchListener() {
-                            @Override
-                            public void onSearchResult() {
-                                adapter.reloadData(currentOrigin());
-                                adapter.notifyDataSetChanged();
-                            }
-                        }, episode, Lang.lang(selectedOnlineLanguagePosition)).find(Source.getByType(Source.Type.Online, selectedOnlineSourcePosition), searchString);
-                    }
-                });
+//                search.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        Search.engine(cpb, new Search.OnSearchListener() {
+//                            @Override
+//                            public void onSearchResult() {
+////                                adapter.reloadData(currentOrigin());
+//                                adapter.notifyDataSetChanged();
+//                            }
+//                        }, episode, Lang.lang(selectedOnlineLanguagePosition)).find(Source.getByType(Source.Type.Online, selectedOnlineSourcePosition), searchString);
+//                    }
+//                });
             }
 
             public void onBind(int position) {
@@ -313,7 +310,7 @@ class OnlineSearchVH extends BindableViewHolder {
         }
     }
 
-    private Source.Origin currentOrigin() {
-        return Source.getByType(Source.Type.Online, selectedOnlineSourcePosition).origin();
-    }
+//    private Source.Origin currentOrigin() {
+//        return Source.getByType(Source.Type.Online, selectedOnlineSourcePosition).origin();
+//    }
 }
