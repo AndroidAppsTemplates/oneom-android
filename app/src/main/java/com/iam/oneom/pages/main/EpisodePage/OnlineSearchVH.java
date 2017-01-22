@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
@@ -45,8 +46,8 @@ class OnlineSearchVH extends BindableViewHolder {
 
     private View view;
 
-    private Text selectSource;
-    private Text selectLang;
+    private TextView selectSource;
+    private TextView selectLang;
 
     private ListPopupWindow spw, lpw;
 
@@ -65,8 +66,8 @@ class OnlineSearchVH extends BindableViewHolder {
         spw = new ListPopupWindow(context);
         lpw = new ListPopupWindow(context);
 
-        selectSource = (Text) itemView.findViewById(R.id.source);
-        selectLang= (Text) itemView.findViewById(R.id.lang);
+        selectSource = (TextView) itemView.findViewById(R.id.source);
+        selectLang= (TextView) itemView.findViewById(R.id.lang);
         searchResults = (RecyclerView) view.findViewById(R.id.searchResults);
         manager = new GridLayoutManager(context, 3);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="dark_offset">0x101010</integer>
-    <integer name="transparency_addition">0xE0000000</integer>
+    <integer name="transparency_addition">0x88000000</integer>
 </resources>

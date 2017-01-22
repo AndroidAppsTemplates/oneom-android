@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/main_recycler_items_background"
-    android:orientation="vertical"
-    android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp">
+    style="@style/search_category_container">
 
     <TextView
-        android:id="@+id/ntorrents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:layout_weight="1"
         android:text="Torrents"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/black"
-        android:textSize="22sp" />
+        android:id="@+id/ntorrents"
+        style="@style/search_category_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_weight="1"
-            android:paddingRight="16dp">
+            android:orientation="vertical">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,28 +26,13 @@
 
                 <TextView
                     android:id="@+id/nquality"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Quality:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    style="@style/search_popup_type"
+                    android:text="Quality:" />
 
                 <TextView
                     android:id="@+id/quality"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/select_popup_text_background"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="Medium"
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    style="@style/search_popup_variable"
+                    android:text="Medium" />
 
             </FrameLayout>
 
@@ -72,29 +44,13 @@
 
                 <TextView
                     android:id="@+id/ntracker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Tracker:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    style="@style/search_popup_type"
+                    android:text="Tracker:" />
 
                 <TextView
                     android:id="@+id/tracker"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="2dp"
-
-                    android:layout_weight="1"
-                    android:background="@drawable/select_popup_text_background"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="KickAssTorrents"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    style="@style/search_popup_variable"
+                    android:text="KickAssTorrents" />
             </FrameLayout>
 
             <FrameLayout
@@ -104,39 +60,18 @@
 
                 <TextView
                     android:id="@+id/nlang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:gravity="center"
-                    android:text="Language:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    style="@style/search_popup_type"
+                    android:text="Language:" />
 
                 <TextView
                     android:id="@+id/lang"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/select_popup_text_background"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="EN"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    style="@style/search_popup_variable"
+                    android:text="EN" />
+
             </FrameLayout>
         </LinearLayout>
 
-        <Button
-            android:text="Search"
-            android:background="@drawable/select_popup_text_background"
-            android:textSize="32sp"
-            android:gravity="center"
-
-            android:fontFamily="sans-serif-condensed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+        <Button style="@style/search_button_source" />
 
     </LinearLayout>
 

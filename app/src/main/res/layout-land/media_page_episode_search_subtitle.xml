@@ -1,78 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/main_recycler_items_background"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    style="@style/search_category_container">
 
-    <com.iam.oneom.env.widget.text.Text
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
+    <TextView
         android:text="Subtitles"
-        android:textSize="18sp"
-        android:layout_weight="1"
-        android:layout_margin="4dp" />
+        style="@style/search_category_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Source:"
-            android:textSize="16sp"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:gravity="center" />
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
-            android:text="OpenSubtitles"
-            android:background="@drawable/select_popup_text_background"
-            android:textSize="16sp"
-            android:id="@+id/source"
-            android:layout_margin="2dp"
-            android:padding="2dp"
-            android:gravity="center" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Lang:"
-            android:textSize="16sp"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:gravity="center" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:background="@drawable/select_popup_text_background"
-            android:text="English"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:id="@+id/lang"
-            android:layout_margin="2dp"
-            android:padding="2dp"
-            android:gravity="center" />
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Source:"
+                    style="@style/search_popup_type" />
+
+                <TextView
+                    android:id="@+id/source"
+                    style="@style/search_popup_variable"
+                    android:text="OpenSubtitles" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Lang:"
+                    style="@style/search_popup_type" />
+
+                <TextView
+                    android:id="@+id/lang"
+                    style="@style/search_popup_variable"
+                    android:text="English" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <Button style="@style/search_button_source" />
+
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_margin="4dp"
+        android:id="@+id/searchResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchResults" />
+        android:layout_margin="4dp" />
 
 </LinearLayout>
