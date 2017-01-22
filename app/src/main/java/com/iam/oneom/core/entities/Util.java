@@ -3,7 +3,9 @@ package com.iam.oneom.core.entities;
 import android.content.Intent;
 
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Lang;
 import com.iam.oneom.core.entities.model.Serial;
+import com.iam.oneom.core.entities.model.Source;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,5 +121,21 @@ public class Util {
 
     public static int episodesCountForSeason(Serial serial, int selected) {
         return episodesForSeasonList(serial, selected).size();
+    }
+
+    public static final List<String> sourceNames(List<Source> sources) {
+        List<String> names = new ArrayList<>();
+        for (Source source : sources) {
+            names.add(source.getName());
+        }
+        return names;
+    }
+
+    public static List<String> langNames(List<Lang> langs) {
+        List<String> names = new ArrayList<>();
+        for (Lang lang : langs) {
+            names.add(lang.getName());
+        }
+        return names;
     }
 }

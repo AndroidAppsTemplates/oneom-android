@@ -27,6 +27,7 @@ import com.iam.oneom.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class Decorator {
 
@@ -103,7 +104,7 @@ public final class Decorator {
         return (screenWidthPx / colsCount);
     }
 
-    public static void configurePopup(View anchorView, ListPopupWindow lpw, AdapterView.OnItemClickListener listener, ArrayList<String> data) {
+    public static void configurePopup(View anchorView, ListPopupWindow lpw, AdapterView.OnItemClickListener listener, List<String> data) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(anchorView.getContext(), R.layout.popup_item, data);
         lpw.setAdapter(adapter);
         lpw.setModal(false);

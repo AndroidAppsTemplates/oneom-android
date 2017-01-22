@@ -19,9 +19,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
+import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Lang;
+import com.iam.oneom.core.entities.model.Online;
+import com.iam.oneom.core.entities.model.Source;
 import com.iam.oneom.core.search.Key;
-import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Web;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
@@ -32,6 +35,9 @@ import com.iam.oneom.env.widget.text.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import io.realm.Realm;
 
 class OnlineSearchVH extends BindableViewHolder {
 
@@ -87,33 +93,50 @@ class OnlineSearchVH extends BindableViewHolder {
 
     private void setClickListeners() {
 
-//        selectSource.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Decorator.configurePopup(selectSource, spw, new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        selectedOnlineSourcePosition = position;
-//                        spw.dismiss();
-//                        resetViewHolder();
-//                    }
-//                }, Source.names(Source.Type.Online));
-//            }
-//        });
+        selectSource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//        selectLang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        selectedOnlineLanguagePosition = position;
-//                        lpw.dismiss();
-//                        resetViewHolder();
-//                    }
-//                }, Lang.names());
-//            }
-//        });
+                List<Source> sources = Realm
+                        .getDefaultInstance()
+                        .where(Source.class)
+                        .equalTo("typeId", Source.Type.Online.type)
+                        .findAll();
+                List<String> names = Util.sourceNames(sources);
+
+                Decorator.configurePopup(selectSource, spw, new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        selectedOnlineSourcePosition = position;
+                        spw.dismiss();
+                        resetViewHolder();
+                    }
+                }, names);
+            }
+        });
+
+
+
+        selectLang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Lang> langs = Realm
+                        .getDefaultInstance()
+                        .where(Lang.class)
+                        .findAll();
+                List<String> names = Util.langNames(langs);
+
+                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        selectedOnlineLanguagePosition = position;
+                        lpw.dismiss();
+                        resetViewHolder();
+                    }
+                }, names);
+            }
+        });
     }
 
     private void resetViewHolder() {
@@ -121,8 +144,16 @@ class OnlineSearchVH extends BindableViewHolder {
     }
 
     private void setTexts() {
-//        selectSource.setText(Source.getByType(Source.Type.Online, selectedOnlineSourcePosition).getName());
-//        selectLang.setText(Lang.lang(selectedOnlineLanguagePosition).getName());
+
+        List<Source> sources =
+                Realm.getDefaultInstance().where(Source.class).equalTo("typeId", Source.Type.Online.type).findAll();
+        Source source = sources.get(selectedOnlineSourcePosition);
+        selectSource.setText(source.getName());
+
+        List<Lang> langs =
+                Realm.getDefaultInstance().where(Lang.class).findAll();
+        Lang lang = langs.get(selectedOnlineLanguagePosition);
+        selectLang.setText(lang.getName());
     }
 
     @Override
@@ -143,13 +174,13 @@ class OnlineSearchVH extends BindableViewHolder {
             inflater = ((AppCompatActivity)context).getLayoutInflater();
             list = new ArrayList<>();
             HashMap<Key, String> d = new HashMap<>();
-//            for (Online o : episode.online()) {
-//                d.put(Key.Name, o.title());
-//                d.put(Key.VideoLink, o.videoUrl());
-//                d.put(Key.PosterUrl, o.posterURL());
-//                d.put(Key.Page, o.url());
-//                list.add(d);
-//            }
+            for (Online o : episode.getOnline()) {
+                d.put(Key.Name, o.getTitle());
+                d.put(Key.VideoLink, o.getVideoUrl());
+                d.put(Key.PosterUrl, o.getPosterUrl());
+                d.put(Key.Page, o.getUrl());
+                list.add(d);
+            }
         }
 
         @Override
