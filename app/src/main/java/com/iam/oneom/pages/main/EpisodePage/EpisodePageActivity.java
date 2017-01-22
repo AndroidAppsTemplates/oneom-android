@@ -90,7 +90,7 @@ public class EpisodePageActivity extends AppCompatActivity {
         public BindableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             switch (viewType) {
                 case HEADER:
-                    return new EpisodesHeaderVH(inflater.inflate(R.layout.media_page_header, parent, false), episode);
+                    return new EpisodesHeaderVH(inflater.inflate(R.layout.media_page_header_ep, parent, false), episode);
                 case ONLINE:
                     return new OnlineSearchVH(inflater.inflate(R.layout.media_page_episode_search_online, parent, false), cpb, episode);
                 case TORRENT:

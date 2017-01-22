@@ -33,17 +33,17 @@ public class SeasonNumberFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (refresheable != null) {
-            try {
-                refresheable.refresh();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (refresheable != null) {
+//            try {
+//                refresheable.refresh();
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     public void setNumber(int number) {
         this.number = number;

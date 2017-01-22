@@ -1,7 +1,5 @@
 package com.iam.oneom.pages.main.EpisodePage;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,7 +9,6 @@ import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Torrent;
 import com.iam.oneom.core.util.Time;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
-import com.iam.oneom.env.widget.text.Text;
 import com.iam.oneom.pages.main.SerialPageActivity;
 
 import java.util.ArrayList;
@@ -38,8 +35,6 @@ class EpisodesHeaderVH extends BindableViewHolder {
         ButterKnife.bind(this, itemView);
         this.episode = episode;
         this.view = itemView;
-        episodeName.setVisibility(View.VISIBLE);
-        airdate.setVisibility(View.VISIBLE);
         makeInfo();
     }
 
@@ -57,16 +52,7 @@ class EpisodesHeaderVH extends BindableViewHolder {
 
     public void onBind(int position) {
         serialName.setText(episode.getSerial().getTitle());
-        serialName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Context context = view.getContext();
-                Intent intent = new Intent(context, SerialPageActivity.class);
-                intent.putExtra(context.getString(R.string.media_page_serial_intent), episode.getSerial().getId() + "");
-                context.startActivity(intent);
-            }
-        });
+        serialName.setOnClickListener(v -> SerialPageActivity.start(view.getContext(), episode.getSerial().getId()));
         episodeName.setText(Util.episodeInSeasonString(episode) + " " + episode.getTitle());
         airdate.setText(Time.format(episode.getAirdate(), Time.TimeFormat.TEXT));
     }

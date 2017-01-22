@@ -31,26 +31,18 @@
             android:background="@drawable/main_recycler_items_background"
             android:id="@+id/divider" />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/mediainfo"
-            android:visibility="gone"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:id="@+id/airdate"
-            android:textColor="@color/black"
-            android:visibility="gone"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="16dp"
-            android:visibility="gone"
             android:textSize="18sp"
             android:fontFamily="sans-serif-medium"
             android:textColor="@color/black"

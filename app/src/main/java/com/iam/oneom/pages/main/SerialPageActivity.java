@@ -2,6 +2,7 @@ package com.iam.oneom.pages.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,7 +50,8 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 
 public class SerialPageActivity extends AppCompatActivity {
-    private static final String TAG  = SerialPageActivity.class.getSimpleName();
+    private static final String TAG = SerialPageActivity.class.getSimpleName();
+    private static final String SERIAL_ID_EXTRA = "SERIAL_ID_EXTRA";
 
     long serial_id;
     Serial serial;
@@ -63,11 +65,19 @@ public class SerialPageActivity extends AppCompatActivity {
     @BindView(R.id.bluring_area)
     FrameLayout bluringArea;
 
+    private int selected = 0;
+
     @BindDimen(R.dimen.serial_page_items_spacing)
-            int serialPageItemsSpacing;
+    int serialPageItemsSpacing;
 
     GridLayoutManager layoutManager;
     SerialAdapter serialAdapter;
+
+    public static final void start(Context context, long id) {
+        Intent intent = new Intent(context, SerialPageActivity.class);
+        intent.putExtra(SERIAL_ID_EXTRA, id);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,12 +129,9 @@ public class SerialPageActivity extends AppCompatActivity {
         private static final int ITEM = 1;
         private static final int SEASON_SELECTOR = 2;
 
-        private int selected;
-
         LayoutInflater inflater;
 
         SerialAdapter(Context context) {
-            selected = 1;
             inflater = ((Activity) context).getLayoutInflater();
         }
 
@@ -132,7 +139,7 @@ public class SerialPageActivity extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             switch (viewType) {
                 case HEADER:
-                    return new SerialHeaderVH(inflater.inflate(R.layout.media_page_header, parent, false));
+                    return new SerialHeaderVH(inflater.inflate(R.layout.media_page_header_serial, parent, false));
                 case SEASON_SELECTOR:
                     return new SeasonSelectorVH(inflater.inflate(R.layout.media_page_serial_season_number_item, parent, false));
                 case ITEM:
@@ -144,7 +151,7 @@ public class SerialPageActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof EpisodeVH) {
-                ((EpisodeVH) holder).onBind(Util.episodesForSeasonList(serial, selected).get(position - 2));
+                ((EpisodeVH) holder).onBind(Util.episodesForSeasonList(serial, selected + 1).get(position - 2));
             } else if (holder instanceof SerialHeaderVH) {
                 ((SerialHeaderVH) holder).onBind();
             } else if (holder instanceof SeasonSelectorVH) {
@@ -154,7 +161,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 2 + Util.episodesCountForSeason(serial, selected);
+            return 2 + Util.episodesCountForSeason(serial, selected + 1);
         }
 
         @Override
@@ -169,7 +176,7 @@ public class SerialPageActivity extends AppCompatActivity {
         }
 
         public boolean isSeasonNumber(int position) {
-            return  (position == 1);
+            return (position == 1);
         }
 
         public boolean isHeader(int position) {
@@ -178,69 +185,55 @@ public class SerialPageActivity extends AppCompatActivity {
 
         @Override
         public void refresh() {
-//            serialAdapter.notifyDataSetChanged();
-        }
-
-        class SeasonSelectorVH extends RecyclerView.ViewHolder {
-
-            View view;
-            @BindView(R.id.pager)
-            ViewPager pager;
-
-            public SeasonSelectorVH(View itemView) {
-                super(itemView);
-                view = itemView;
-                ButterKnife.bind(this, view);
-            }
-
-            public void onBind() {
-                pager.setAdapter(new SeasonNumberAdapter(getSupportFragmentManager()));
-                pager.setCurrentItem(selected);
-                pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        selected = position + 1;
-                    }
-                });
-            }
-
-            class SeasonNumberAdapter extends FragmentPagerAdapter {
-
-                public SeasonNumberAdapter(FragmentManager fm) {
-                    super(fm);
-                }
-
-                @Override
-                public Fragment getItem(int position) {
-                    SeasonNumberFragment seasonNumberFragment = new SeasonNumberFragment();
-                    seasonNumberFragment.setNumber(position + 1);
-                    seasonNumberFragment.setCallback(SerialAdapter.this);
-                    return seasonNumberFragment;
-                }
-
-                @Override
-                public int getCount() {
-                    return Util.seasonsCountForSerial(serial);
-                }
-            }
+            serialAdapter.notifyItemRangeChanged(2, Util.episodesCountForSeason(serial, selected + 1));
         }
 
         class SerialHeaderVH extends RecyclerView.ViewHolder {
 
-            private TextView serialName;
-            private RecyclerView infoRecyclerView;
+            public static final String IMDB = "IMDB";
+            public static final String RUNTIME = "Runtime";
+            public static final String GENRE = "Genre";
+            public static final String NETWORK = "Network";
+            public static final String COUNTRY = "Country";
+            public static final String STATUS = "Status";
+            public static final String AIR_START = "Air Start";
+            public static final String AIR_END = "Air End";
+
+            public static final String TVDB = "TVDB";
+            public static final String TNDb = "TNDb";
+            public static final String TVRAGE = "TVRAGE";
+            public static final String TVMAZE = "TVMAZE";
+            public static final String VK_GROUP = "VK Group";
+
+            String[] linkItems = new String[]{
+                    TVDB,
+                    TNDb,
+                    TVRAGE,
+                    TVMAZE,
+                    VK_GROUP
+            };
+
+            String[] items = new String[]{
+                    IMDB,
+                    RUNTIME,
+                    GENRE,
+                    NETWORK,
+                    COUNTRY,
+                    STATUS,
+                    AIR_START,
+                    AIR_END
+            };
+
+            @BindView(R.id.serialname)
+            protected TextView serialName;
+            @BindView(R.id.mediainfo)
+            protected RecyclerView infoRecyclerView;
             private GridLayoutManager gridLayoutManager;
             private InfoAdapter infoAdapter;
-            private View view;
-            private int viewType;
-            private ArrayList<String> info = new ArrayList<>();
 
             public SerialHeaderVH(View itemView) {
                 super(itemView);
-                this.view = itemView;
-                serialName = (TextView) view.findViewById(R.id.serialname);
-                infoRecyclerView = (RecyclerView) view.findViewById(R.id.mediainfo);
-                infoRecyclerView.setVisibility(View.VISIBLE);
+                ButterKnife.bind(this, itemView);
             }
 
             public void onBind() {
@@ -251,8 +244,9 @@ public class SerialPageActivity extends AppCompatActivity {
                     infoRecyclerView.setAdapter(infoAdapter);
                     infoRecyclerView.setLayoutManager(gridLayoutManager);
                     gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                        @Override public int getSpanSize(int position) {
-                            return (position < 5) ? 2 : 5;
+                        @Override
+                        public int getSpanSize(int position) {
+                            return (position < linkItems.length) ? 2 : linkItems.length;
                         }
                     });
                 }
@@ -285,58 +279,55 @@ public class SerialPageActivity extends AppCompatActivity {
 
                 @Override
                 public int getItemCount() {
-                    return 13;
+                    return linkItems.length + items.length;
                 }
 
                 @Override
                 public int getItemViewType(int position) {
-                    return position >= 5 ? INFO : HYPERLINK;
+                    return position >= linkItems.length ? INFO : HYPERLINK;
                 }
 
                 class InfoVH extends BindableViewHolder {
 
+                    @BindView(R.id.title)
                     TextView title;
+                    @BindView(R.id.value)
                     TextView value;
 
                     public InfoVH(View itemView) {
                         super(itemView);
-                        title = (TextView) itemView.findViewById(R.id.title);
-                        value = (TextView) itemView.findViewById(R.id.value);
+                        ButterKnife.bind(this, itemView);
                     }
 
                     @Override
                     public void onBind(int position) {
-                        switch (position) {
-                            case 5:
-                                title.setText("IMDB");
+
+                        String key = items[position - linkItems.length];
+                        title.setText(key);
+
+                        switch (key) {
+                            case IMDB:
                                 value.setText(serial.getImdbRating());
                                 break;
-                            case 6:
-                                title.setText("Runtime");
+                            case RUNTIME:
                                 value.setText(String.valueOf(serial.getRuntime()));
                                 break;
-                            case 7:
-                                title.setText("Genre");
+                            case GENRE:
                                 value.setText(Editor.namesByComma(serial.getGenre()));
                                 break;
-                            case 8:
-                                title.setText("Network");
+                            case NETWORK:
                                 value.setText(Editor.namesByComma(serial.getNetwork()));
                                 break;
-                            case 9:
-                                title.setText("Country");
+                            case COUNTRY:
                                 value.setText(Editor.namesByComma(serial.getCountry()));
                                 break;
-                            case 10:
-                                title.setText("Status");
+                            case STATUS:
                                 value.setText(Util.serialStatusName(serial));
                                 break;
-                            case 11:
-                                title.setText("Air Start");
+                            case AIR_START:
                                 value.setText(Time.format(serial.getStart(), Time.TimeFormat.IDN));
                                 break;
-                            case 12:
-                                title.setText("Air End");
+                            case AIR_END:
                                 value.setText(Time.format(serial.getEnd(), Time.TimeFormat.IDN));
                                 break;
                         }
@@ -355,29 +346,68 @@ public class SerialPageActivity extends AppCompatActivity {
 
                     @Override
                     public void onBind(int position) {
-                        switch (position) {
-                            case 0:
-                                hyperlink.setText("TVDB");
-                                break;
-                            case 1:
-                                hyperlink.setText("TNDb");
-                                break;
-                            case 2:
-                                hyperlink.setText("TVRAGE");
-                                break;
-                            case 3:
-                                hyperlink.setText("TVMAZE");
-                                break;
-                            case 4:
-                                hyperlink.setText("VK Group");
-                                break;
-                        }
+                        hyperlink.setText(linkItems[position]);
                     }
                 }
             }
         }
-    }
 
+        class SeasonSelectorVH extends RecyclerView.ViewHolder {
+
+            @BindView(R.id.pager)
+            ViewPager pager;
+            @BindView(R.id.prev)
+            ImageView prev;
+            @BindView(R.id.next)
+            ImageView next;
+
+
+            public SeasonSelectorVH(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this, itemView);
+                pager.setAdapter(new SeasonNumberAdapter(getSupportFragmentManager()));
+                prev.setOnClickListener(v -> {
+                    int toSelect = selected - 1 < 0 ? 0 : selected - 1;
+                    pager.setCurrentItem(toSelect);
+                });
+                next.setOnClickListener(v -> {
+                    int toSelect = selected + 1 >= Util.seasonsCountForSerial(serial) - 1 ?
+                                Util.seasonsCountForSerial(serial) - 1 : selected + 1;
+                    pager.setCurrentItem(toSelect);
+                });
+            }
+
+            public void onBind() {
+                pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        selected = position;
+                        serialAdapter.refresh();
+                    }
+                });
+            }
+
+            class SeasonNumberAdapter extends FragmentPagerAdapter {
+
+                public SeasonNumberAdapter(FragmentManager fm) {
+                    super(fm);
+                }
+
+                @Override
+                public Fragment getItem(int position) {
+                    SeasonNumberFragment seasonNumberFragment = new SeasonNumberFragment();
+                    seasonNumberFragment.setNumber(position + 1);
+                    seasonNumberFragment.setCallback(serialAdapter);
+                    return seasonNumberFragment;
+                }
+
+                @Override
+                public int getCount() {
+                    return Util.seasonsCountForSerial(serial);
+                }
+            }
+        }
+    }
 
     private void loadBackground(String url) {
         Glide
@@ -392,7 +422,7 @@ public class SerialPageActivity extends AppCompatActivity {
                         int averageColorInt = Decorator.getAverageColorInt(resource);
 
 
-                        bluringArea.setBackgroundColor(0xE0000000 + averageColorInt);
+                        bluringArea.setBackgroundColor(0xf0000000 + averageColorInt);
 
                         RoundedBitmapDrawable circularBitmapDrawable =
                                 RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);

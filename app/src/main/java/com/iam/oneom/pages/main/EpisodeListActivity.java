@@ -237,9 +237,7 @@ public class EpisodeListActivity extends AppCompatActivity {
             public void onBind(final int position) {
                 text.setText(names.get(position));
                 text.setOnClickListener(v -> {
-                    Intent intent = new Intent(EpisodeListActivity.this, SerialPageActivity.class);
-                    intent.putExtra(getString(R.string.media_page_serial_intent), ids.get(position));
-                    startActivity(intent);
+                    SerialPageActivity.start(v.getContext(), ids.get(position));
                 });
             }
 
