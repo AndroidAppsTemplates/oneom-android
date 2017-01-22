@@ -86,7 +86,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        serial_id = getIntent().getLongExtra(getString(R.string.media_page_serial_intent), 0);
+        serial_id = getIntent().getLongExtra(SERIAL_ID_EXTRA, 0);
 
         showProgressBar();
         Web.instance.getSerial(serial_id)

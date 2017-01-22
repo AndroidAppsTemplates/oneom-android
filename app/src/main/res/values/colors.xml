@@ -29,7 +29,7 @@
     <color name="episode_window_background">#eeFFFFFF</color>
     <color name="online_play_button_gradient_top">#3279b5</color>
     <color name="online_play_button_gradient_bottom">#245580</color>
-    <color name="episode_item_serial_title_blue">#3d5a97</color>
+    <color name="episode_item_serial_title_blue">#1d3a77</color>
     <color name="episode_item_ep_num_blue">#5d7ab7</color>
     <color name="recycler_item_background">#4eee</color>
     <color name="recycler_item_background_dark">#4aaa</color>

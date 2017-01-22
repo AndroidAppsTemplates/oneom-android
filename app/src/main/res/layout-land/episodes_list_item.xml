@@ -30,15 +30,17 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_gravity="center_horizontal"
-            android:lines="2"
-            android:gravity="center"
+            android:layout_marginTop="4dp"
             android:fontFamily="sans-serif-medium"
-            android:textStyle="bold"
+            android:gravity="center"
+            android:lines="2"
+            android:shadowColor="@color/white"
+            android:shadowRadius="2"
             android:text="name"
             android:textColor="@color/episode_item_serial_title_blue"
-            android:textSize="16sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
         <TextView
@@ -46,10 +48,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:lines="2"
-            android:gravity="center"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/episode_item_ep_num_blue" />
+            android:gravity="center"
+            android:textSize="18sp"
+            android:shadowColor="@color/white"
+            android:shadowRadius="2"
+            android:textColor="@color/episode_item_serial_title_blue" />
 
         <com.iam.oneom.env.widget.TagBar
             android:id="@+id/tagBar"
