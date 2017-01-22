@@ -12,8 +12,10 @@ import com.iam.oneom.core.entities.model.Online;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.entities.model.Subtitle;
 import com.iam.oneom.core.entities.model.Torrent;
+import com.iam.oneom.core.util.Time;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -94,7 +96,9 @@ public class EpisodeDeserializer implements JsonDeserializer<Episode> {
         }
 
         if ((tmpElem = jsonObject.get("airdate")) != null && !tmpElem.isJsonNull()) {
-            episode.setAirdate(tmpElem.getAsString());
+            episode.setAirdate(Time.parse(tmpElem.getAsString(), Time.TimeFormat.IDN));
+        } else {
+            episode.setAirdate(new Date(0));
         }
 
         if ((tmpElem = jsonObject.get("video_stream_url")) != null && !tmpElem.isJsonNull()) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="episode_item_corner">4dp</dimen>
+    <dimen name="episode_item_image_corner">@dimen/episode_item_corner</dimen>
+    <dimen name="episode_item_image_size">200dp</dimen>
+    <dimen name="episode_item_padding">6dp</dimen>
+    <dimen name="tag_bar_text_padding">2dp</dimen>
+    <dimen name="tag_bar_text_margin">1dp</dimen>
+    <dimen name="serial_page_items_spacing">12dp</dimen>
+
+    <integer name="tag_bar_text_size">10</integer>
+</resources>

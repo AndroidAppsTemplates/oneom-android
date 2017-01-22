@@ -96,7 +96,25 @@ public class Util {
 
     // Returns tag text like Web 720p
     public static String qualityTag(Tagged tagged) {
-        return tagged.getQuality().getName() + " " + tagged.getLang().getShortName();
+
+
+        String name = tagged.getQuality().getName();
+        String shortName = tagged.getLang().getShortName();
+
+        if (name == null && shortName == null) {
+            return "";
+        }
+
+        if (shortName == null) {
+            return name;
+        }
+
+
+        if (name == null) {
+            return shortName;
+        }
+
+        return name + " " + shortName;
     }
 
     public static int episodesCountForSeason(Serial serial, int selected) {

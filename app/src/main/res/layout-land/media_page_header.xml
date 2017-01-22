@@ -4,10 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@drawable/episode_window_background">
+        android:background="@drawable/main_recycler_items_background">
 
 
         <FrameLayout
@@ -16,10 +15,11 @@
             android:background="@drawable/episode_window_header_backround"
             android:padding="16dp"
             android:id="@+id/header">
-            <com.iam.oneom.env.widget.text.Text
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
                 android:text="Serial Name"
                 android:textColor="@color/black"
                 android:id="@+id/serialname"/>
@@ -28,7 +28,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/episode_window_border"
+            android:background="@drawable/main_recycler_items_background"
             android:id="@+id/divider" />
 
         <android.support.v7.widget.RecyclerView
@@ -37,21 +37,22 @@
             android:id="@+id/mediainfo"
             android:visibility="gone"/>
 
-        <com.iam.oneom.env.widget.text.Text
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:id="@+id/airdate"
             android:textColor="@color/black"
             android:visibility="gone"/>
 
-        <com.iam.oneom.env.widget.text.Text
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
             android:visibility="gone"
             android:textSize="18sp"
-
+            android:fontFamily="sans-serif-medium"
             android:textColor="@color/black"
             android:id="@+id/episodename"
             android:textStyle="bold" />

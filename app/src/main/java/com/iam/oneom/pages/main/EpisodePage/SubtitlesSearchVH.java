@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
@@ -47,8 +48,8 @@ class SubtitlesSearchVH extends BindableViewHolder {
 
     private View view;
 
-    private Text selectSource;
-    private Text selectLang;
+    private TextView selectSource;
+    private TextView selectLang;
 
     private ListPopupWindow spw, lpw;
 
@@ -67,8 +68,8 @@ class SubtitlesSearchVH extends BindableViewHolder {
         spw = new ListPopupWindow(context);
         lpw = new ListPopupWindow(context);
 
-        selectSource = (Text) itemView.findViewById(R.id.source);
-        selectLang = (Text) itemView.findViewById(R.id.lang);
+        selectSource = (TextView) itemView.findViewById(R.id.source);
+        selectLang = (TextView) itemView.findViewById(R.id.lang);
         searchResults = (RecyclerView) view.findViewById(R.id.searchResults);
         manager = new LinearLayoutManager(context);
         adapter = new SubtitlesSearchAdapter(context);
@@ -175,11 +176,11 @@ class SubtitlesSearchVH extends BindableViewHolder {
 
         class SubtitleVH extends BindableViewHolder {
 
-            Text title;
-            Text uploaded;
-            Text lang;
+            TextView title;
+            TextView uploaded;
+            TextView lang;
 
-            Text download;
+            TextView download;
 
             View view;
 
@@ -188,10 +189,10 @@ class SubtitlesSearchVH extends BindableViewHolder {
                 super(itemView);
 
                 this.view = itemView;
-                title = (Text) itemView.findViewById(R.id.title);
-                uploaded = (Text) itemView.findViewById(R.id.uploaded);
-                lang = (Text) itemView.findViewById(R.id.lang);
-                download = (Text) itemView.findViewById(R.id.download);
+                title = (TextView) itemView.findViewById(R.id.title);
+                uploaded = (TextView) itemView.findViewById(R.id.uploaded);
+                lang = (TextView) itemView.findViewById(R.id.lang);
+                download = (TextView) itemView.findViewById(R.id.download);
             }
 
             @Override
@@ -200,7 +201,6 @@ class SubtitlesSearchVH extends BindableViewHolder {
                 if (position == 0) {
                     data = headers;
                     title.setGravity(Gravity.CENTER);
-                    title.setTextStyle(font.font133b);
                     download.setTextColor(Color.TRANSPARENT);
                 } else {
                     data = list.get(position - 1);

@@ -1,44 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:id="@+id/frame">
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/recycler_item_background"
+    app:cardCornerRadius="@dimen/episode_item_corner">
 
-    <FrameLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:padding="2dp"
-        android:id="@+id/imageframe">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/image"/>
-
-        <ImageView
-            android:src="@drawable/episode_item_image_cropper"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-    <com.iam.oneom.env.widget.text.Text
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="name"
-        android:textSize="12dp"
-        android:id="@+id/title"
-        android:lines="2"
-        android:layout_below="@+id/imageframe"
-        android:layout_margin="4dp" />
-    <com.iam.oneom.env.widget.TagBar
+    <LinearLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tagBar"
-        android:layout_below="@+id/title"
-        android:layout_margin="4dp" />
+        android:layout_margin="@dimen/episode_item_padding"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/episode_item_image_corner">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/episode_item_image_size"
+                android:scaleType="centerCrop" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center_horizontal"
+            android:lines="2"
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:text="name"
+            android:textColor="@color/episode_item_serial_title_blue"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/ep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:lines="2"
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/episode_item_ep_num_blue" />
+
+        <com.iam.oneom.env.widget.TagBar
+            android:id="@+id/tagBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

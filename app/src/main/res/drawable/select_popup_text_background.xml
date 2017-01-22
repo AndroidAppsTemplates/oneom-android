@@ -3,6 +3,6 @@
     android:shape="rectangle">
     <stroke android:width="0.5dp" android:color="@color/episode_window_border"/>
     <corners android:radius="@dimen/episode_info_window_corner_radius" />
-    <solid android:color="@color/recycler_item_background"/>
+    <solid android:color="@android:color/transparent"/>
 
 </shape>

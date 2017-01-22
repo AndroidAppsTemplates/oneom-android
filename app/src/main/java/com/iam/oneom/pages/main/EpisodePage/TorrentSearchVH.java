@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iam.oneom.R;
@@ -44,9 +45,9 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
     private ListPopupWindow qgpw;
     private ListPopupWindow lpw;
 
-    private Text selectTracker;
-    private Text selectQualityGroup;
-    private Text selectLang;
+    private TextView selectTracker;
+    private TextView selectQualityGroup;
+    private TextView selectLang;
 
     private RecyclerView searchResults;
     private TorrentsListAdapter adapter;
@@ -61,9 +62,9 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
         tpw = new ListPopupWindow(view.getContext());
         qgpw = new ListPopupWindow(view.getContext());
         lpw = new ListPopupWindow(view.getContext());
-        selectTracker = (Text) view.findViewById(R.id.tracker);
-        selectQualityGroup = (Text) view.findViewById(R.id.quality);
-        selectLang = (Text) view.findViewById(R.id.lang);
+        selectTracker = (TextView) view.findViewById(R.id.tracker);
+        selectQualityGroup = (TextView) view.findViewById(R.id.quality);
+        selectLang = (TextView) view.findViewById(R.id.lang);
         searchResults = (RecyclerView) view.findViewById(R.id.searchResults);
         manager = new LinearLayoutManager(context);
         adapter = new TorrentsListAdapter();

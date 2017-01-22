@@ -2,15 +2,18 @@ package com.iam.oneom.pages.main;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +22,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.Util;
-import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Serial;
-import com.iam.oneom.core.entities.model.Torrent;
 import com.iam.oneom.core.network.Web;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Editor;
@@ -32,18 +37,19 @@ import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
-import com.iam.oneom.env.widget.TagBar;
-import com.iam.oneom.env.widget.svg;
+import com.iam.oneom.env.widget.blur.Blurer;
+import com.iam.oneom.env.widget.blur.FullScreenBlurArea;
 import com.iam.oneom.env.widget.text.Text;
-import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
 
 import java.util.ArrayList;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 
 public class SerialPageActivity extends AppCompatActivity {
+    private static final String TAG  = SerialPageActivity.class.getSimpleName();
 
     long serial_id;
     Serial serial;
@@ -54,6 +60,11 @@ public class SerialPageActivity extends AppCompatActivity {
     CircleProgressBar cpb;
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.bluring_area)
+    FrameLayout bluringArea;
+
+    @BindDimen(R.dimen.serial_page_items_spacing)
+            int serialPageItemsSpacing;
 
     GridLayoutManager layoutManager;
     SerialAdapter serialAdapter;
@@ -78,7 +89,31 @@ public class SerialPageActivity extends AppCompatActivity {
                 });
     }
 
-    class SerialAdapter extends RecyclerView.Adapter<BindableViewHolder> implements Refresheable {
+    private void configureRecycler() {
+        serialAdapter = new SerialAdapter(this);
+        recycler.setAdapter(serialAdapter);
+        layoutManager = new GridLayoutManager(this, 15);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+
+                if (serialAdapter.isHeader(position)) {
+                    return 13;
+                }
+
+                if (serialAdapter.isSeasonNumber(position)) {
+                    return 2;
+                }
+
+                return 5;
+            }
+        });
+        recycler.addItemDecoration(new SpacesBetweenItemsDecoration(serialPageItemsSpacing));
+        recycler.setLayoutManager(layoutManager);
+    }
+
+
+    class SerialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Refresheable {
 
         private static final int HEADER = 0;
         private static final int ITEM = 1;
@@ -94,7 +129,7 @@ public class SerialPageActivity extends AppCompatActivity {
         }
 
         @Override
-        public BindableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             switch (viewType) {
                 case HEADER:
                     return new SerialHeaderVH(inflater.inflate(R.layout.media_page_header, parent, false));
@@ -107,8 +142,14 @@ public class SerialPageActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(BindableViewHolder holder, int position) {
-            holder.onBind(position);
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (holder instanceof EpisodeVH) {
+                ((EpisodeVH) holder).onBind(Util.episodesForSeasonList(serial, selected).get(position - 2));
+            } else if (holder instanceof SerialHeaderVH) {
+                ((SerialHeaderVH) holder).onBind();
+            } else if (holder instanceof SeasonSelectorVH) {
+                ((SeasonSelectorVH) holder).onBind();
+            }
         }
 
         @Override
@@ -137,10 +178,10 @@ public class SerialPageActivity extends AppCompatActivity {
 
         @Override
         public void refresh() {
-            serialAdapter.notifyDataSetChanged();
+//            serialAdapter.notifyDataSetChanged();
         }
 
-        class SeasonSelectorVH extends BindableViewHolder {
+        class SeasonSelectorVH extends RecyclerView.ViewHolder {
 
             View view;
             @BindView(R.id.pager)
@@ -152,8 +193,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 ButterKnife.bind(this, view);
             }
 
-            @Override
-            public void onBind(int position) {
+            public void onBind() {
                 pager.setAdapter(new SeasonNumberAdapter(getSupportFragmentManager()));
                 pager.setCurrentItem(selected);
                 pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -185,7 +225,7 @@ public class SerialPageActivity extends AppCompatActivity {
             }
         }
 
-        class SerialHeaderVH extends BindableViewHolder {
+        class SerialHeaderVH extends RecyclerView.ViewHolder {
 
             private TextView serialName;
             private RecyclerView infoRecyclerView;
@@ -203,8 +243,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 infoRecyclerView.setVisibility(View.VISIBLE);
             }
 
-            @Override
-            public void onBind(int position) {
+            public void onBind() {
                 serialName.setText(serial.getTitle());
                 if (infoRecyclerView.getAdapter() == null) {
                     infoAdapter = new InfoAdapter(SerialPageActivity.this);
@@ -336,91 +375,32 @@ public class SerialPageActivity extends AppCompatActivity {
                     }
                 }
             }
-
         }
-
-        class EpisodeVH extends BindableViewHolder {
-
-            View view;
-            ImageView image;
-            Text title;
-            TagBar tagbar;
-            FrameLayout frameLayout;
-
-            public EpisodeVH(View itemView) {
-                super(itemView);
-                view = itemView;
-                view.setBackgroundResource(R.drawable.table_item_border);
-                setImage(itemView);
-                setTitle(itemView);
-                tagbar = (TagBar) itemView.findViewById(R.id.tagBar);
-            }
-
-            private void setTitle(View itemView) {
-                title = (Text) itemView.findViewById(R.id.title);
-                title.setTextColor(Decorator.TXTBLUE);
-            }
-
-            private void setImage(View itemView) {
-                image = (ImageView) itemView.findViewById(R.id.image);
-                frameLayout = (FrameLayout) itemView.findViewById(R.id.imageframe);
-                Decorator.setSquareSize(frameLayout, Decorator.getSizeForTable(3) - (int) Decorator.dipToPixels(SerialPageActivity.this, 8) * 2);
-                image.setBackgroundResource(R.drawable.episode_item_image_cropper);
-            }
-
-            @Override
-            public void onBind(final int position) {
-
-                final Episode ep = Util.episodesForSeasonList(serial, selected).get(position - 2);// = episodes.get(position - 1);
-                String titleText = ep.getTitle() + " " + Util.episodeInSeasonString(ep);
-                title.setText(titleText);
-                ArrayList<String> tags = new ArrayList<>();
-                for (Torrent torrent : ep.getTorrent()) {
-                    tags.add(Util.qualityTag(torrent));
-                }
-                tagbar.addTags(tags);
-                Glide
-                        .with(view.getContext())
-                        .load(Util.posterUrl(ep))
-                        .into(image);
-                view.setOnClickListener(v -> {
-                    Intent intent = new Intent(getApplicationContext(), EpisodePageActivity.class);
-                    intent.putExtra(getString(R.string.media_page_episode_intent), ep.getId());
-                    startActivity(intent);
-                });
-            }
-        }
-
     }
 
-    private void configureRecycler() {
-        serialAdapter = new SerialAdapter(this);
-        recycler.setAdapter(serialAdapter);
-        layoutManager = new GridLayoutManager(this, 15);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-
-                if (serialAdapter.isHeader(position)) {
-                    return 13;
-                }
-
-                if (serialAdapter.isSeasonNumber(position)) {
-                    return 2;
-                }
-
-                return 5;
-            }
-        });
-        recycler.addItemDecoration(new SpacesBetweenItemsDecoration((int) Decorator.dipToPixels(this, 8)));
-        recycler.setLayoutManager(layoutManager);
-    }
 
     private void loadBackground(String url) {
         Glide
                 .with(this)
                 .load(url)
-                .into(posterImage);
+                .asBitmap()
+                .centerCrop()
+                .into(new BitmapImageViewTarget(posterImage) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+
+                        int averageColorInt = Decorator.getAverageColorInt(resource);
+
+
+                        bluringArea.setBackgroundColor(0xE0000000 + averageColorInt);
+
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);
+                        posterImage.setImageDrawable(circularBitmapDrawable);
+                        Blurer.applyBlur(new FullScreenBlurArea(bluringArea));
+
+                    }
+                });
     }
 
     private void showProgressBar() {

@@ -18,28 +18,20 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.entities.model.Torrent;
 import com.iam.oneom.core.network.request.SerialSearchResult;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Editor;
-import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.EqualSpaceItemDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
-import com.iam.oneom.env.widget.TagBar;
 import com.iam.oneom.env.widget.svg;
 import com.iam.oneom.env.widget.text.Text;
-import com.iam.oneom.env.widget.text.font;
-import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +41,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,7 +74,7 @@ public class EpisodeListActivity extends AppCompatActivity {
         setContentView(R.layout.episodes_list_activity);
         ButterKnife.bind(this);
 
-        episodes = Realm.getDefaultInstance().where(Episode.class).findAll();
+        episodes = Realm.getDefaultInstance().where(Episode.class).findAllSorted("airdate", Sort.DESCENDING);
 
         searchIcon.setImageDrawable(svg.search.drawable());
         searchET.addTextChangedListener(new TextWatcher() {
@@ -129,7 +122,7 @@ public class EpisodeListActivity extends AppCompatActivity {
         invalidateRecycler();
     }
 
-    class EpisodesAdapter extends RecyclerView.Adapter<BindableViewHolder> {
+    class EpisodesAdapter extends RecyclerView.Adapter<EpisodeVH> {
 
         LayoutInflater inflater;
         List<Episode> episodes = new ArrayList<>();
@@ -140,13 +133,13 @@ public class EpisodeListActivity extends AppCompatActivity {
         }
 
         @Override
-        public BindableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public EpisodeVH onCreateViewHolder(ViewGroup parent, int viewType) {
             return new EpisodeVH(inflater.inflate(R.layout.episodes_list_item, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(BindableViewHolder holder, int position) {
-            holder.onBind(position);
+        public void onBindViewHolder(EpisodeVH holder, int position) {
+            holder.onBind(episodes.get(position));
         }
 
         public void filterOnSearch(ArrayList<String> matchStrings) {
@@ -189,69 +182,6 @@ public class EpisodeListActivity extends AppCompatActivity {
             return episodes.size();// + 1;
         }
 
-        class EpisodeVH extends BindableViewHolder {
-
-            View view;
-            ImageView image;
-            Text title;
-            TagBar tagbar;
-            RelativeLayout frame;
-            FrameLayout frameLayout;
-
-            public EpisodeVH(View itemView) {
-                super(itemView);
-                view = itemView;
-                view.setBackgroundResource(R.drawable.table_item_border);
-                setFrame(itemView);
-                setImage(itemView);
-                setTitle(itemView);
-                setTagBar(itemView);
-            }
-
-            private void setFrame(View itemView) {
-                frame = (RelativeLayout) itemView.findViewById(R.id.frame);
-                int a = (int) Decorator.dipToPixels(EpisodeListActivity.this, 8);
-                frame.setPadding(a, a, a, a);
-            }
-
-            private void setTagBar(View itemView) {
-                tagbar = (TagBar) itemView.findViewById(R.id.tagBar);
-            }
-
-            private void setTitle(View itemView) {
-                title = (Text) itemView.findViewById(R.id.title);
-                title.setTypeface(font.font133sb.typeface(EpisodeListActivity.this));
-                title.setTextColor(Decorator.TXTBLUE);
-            }
-
-            private void setImage(View itemView) {
-                image = (ImageView) itemView.findViewById(R.id.image);
-                frameLayout = (FrameLayout) itemView.findViewById(R.id.imageframe);
-                Decorator.setSquareSize(frameLayout, Decorator.getSizeForTable(3) - (int) Decorator.dipToPixels(EpisodeListActivity.this, 8) * 2);
-                image.setBackgroundResource(R.drawable.episode_item_image_cropper);
-            }
-
-            @Override
-            public void onBind(final int position) {
-                final Episode ep = episodes.get(position);
-                String titleText = ep.getSerial().getTitle() + " " + Util.episodeInSeasonString(ep);
-                title.setText(titleText);
-                ArrayList<String> tags = new ArrayList<>();
-                for (Torrent torrent : ep.getTorrent()) {
-                    tags.add(Util.qualityTag(torrent));
-                }
-                tagbar.addTags(tags);
-                Glide
-                        .with(view.getContext())
-                        .load(ep.getSerial() == null ? "null" : ep.getSerial().getPoster().getOriginal())
-                        .into(image);
-                view.setOnClickListener(v -> {
-                    Intent intent = new Intent(getApplicationContext(), EpisodePageActivity.class);
-                    intent.putExtra(getString(R.string.media_page_episode_intent), episodes.get(position).getId());
-                    startActivity(intent);
-                });
-            }
-        }
     }
 
     class PopupAdapter extends ArrayAdapter<String> {

@@ -1,5 +1,7 @@
 package com.iam.oneom.core.entities.model;
 
+import java.util.Date;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -19,7 +21,7 @@ public class Episode extends RealmObject {
     private String rait;
     private String title;
     private String vkPostId;
-    private String airdate;
+    private Date airdate;
     private String videoStreamUrl;
 
     public long getId() {
@@ -66,7 +68,7 @@ public class Episode extends RealmObject {
         return vkPostId;
     }
 
-    public String getAirdate() {
+    public Date getAirdate() {
         return airdate;
     }
 
@@ -118,7 +120,7 @@ public class Episode extends RealmObject {
         this.description = description;
     }
 
-    public void setAirdate(String airdate) {
+    public void setAirdate(Date airdate) {
         this.airdate = airdate;
     }
 

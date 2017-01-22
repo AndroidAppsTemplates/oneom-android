@@ -12,6 +12,7 @@ import com.iam.oneom.core.entities.model.Online;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.entities.model.Subtitle;
 import com.iam.oneom.core.entities.model.Torrent;
+import com.iam.oneom.core.util.Time;
 
 import java.lang.reflect.Type;
 
@@ -31,7 +32,7 @@ public class EpisodeSerializer implements JsonSerializer<Episode> {
         jsonObject.addProperty("rait", episode.getRait());
         jsonObject.addProperty("title", episode.getTitle());
         jsonObject.addProperty("vk_post_id", episode.getVkPostId());
-        jsonObject.addProperty("airdate", episode.getAirdate());
+        jsonObject.addProperty("airdate", Time.format(episode.getAirdate(), Time.TimeFormat.IDN));
         jsonObject.addProperty("video_stream_url", episode.getVideoStreamUrl());
 
         if (episode.getTorrent() != null) {

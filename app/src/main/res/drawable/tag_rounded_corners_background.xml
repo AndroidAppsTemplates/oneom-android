@@ -3,8 +3,15 @@
 
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="5dp" />
-            <solid android:color="@color/greenFont"/>
+            <corners android:radius="2dp" />
+            <stroke android:color="@android:color/transparent" android:width="1dp"/>
+            <solid  android:color="@color/greenFont"/>
+            <padding
+                android:bottom="@dimen/tag_bar_text_margin"
+                android:top="@dimen/tag_bar_text_margin"
+                android:left="@dimen/tag_bar_text_margin"
+                android:right="@dimen/tag_bar_text_margin"
+                />
 
         </shape>
     </item>

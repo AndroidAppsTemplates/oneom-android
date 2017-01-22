@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <stroke android:width="1dp" android:color="@color/episode_window_border"/>
+    <stroke android:width="0.5dp" android:color="@color/episode_window_border"/>
     <corners
         android:radius="@dimen/episode_info_window_corner_radius"
         android:bottomLeftRadius="0dp"
@@ -8,7 +8,7 @@
         />
     <gradient
         android:angle="90"
-        android:startColor="@color/episode_window_header_bottom"
-        android:endColor="@color/episode_window_header_top"
+        android:startColor="@color/recycler_item_background"
+        android:endColor="@color/recycler_item_background_dark"
         android:type="linear" />
 </shape>
