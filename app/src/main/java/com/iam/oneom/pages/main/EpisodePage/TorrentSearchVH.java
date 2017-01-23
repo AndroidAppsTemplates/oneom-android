@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +13,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iam.oneom.R;
+import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.entities.model.Lang;
+import com.iam.oneom.core.entities.model.QualityGroup;
+import com.iam.oneom.core.entities.model.Source;
 import com.iam.oneom.core.search.Key;
 import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;
@@ -31,13 +35,18 @@ import com.iam.oneom.env.widget.text.font;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListener {
 
     private Episode episode;
     private String searchString;
 
     private int selectedTorrentSourcePosition, selectedQualityGroupPosition = 1, selectedLanguagePosition;
-    private Context context;
 
     private CircleProgressBar cpb;
 
@@ -45,93 +54,85 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
     private ListPopupWindow qgpw;
     private ListPopupWindow lpw;
 
-    private TextView selectTracker;
-    private TextView selectQualityGroup;
-    private TextView selectLang;
-
-    private RecyclerView searchResults;
+    @BindView(R.id.tracker)
+    TextView selectTracker;
+    @BindView(R.id.quality)
+    TextView selectQualityGroup;
+    @BindView(R.id.lang)
+    TextView selectLang;
+    @BindView(R.id.searchResults)
+    RecyclerView searchResults;
     private TorrentsListAdapter adapter;
     private LinearLayoutManager manager;
 
-    public TorrentSearchVH (View view, CircleProgressBar cpb, Episode episode) {
+    public TorrentSearchVH(View view, CircleProgressBar cpb, Episode episode) {
         super(view);
+
+        ButterKnife.bind(this, view);
+
         this.cpb = cpb;
         this.episode = episode;
         this.searchString = episode.getSerial().getTitle();
-        this.context = view.getContext();
+
         tpw = new ListPopupWindow(view.getContext());
         qgpw = new ListPopupWindow(view.getContext());
         lpw = new ListPopupWindow(view.getContext());
-        selectTracker = (TextView) view.findViewById(R.id.tracker);
-        selectQualityGroup = (TextView) view.findViewById(R.id.quality);
-        selectLang = (TextView) view.findViewById(R.id.lang);
-        searchResults = (RecyclerView) view.findViewById(R.id.searchResults);
-        manager = new LinearLayoutManager(context);
-        adapter = new TorrentsListAdapter();
+
+        manager = new LinearLayoutManager(view.getContext());
+        adapter = new TorrentsListAdapter(view.getContext());
         searchResults.setLayoutManager(manager);
         searchResults.setAdapter(adapter);
 
-//        setTexts();
-        setClickListeners();
+        selectQualityGroup.setText(getTorrentQG().get(1).getName());
+        selectTracker.setText(getTorrentSources().get(0).getName());
+        selectLang.setText(getTorrentLangs().get(0).getName());
     }
 
-    private void setClickListeners() {
-
-//        selectTracker.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Decorator.configurePopup(selectTracker, tpw, new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        selectedTorrentSourcePosition = position;
+    @OnClick(R.id.lang)
+    public void selectLang(View view) {
+        Decorator.configurePopup(selectLang, lpw, (parent, v, position, id) -> {
+            selectedLanguagePosition = position;
+            lpw.dismiss();
 //                        Search.instance().clearResults();
-//                        tpw.dismiss();
-//                        resetViewHolder();
-//                    }
-//                }, Source.names(Source.Type.Torrent));
-//            }
-//        });
-
-//        selectQualityGroup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Decorator.configurePopup(selectQualityGroup, qgpw, new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        selectedQualityGroupPosition = position;
-//                        qgpw.dismiss();
-//                        Search.instance().clearResults();
-//                        resetViewHolder();
-//                    }
-//                }, QualityGroup.names());
-//            }
-//        });
-
-//        selectLang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        selectedLanguagePosition = position;
-//                        lpw.dismiss();
-//                        Search.instance().clearResults();
-//                        resetViewHolder();
-//                    }
-//                }, Lang.names());
-//            }
-//        });
+            selectLang.setText(getTorrentLangs().get(selectedLanguagePosition).getShortName());
+        }, Util.langNames(getTorrentLangs()));
     }
 
-//    private void resetViewHolder() {
-//        setTexts();
-//    }
+    @OnClick(R.id.quality)
+    public void selectQG(View view) {
+        Decorator.configurePopup(selectQualityGroup, qgpw, (parent, v, position, id) -> {
+            selectedQualityGroupPosition = position;
+            qgpw.dismiss();
+//                        Search.instance().clearResults();
+            selectQualityGroup.setText(getTorrentQG().get(selectedQualityGroupPosition).getName());
 
-//    private void setTexts() {
-//        selectTracker.setText(Source.getByType(Source.Type.Torrent, selectedTorrentSourcePosition).getName());
-//        selectQualityGroup.setText(QualityGroup.group(selectedQualityGroupPosition).getName());
-//        selectLang.setText(Lang.lang(selectedLanguagePosition).getName());
-//    }
+        }, Util.qgNames(getTorrentQG()));
+    }
+
+    @OnClick(R.id.tracker)
+    public void selectTracker(View view) {
+        Decorator.configurePopup(selectTracker, tpw, (parent, v, position, id) -> {
+            selectedTorrentSourcePosition = position;
+            Search.instance().clearResults();
+            tpw.dismiss();
+            selectTracker.setText(getTorrentSources().get(selectedTorrentSourcePosition).getName());
+        }, Util.sourceNames(getTorrentSources()));
+    }
+
+    @NonNull
+    private RealmResults<Lang> getTorrentLangs() {
+        return Realm.getDefaultInstance().where(Lang.class).findAll();
+    }
+
+    @NonNull
+    private RealmResults<Source> getTorrentSources() {
+        return Realm.getDefaultInstance().where(Source.class).equalTo("typeId", Source.Type.Torrent.type).findAll();
+    }
+
+    @NonNull
+    private RealmResults<QualityGroup> getTorrentQG() {
+        return Realm.getDefaultInstance().where(QualityGroup.class).findAll();
+    }
 
     @Override
     public void onBind(int position) {
@@ -153,14 +154,14 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
         HashMap<Key, String> headers;
         LayoutInflater inflater;
 
-        public TorrentsListAdapter() {
+        public TorrentsListAdapter(Context context) {
             headers = new HashMap<>();
             headers.put(Key.Name, "Title");
             headers.put(Key.Seeds, "S");
             headers.put(Key.Leachs, "L");
             headers.put(Key.Size, "Size");
 //            list = Search.instance().results(searchString, currentOrigin());
-            inflater = ((AppCompatActivity)context).getLayoutInflater();
+            inflater = ((AppCompatActivity) context).getLayoutInflater();
         }
 
 //        public void reloadData(Source.Origin origin) {
@@ -225,10 +226,10 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
                             public void onClick(View v) {
 
                                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(data.get(Key.Download)));
-                                if (context.getPackageManager().queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY).size() > 0) {
-                                    context.startActivity(Intent.createChooser(i, context.getString(R.string.torrent_client_select_dialog_title)));
+                                if (v.getContext().getPackageManager().queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY).size() > 0) {
+                                    v.getContext().startActivity(Intent.createChooser(i, v.getContext().getString(R.string.torrent_client_select_dialog_title)));
                                 } else {
-                                    Toast.makeText(context, "You must install torrent client on your device", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(v.getContext(), "You must install torrent client on your device", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -236,7 +237,7 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
                         title.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Web.openUrlInWebView(context, data.get(Key.Page));
+                                Web.openUrlInWebView(v.getContext(), data.get(Key.Page));
                             }
                         });
                     }

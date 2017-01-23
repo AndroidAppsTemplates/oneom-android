@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="Lang:"
+                    android:text="Language:"
                     style="@style/search_popup_type" />
 
                 <TextView

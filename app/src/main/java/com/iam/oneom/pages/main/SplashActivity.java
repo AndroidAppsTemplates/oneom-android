@@ -9,12 +9,16 @@ import android.widget.ImageView;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.network.Web;
+import com.iam.oneom.core.network.request.DataConfigRequest;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.widget.svg;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -34,14 +38,39 @@ public class SplashActivity extends AppCompatActivity {
 
         imageView.setImageDrawable(svg.logo.drawable());
 
-        Web.instance.getLastEpisodes((downloaded, total) ->
-                Log.d(TAG, "onProgressUpdate: " + downloaded + "/" + total))
-                .subscribe(epsRequest -> {
-                    Realm.getDefaultInstance().executeTransaction(realm -> realm.insertOrUpdate(epsRequest.getEps()));
-                    Intent intent = new Intent(this, EpisodeListActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+        Web.instance.getInitialData().enqueue(new Callback<DataConfigRequest>() {
+            @Override
+            public void onResponse(Call<DataConfigRequest> call, Response<DataConfigRequest> response) {
+                Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        DataConfigRequest request = response.body();
+                        realm.insertOrUpdate(request.getCountries());
+                        realm.insertOrUpdate(request.getGenres());
+                        realm.insertOrUpdate(request.getLang());
+                        realm.insertOrUpdate(request.getNetworks());
+                        realm.insertOrUpdate(request.getQualities());
+                        realm.insertOrUpdate(request.getQualityGroups());
+                        realm.insertOrUpdate(request.getSources());
+                        realm.insertOrUpdate(request.getStatuses());
+                    }
                 });
+
+                Web.instance.getLastEpisodes((downloaded, total) ->
+                        Log.d(TAG, "onProgressUpdate: " + downloaded + "/" + total))
+                        .subscribe(epsRequest -> {
+                            Realm.getDefaultInstance().executeTransaction(realm -> realm.insertOrUpdate(epsRequest.getEps()));
+                            Intent intent = new Intent(SplashActivity.this, EpisodeListActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        });
+            }
+
+            @Override
+            public void onFailure(Call<DataConfigRequest> call, Throwable t) {
+
+            }
+        });
     }
 }

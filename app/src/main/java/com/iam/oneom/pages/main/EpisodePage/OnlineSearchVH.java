@@ -109,7 +109,7 @@ class OnlineSearchVH extends BindableViewHolder {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         selectedOnlineSourcePosition = position;
                         spw.dismiss();
-                        resetViewHolder();
+                        setTexts();
                     }
                 }, names);
             }
@@ -132,15 +132,11 @@ class OnlineSearchVH extends BindableViewHolder {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         selectedOnlineLanguagePosition = position;
                         lpw.dismiss();
-                        resetViewHolder();
+                        setTexts();
                     }
                 }, names);
             }
         });
-    }
-
-    private void resetViewHolder() {
-        setTexts();
     }
 
     private void setTexts() {

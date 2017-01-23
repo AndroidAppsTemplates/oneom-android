@@ -44,7 +44,7 @@
 
                 <TextView
                     style="@style/search_popup_type"
-                    android:text="Subtitles Lang:" />
+                    android:text="Language:" />
 
                 <TextView
                     android:id="@+id/lang"

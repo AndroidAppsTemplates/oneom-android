@@ -1,9 +1,8 @@
 package com.iam.oneom.core.entities;
 
-import android.content.Intent;
-
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Lang;
+import com.iam.oneom.core.entities.model.QualityGroup;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.entities.model.Source;
 
@@ -134,7 +133,23 @@ public class Util {
     public static List<String> langNames(List<Lang> langs) {
         List<String> names = new ArrayList<>();
         for (Lang lang : langs) {
-            names.add(lang.getName());
+            if (lang.getName() != null) names.add(lang.getName());
+        }
+        return names;
+    }
+
+    public static List<String> langShortNames(List<Lang> langs) {
+        List<String> names = new ArrayList<>();
+        for (Lang lang : langs) {
+            if (lang.getShortName() != null) names.add(lang.getShortName());
+        }
+        return names;
+    }
+
+    public static List<String> qgNames(List<QualityGroup> qualityGroups) {
+        List<String> names = new ArrayList<>();
+        for (QualityGroup qualityGroup : qualityGroups) {
+            names.add(qualityGroup.getName());
         }
         return names;
     }
