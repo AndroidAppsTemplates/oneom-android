@@ -78,7 +78,9 @@ public class Blurer {
                     blurRadius = blurArea.getBlurRadius();
                 }
 
-                blur(bmp, blurringView.getContext(), blurRadius);
+                for (int i = 0; i < blurRadius; i++) {
+                    blur(bmp, blurringView.getContext(), 1);
+                }
 
                 return true;
             }

@@ -1,7 +1,10 @@
 package com.iam.oneom.pages.main;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,10 +13,10 @@ import com.iam.oneom.R;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Torrent;
-import com.iam.oneom.env.widget.TagBar;
-import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivity;
+import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivityNew;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -30,7 +33,9 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
     @BindView(R.id.ep)
     protected TextView ep;
     @BindView(R.id.tagBar)
-    protected TagBar tagbar;
+    protected RecyclerView tagbar;
+
+    TagAdapter adapter;
 
     @BindDimen(R.dimen.episode_item_corner)
     int episode_item_image_corner;
@@ -58,8 +63,49 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
                 .bitmapTransform(new RoundedCornersTransformation(view.getContext(), episode_item_image_corner, 0))
                 .into(image);
         view.setOnClickListener(v -> {
-            EpisodePageActivity.start(v.getContext(), ep.getId());
+            EpisodePageActivityNew.open(v.getContext(), ep.getId());
         });
-        tagbar.addTags(tags);
+
+        tagbar.setAdapter(new TagAdapter(tags));
+        tagbar.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
+
+    }
+
+    class TagAdapter extends RecyclerView.Adapter<TagAdapter.TagVH> {
+
+        List<String> strings;
+
+        TagAdapter(List<String> strings) {
+            this.strings = strings;
+        }
+
+        @Override
+        public TagVH onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new TagVH(LayoutInflater.from(view.getContext()).inflate(R.layout.w_tag, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(TagVH holder, int position) {
+            holder.onBind(strings.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return strings.size();
+        }
+
+        class TagVH extends RecyclerView.ViewHolder {
+
+            TextView tv;
+
+            public TagVH(View itemView) {
+                super(itemView);
+                tv = (TextView) itemView;
+            }
+
+            void onBind(String text) {
+                tv.setText(text);
+            }
+        }
     }
 }

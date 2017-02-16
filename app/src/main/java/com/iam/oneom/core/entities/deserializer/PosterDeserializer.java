@@ -5,15 +5,9 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.iam.oneom.core.entities.model.Lang;
-import com.iam.oneom.core.entities.model.Online;
 import com.iam.oneom.core.entities.model.Poster;
-import com.iam.oneom.core.entities.model.Quality;
-import com.iam.oneom.core.entities.model.Source;
 
 import java.lang.reflect.Type;
-
-import io.realm.Realm;
 
 public class PosterDeserializer implements JsonDeserializer<Poster> {
 
@@ -48,6 +42,9 @@ public class PosterDeserializer implements JsonDeserializer<Poster> {
         }
         if ((tmpElem = json.get("size")) != null && !tmpElem.isJsonNull()) {
             poster.setSize(tmpElem.getAsLong());
+        }
+        if ((tmpElem = json.get("tint_color")) != null && !tmpElem.isJsonNull()) {
+            poster.setTintColor(tmpElem.getAsInt());
         }
         return poster;
     }

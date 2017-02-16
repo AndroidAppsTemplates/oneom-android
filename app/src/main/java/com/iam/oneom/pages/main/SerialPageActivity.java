@@ -14,7 +14,6 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Serial;
@@ -41,8 +37,6 @@ import com.iam.oneom.env.widget.CircleProgressBar;
 import com.iam.oneom.env.widget.blur.Blurer;
 import com.iam.oneom.env.widget.blur.FullScreenBlurArea;
 import com.iam.oneom.env.widget.text.Text;
-
-import java.util.ArrayList;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -419,10 +413,10 @@ public class SerialPageActivity extends AppCompatActivity {
                     @Override
                     protected void setResource(Bitmap resource) {
 
-                        int averageColorInt = Decorator.getAverageColorInt(resource);
+                        long averageColorInt = Decorator.getAverageColorInt(resource);
 
 
-                        bluringArea.setBackgroundColor(0xf0000000 + averageColorInt);
+                        bluringArea.setBackgroundColor((int) (0xf0000000 + averageColorInt));
 
                         RoundedBitmapDrawable circularBitmapDrawable =
                                 RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);

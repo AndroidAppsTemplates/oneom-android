@@ -33,6 +33,7 @@ public class Serial extends RealmObject {
     private String timezone;
     private String vkGroupUpdate;
 
+
     public long getId() {
         return id;
     }

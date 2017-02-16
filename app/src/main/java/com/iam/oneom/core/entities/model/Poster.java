@@ -17,6 +17,18 @@ public class Poster extends RealmObject implements Named {
     private String type;
     private long size;
 
+    // defined
+    private int tintColor = 0xffffffff;
+
+
+    public int getTintColor() {
+        return tintColor;
+    }
+
+    public void setTintColor(int tintColor) {
+        this.tintColor = tintColor;
+    }
+
     @Override
     public String getName() {
         return name;

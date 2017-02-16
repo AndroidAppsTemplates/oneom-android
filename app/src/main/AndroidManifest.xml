@@ -40,6 +40,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.EpisodePage.EpisodePageActivity" />
         <activity
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".pages.main.EpisodePage.EpisodePageActivityNew" />
+        <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"

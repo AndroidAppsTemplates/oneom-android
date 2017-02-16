@@ -2,11 +2,10 @@ package com.iam.oneom.pages.main;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,21 +19,24 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.network.request.SerialSearchResult;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.util.Decorator;
-import com.iam.oneom.core.util.Editor;
+import com.iam.oneom.core.util.Time;
 import com.iam.oneom.env.handling.recycler.itemdecorations.EqualSpaceItemDecoration;
-import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
+import com.iam.oneom.env.handling.recycler.layoutmanagers.LinearLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
 import com.iam.oneom.env.widget.svg;
 import com.iam.oneom.env.widget.text.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EpisodeListActivity extends AppCompatActivity {
+public class EpisodeListActivity extends AppCompatActivity implements Callback<SerialsSearchRequest>, TextWatcher {
 
     private static final String TAG = EpisodeListActivity.class.getSimpleName();
 
@@ -64,9 +66,10 @@ public class EpisodeListActivity extends AppCompatActivity {
     RecyclerView episodesGrid;
 
     List<Episode> episodes = new ArrayList<>();
+    Map<Date, List<Episode>> groups = new LinkedHashMap<>();
 
-    GridLayoutManager recyclerLayoutManager;
-    EpisodesAdapter adapter;
+    RecyclerView.LayoutManager recyclerLayoutManager;
+    EpisodeGroupAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,52 +77,72 @@ public class EpisodeListActivity extends AppCompatActivity {
         setContentView(R.layout.episodes_list_activity);
         ButterKnife.bind(this);
 
-        episodes = Realm.getDefaultInstance().where(Episode.class).findAllSorted("airdate", Sort.DESCENDING);
+        episodes = Realm.getDefaultInstance().where(Episode.class).equalTo("isSheldule", true).findAllSorted("airdate", Sort.DESCENDING);
+
+        for (Episode e : episodes) {
+            if (groups.get(e.getAirdate()) == null) {
+                groups.put(e.getAirdate(), new ArrayList<>());
+                groups.get(e.getAirdate()).add(e);
+            } else {
+                groups.get(e.getAirdate()).add(e);
+            }
+        }
 
         searchIcon.setImageDrawable(svg.search.drawable());
-        searchET.addTextChangedListener(new TextWatcher() {
-
-            AsyncTask<String, Void, String> task;
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (task != null) {
-                    hideProgressBar();
-                    task.cancel(true);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (popupWindow != null && popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(final Editable s) {
-                if (s != null && s.length() > 0) {
-                    adapter.filterOnSearch(Editor.splitTOWords(s.toString()));
-                    com.iam.oneom.core.network.Web.instance.searchSerials(s.toString()).enqueue(new Callback<SerialsSearchRequest>() {
-                        @Override
-                        public void onResponse(Call<SerialsSearchRequest> call, Response<SerialsSearchRequest> response) {
-                            showPopup(response.body().getResults());
-                        }
-
-                        @Override
-                        public void onFailure(Call<SerialsSearchRequest> call, Throwable t) {
-
-                        }
-                    });
-                } else {
-                    adapter.filterOnSearch(new ArrayList<>());
-                }
-            }
-        });
+        searchET.addTextChangedListener(this);
 
         episodesGrid.addItemDecoration(new EqualSpaceItemDecoration((int) Decorator.dipToPixels(this, 5)));
 
         invalidateRecycler();
+    }
+
+
+    class EpisodeGroupAdapter extends RecyclerView.Adapter<EpisodeGroupAdapter.GroupVH> {
+
+        Map<Date, List<Episode>> groups;
+        List<Date> keys;
+
+
+        EpisodeGroupAdapter(Map<Date, List<Episode>> groups) {
+            this.groups = groups;
+            this.keys = new ArrayList(groups.keySet());
+        }
+
+        @Override
+        public EpisodeGroupAdapter.GroupVH onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new GroupVH(
+                    LayoutInflater.from(EpisodeListActivity.this).inflate(R.layout.episodes_group_item, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(EpisodeGroupAdapter.GroupVH holder, int position) {
+            Date date = keys.get(position);
+            holder.onBind(date, groups.get(date));
+        }
+
+        @Override
+        public int getItemCount() {
+            return groups.size();
+        }
+
+        class GroupVH extends RecyclerView.ViewHolder {
+
+            @BindView(R.id.recycler)
+            RecyclerView recyclerView;
+            @BindView(R.id.date)
+            TextView date;
+
+            public GroupVH(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this, itemView);
+            }
+
+            void onBind(Date date, List<Episode> episodes) {
+                this.date.setText(Time.format(date, Time.TimeFormat.TEXT));
+                recyclerView.setAdapter(new EpisodesAdapter(episodes, recyclerView.getContext()));
+                recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
+            }
+        }
     }
 
     class EpisodesAdapter extends RecyclerView.Adapter<EpisodeVH> {
@@ -127,8 +150,8 @@ public class EpisodeListActivity extends AppCompatActivity {
         LayoutInflater inflater;
         List<Episode> episodes = new ArrayList<>();
 
-        public EpisodesAdapter(List<Episode> episodes, AppCompatActivity context) {
-            if (context != null) inflater = context.getLayoutInflater();
+        public EpisodesAdapter(List<Episode> episodes, Context context) {
+            if (context != null) inflater = LayoutInflater.from(context);
             this.episodes = episodes;
         }
 
@@ -280,9 +303,9 @@ public class EpisodeListActivity extends AppCompatActivity {
     }
 
     private void invalidateRecycler() {
-        recyclerLayoutManager = new GridLayoutManager(this, 3);
+        recyclerLayoutManager = new LinearLayoutManager(this);
         episodesGrid.setLayoutManager(recyclerLayoutManager);
-        adapter = new EpisodesAdapter(episodes, this);
+        adapter = new EpisodeGroupAdapter(groups);
         episodesGrid.addOnScrollListener(episodesRecyclerViewOnScrollListener());
         episodesGrid.setAdapter(adapter);
     }
@@ -308,6 +331,40 @@ public class EpisodeListActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    @Override
+    public void onResponse(Call<SerialsSearchRequest> call, Response<SerialsSearchRequest> response) {
+        if (response.body() != null) {
+            showPopup(response.body().getResults());
+        }
+    }
+
+    @Override
+    public void onFailure(Call<SerialsSearchRequest> call, Throwable t) {
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+    }
+
+    @Override
+    public void afterTextChanged(final Editable s) {
+        if (s != null && s.length() > 0) {
+//            adapter.filterOnSearch(Editor.splitTOWords(s.toString()));
+            com.iam.oneom.core.network.Web.instance.searchSerials(s.toString()).enqueue(this);
+        } else {
+//            adapter.filterOnSearch(new ArrayList<>());
+        }
     }
 
     private Animator.AnimatorListener searchAnimatorListener(final RecyclerView recyclerView) {

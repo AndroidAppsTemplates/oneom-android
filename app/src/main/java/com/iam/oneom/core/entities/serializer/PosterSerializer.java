@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.iam.oneom.core.entities.model.Online;
 import com.iam.oneom.core.entities.model.Poster;
 
 import java.lang.reflect.Type;
@@ -23,6 +22,7 @@ public class PosterSerializer implements JsonSerializer<Poster> {
         jsonObject.addProperty("path", poster.getPath());
         jsonObject.addProperty("type", poster.getType());
         jsonObject.addProperty("size", poster.getSize());
+        jsonObject.addProperty("tint_color", poster.getTintColor());
 
         return jsonObject;
     }

@@ -1,15 +1,9 @@
 package com.iam.oneom.core.util;
 
-import com.iam.oneom.pages.OneOm;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import retrofit2.http.Path;
 
 public final class Time {
 
@@ -28,7 +22,7 @@ public final class Time {
 
     public enum TimeFormat {
         IDN(new SimpleDateFormat("yyyy-MM-dd")),
-        TEXT(new SimpleDateFormat("dd MMMM yyyy")),
+        TEXT(new SimpleDateFormat("dd MMMM, yyyy")),
         ITDN(new SimpleDateFormat("kk:mm:ss")),
         OutputDTwTZ(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")),
         OutputDT(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")),

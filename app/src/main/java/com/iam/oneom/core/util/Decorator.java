@@ -4,15 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.ListPopupWindow;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -26,7 +19,6 @@ import android.widget.ArrayAdapter;
 import com.iam.oneom.R;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Decorator {
@@ -56,8 +48,8 @@ public final class Decorator {
         int blueBucket = 0;
         int pixelCount = 0;
 
-        for (int y = 0; y < bitmap.getHeight(); y++) {
-            for (int x = 0; x < bitmap.getWidth(); x++) {
+        for (int y = 0; y < bitmap.getHeight(); y+=10) {
+            for (int x = 0; x < bitmap.getWidth(); x+=10) {
                 int c = bitmap.getPixel(x, y);
 
                 pixelCount++;
@@ -71,6 +63,7 @@ public final class Decorator {
         int averageColor = Color.rgb(redBucket / pixelCount,
                 greenBucket / pixelCount,
                 blueBucket / pixelCount);
+
 
         return averageColor;
     }

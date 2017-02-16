@@ -1,5 +1,7 @@
 package com.iam.oneom.core.entities;
 
+import android.util.Log;
+
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Lang;
 import com.iam.oneom.core.entities.model.QualityGroup;
@@ -31,6 +33,18 @@ public class Util {
         return String.format("S%02dE%02d", Integer.parseInt(s), Integer.parseInt(e));
     }
 
+    public static String title(Episode episode) {
+        if (episode == null || episode.getSerial() == null) {
+            return "";
+        }
+
+        return title(episode.getSerial());
+    }
+
+    public static String title(Serial serial) {
+        return serial.getTitle();
+    }
+
     public static String posterUrl(Episode episode) {
         if (episode == null || episode.getSerial() == null) {
             return "";
@@ -51,6 +65,49 @@ public class Util {
 
         return serial.getPoster().getOriginal();
     }
+
+    public static int posterTint(Episode episode) {
+        if (episode == null || episode.getSerial() == null) {
+            return 0xffffffff;
+        }
+
+        return posterTint(episode.getSerial());
+    }
+
+    public static int posterTint(Serial serial) {
+
+        if (serial == null) {
+            return 0xffffffff;
+        }
+
+        if (serial.getPoster() == null) {
+            return 0xffffffff;
+        }
+
+        return serial.getPoster().getTintColor();
+    }
+
+    public static void storePosterTint(Episode episode, int tintColor) {
+        if (episode == null || episode.getSerial() == null) {
+            return;
+        }
+
+        storePosterTint(episode.getSerial(), tintColor);
+    }
+
+    public static void storePosterTint(Serial serial, int tintColor) {
+        Log.d("fd", "storePosterTint: ");
+        if (serial == null) {
+            return;
+        }
+
+        if (serial.getPoster() == null) {
+            return;
+        }
+        serial.getPoster().setTintColor(tintColor);
+    }
+
+
 
     public static String serialStatusName(Serial serial) {
         if (serial == null || serial.getStatus() == null) {

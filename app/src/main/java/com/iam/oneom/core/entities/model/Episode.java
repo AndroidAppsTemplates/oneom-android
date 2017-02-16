@@ -23,6 +23,7 @@ public class Episode extends RealmObject {
     private String vkPostId;
     private Date airdate;
     private String videoStreamUrl;
+    private boolean isSheldule;
 
     public long getId() {
         return id;
@@ -126,5 +127,9 @@ public class Episode extends RealmObject {
 
     public void setVideoStreamUrl(String videoStreamUrl) {
         this.videoStreamUrl = videoStreamUrl;
+    }
+
+    public void setIsSheldule(boolean isSheldule) {
+        this.isSheldule = isSheldule;
     }
 }

@@ -172,10 +172,10 @@ public class EpisodePageActivity extends AppCompatActivity {
                     @Override
                     protected void setResource(Bitmap resource) {
 
-                        int averageColorInt = Decorator.getAverageColorInt(resource);
+                        long averageColorInt = Decorator.getAverageColorInt(resource);
 
-                        Decorator.setStatusBarColor(EpisodePageActivity.this, averageColorInt);
-                        bluringArea.setBackgroundColor(0xE0000000 + averageColorInt);
+                        Decorator.setStatusBarColor(EpisodePageActivity.this, (int) averageColorInt);
+                        bluringArea.setBackgroundColor((int) (0xE0000000 + averageColorInt));
 
                         RoundedBitmapDrawable circularBitmapDrawable =
                                 RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);
