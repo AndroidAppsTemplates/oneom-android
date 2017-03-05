@@ -7,6 +7,7 @@ import com.iam.oneom.core.entities.model.Lang;
 import com.iam.oneom.core.entities.model.QualityGroup;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.entities.model.Source;
+import com.iam.oneom.core.util.Web;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class Util {
             return "";
         }
 
-        return serial.getPoster().getOriginal();
+        return Web.url.poster_prefix + serial.getPoster().getName();
     }
 
     public static int posterTint(Episode episode) {

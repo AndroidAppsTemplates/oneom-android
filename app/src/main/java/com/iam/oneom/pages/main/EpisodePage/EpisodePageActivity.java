@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,8 +24,6 @@ import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
-import com.iam.oneom.env.widget.blur.Blurer;
-import com.iam.oneom.env.widget.blur.FullScreenBlurArea;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -177,10 +173,14 @@ public class EpisodePageActivity extends AppCompatActivity {
                         Decorator.setStatusBarColor(EpisodePageActivity.this, (int) averageColorInt);
                         bluringArea.setBackgroundColor((int) (0xE0000000 + averageColorInt));
 
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);
-                        posterImage.setImageDrawable(circularBitmapDrawable);
-                        Blurer.applyBlur(new FullScreenBlurArea(bluringArea));
+//                        RoundedBitmapDrawable circularBitmapDrawable =
+//                                RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);
+
+                        Bitmap blurBitmap = Decorator.fastblur(resource, 1, 25);
+
+                        posterImage.setImageBitmap(blurBitmap);
+
+//                        Blurer.applyBlur(new FullScreenBlurArea(bluringArea));
 
                     }
                 });

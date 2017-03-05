@@ -19,8 +19,6 @@ import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.widget.ToolbarAdapter;
-import com.iam.oneom.env.widget.blur.Blurer;
-import com.iam.oneom.env.widget.blur.FullScreenBlurArea;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,12 +77,12 @@ public class EpisodePageActivityNew extends AppCompatActivity {
                     public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         int averageColorInt = Decorator.getAverageColorInt(resource);
 
-                        Decorator.setStatusBarColor(EpisodePageActivityNew.this, averageColorInt);
 
                         int tintColor = 0xf0000000 + averageColorInt % 0x1000000;
 
                         Realm.getDefaultInstance().executeTransaction(realm -> Util.storePosterTint(episode, tintColor));
 
+                        Decorator.setStatusBarColor(EpisodePageActivityNew.this, Util.posterTint(episode));
                         blurArea.setBackgroundColor(tintColor);
 
 
@@ -96,9 +94,10 @@ public class EpisodePageActivityNew extends AppCompatActivity {
                 .into(new BitmapImageViewTarget(imagePoster) {
                     @Override
                     protected void setResource(Bitmap resource) {
+                        Bitmap bitmap = Decorator.fastblur(resource, 1, 50);
 
-                        imagePoster.setImageBitmap(resource);
-                        Blurer.applyBlur(new FullScreenBlurArea(blurArea));
+                        imagePoster.setImageBitmap(bitmap);
+//                        Blurer.applyBlur(new FullScreenBlurArea(blurArea));
                     }
                 });
     }

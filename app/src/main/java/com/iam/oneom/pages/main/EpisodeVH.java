@@ -54,11 +54,10 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
         for (Torrent torrent : ep.getTorrent()) {
             tags.add(Util.qualityTag(torrent));
         }
-        boolean isSerialNull = ep.getSerial() == null;
-        boolean isPosterNull = ep.getSerial().getPoster() == null;
+
         Glide
                 .with(view.getContext())
-                .load(isSerialNull || isPosterNull ? "null" : ep.getSerial().getPoster().getOriginal())
+                .load(Util.posterUrl(ep))
                 .error(R.drawable.movie_icon_13)
                 .bitmapTransform(new RoundedCornersTransformation(view.getContext(), episode_item_image_corner, 0))
                 .into(image);

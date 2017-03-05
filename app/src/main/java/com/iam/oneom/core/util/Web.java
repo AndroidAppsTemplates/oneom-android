@@ -54,6 +54,7 @@ public class Web {
 //        public static final String proxies = "http://multiproxy.org/txt_all/proxy.txt";
         public static final String proxies = "http://www.freeproxy-list.ru/api/proxy?anonymity=false&token=demo";
         public static final String domain = "https://oneom.tk";
+        public static final String poster_prefix = "https://fileom.s3.amazonaws.com/serial/max/";
         public static final String episodes = "/ep";
         public static final String error = "/errors/java";
         public static final String serial = "/serial";
