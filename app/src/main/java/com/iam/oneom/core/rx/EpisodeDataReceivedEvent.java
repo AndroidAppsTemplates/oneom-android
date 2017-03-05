@@ -6,11 +6,11 @@ import com.iam.oneom.core.entities.model.Episode;
  * Created by iam on 05.03.17.
  */
 
-public class EpisodeDateReceivedEvent {
+public class EpisodeDataReceivedEvent {
 
     private final Episode episode;
 
-    public EpisodeDateReceivedEvent(Episode episode) {
+    public EpisodeDataReceivedEvent(Episode episode) {
         this.episode = episode;
     }
 

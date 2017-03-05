@@ -4,13 +4,14 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.rx.EpisodeDateReceivedEvent;
+import com.iam.oneom.core.rx.EpisodeDataReceivedEvent;
 import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.util.Decorator;
 
@@ -38,10 +39,9 @@ public class EpisodePageFragmentAdapter extends EpisodePageNestedChildAdapter {
 
     @Override
     public void onCreate() {
-        RxBus.INSTANCE.register(EpisodeDateReceivedEvent.class, episodeDateReceivedEvent -> {
+        RxBus.INSTANCE.register(EpisodeDataReceivedEvent.class, episodeDateReceivedEvent -> {
             episode = episodeDateReceivedEvent.getEpisode();
-            fragment.get().description.setText(Util.description(episode, getActivity().getString(R.string.no_description)));
-
+            fragment.get().description.setText(Html.fromHtml(Util.description(episode, getActivity().getString(R.string.no_description))));
         });
 
         fragment.get().description.setText(String.format("%s...", fragment.get().getString(R.string.waiting)));

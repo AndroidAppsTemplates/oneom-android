@@ -8,6 +8,9 @@
     <dimen name="tag_bar_text_margin">1dp</dimen>
     <dimen name="serial_page_items_spacing">12dp</dimen>
     <dimen name="ep_poster_corner_radius">4dp</dimen>
+    <dimen name="online_related_spacing">4dp</dimen>
+    <dimen name="online_related_width">108dp</dimen>
+    <dimen name="online_related_height">160dp</dimen>
 
     <integer name="tag_bar_text_size">10</integer>
 </resources>

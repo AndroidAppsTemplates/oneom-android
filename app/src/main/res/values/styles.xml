@@ -73,4 +73,10 @@
         <item name="android:padding">8dp</item>
     </style>
 
+    <style name="headerText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
 </resources>

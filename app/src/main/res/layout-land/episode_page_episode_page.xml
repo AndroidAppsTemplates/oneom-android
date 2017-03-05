@@ -27,13 +27,11 @@
 
                 <TextView
                     android:id="@+id/desc_title"
+                    style="@style/headerText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/description"
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:text="@string/description" />
 
                 <TextView
                     android:id="@+id/description"

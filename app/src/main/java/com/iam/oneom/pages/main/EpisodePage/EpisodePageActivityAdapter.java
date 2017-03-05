@@ -16,7 +16,7 @@ import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.network.Web;
 import com.iam.oneom.core.network.response.EpResponse;
-import com.iam.oneom.core.rx.EpisodeDateReceivedEvent;
+import com.iam.oneom.core.rx.EpisodeDataReceivedEvent;
 import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;
@@ -76,7 +76,7 @@ public class EpisodePageActivityAdapter extends EpisodePageNestedChildAdapter
     private void setupViewPager(ViewPager viewPager) {
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(EpisodePageFragment.getFragment(episode.getId()), activity.get().getString(R.string.episode).toUpperCase());
-        adapter.addFragment(new DummyFragment(), activity.get().getString(R.string.online).toUpperCase());
+        adapter.addFragment(OnlinePageFragment.getFragment(episode.getId()), activity.get().getString(R.string.online).toUpperCase());
         adapter.addFragment(new DummyFragment(), activity.get().getString(R.string.torrent).toUpperCase());
         adapter.addFragment(new DummyFragment(), activity.get().getString(R.string.subtitles).toUpperCase());
         viewPager.setAdapter(adapter);
@@ -136,7 +136,7 @@ public class EpisodePageActivityAdapter extends EpisodePageNestedChildAdapter
     @Override
     public void onResponse(Call<EpResponse> call, Response<EpResponse> response) {
         onEpisodeGetted(response.body().getEpisode());
-        RxBus.INSTANCE.post(new EpisodeDateReceivedEvent(episode));
+        RxBus.INSTANCE.post(new EpisodeDataReceivedEvent(episode));
     }
 
     @Override

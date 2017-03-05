@@ -10,6 +10,10 @@ import io.realm.annotations.PrimaryKey;
 
 public class Source extends RealmObject implements Named {
 
+    public static final int TORRENT = 1;
+    public static final int SUBTITLE = 2;
+    public static final int ONLINE = 3;
+
     @PrimaryKey
     private long id;
     private int typeId; // TODO implement into deserializer

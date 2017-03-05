@@ -1,9 +1,11 @@
 package com.iam.oneom.core.entities.model;
 
+import com.iam.oneom.core.entities.Tagged;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Online extends RealmObject {
+public class Online extends RealmObject implements Tagged {
 
     @PrimaryKey
     private long id;
