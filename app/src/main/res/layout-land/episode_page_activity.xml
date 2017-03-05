@@ -1,95 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.AppBarLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            style="@style/AppTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/AppTabTextAppearance" />
+    </android.support.design.widget.AppBarLayout>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabs"
-                    style="@style/AppTabLayout"
-                    app:tabGravity="fill"
-                    app:tabMode="fixed"
-                    app:tabTextAppearance="@style/AppTabTextAppearance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/poster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop" />
 
         <FrameLayout
+            android:id="@+id/bluring_area"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/poster"
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop" />
+                android:layout_height="match_parent" />
 
-            <FrameLayout
-                android:id="@+id/bluring_area"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="144dp">
-
-                    <ImageView
-                        android:id="@+id/posterImage"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp"
-                        android:layout_margin="8dp" />
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="144dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/desc_title"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/description"
-                                android:textColor="@color/black"
-                                android:textSize="20dp" />
-
-                            <TextView
-                                android:id="@+id/description"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="8dp"
-                                android:lineSpacingExtra="4dp"
-                                android:text="Just another episode. This is the description for it. It is obvious. Just another episode. This is the description for it. It is obvious. Just another episode. This is the description for it. It is obvious. Just another episode. This is the description for it. It is obvious. Just another episode. This is the description for it. It is obvious. Just another episode. This is the description for it. It is obvious. "
-                                android:textSize="16dp" />
-                        </LinearLayout>
-                    </ScrollView>
-
-                </FrameLayout>
-            </FrameLayout>
         </FrameLayout>
-    </LinearLayout>
-
-
-</FrameLayout>
+    </FrameLayout>
+</LinearLayout>

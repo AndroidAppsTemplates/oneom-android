@@ -94,7 +94,7 @@ public class EpisodePageActivity extends AppCompatActivity {
                 case SUBTITLES:
                     return new SubtitlesSearchVH(inflater.inflate(R.layout.media_page_episode_search_subtitle, parent, false), cpb, episode);
             }
-            throw new RuntimeException("EpisodePageActivity.EpisodePageAdapter has not view type with tag" + viewType);
+            throw new RuntimeException("EpisodePageActivity.EpisodePageActivityAdapter has not view type with tag" + viewType);
         }
 
         @Override
