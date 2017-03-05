@@ -7,6 +7,7 @@
     <dimen name="tag_bar_text_padding">2dp</dimen>
     <dimen name="tag_bar_text_margin">1dp</dimen>
     <dimen name="serial_page_items_spacing">12dp</dimen>
+    <dimen name="ep_poster_corner_radius">4dp</dimen>
 
     <integer name="tag_bar_text_size">10</integer>
 </resources>

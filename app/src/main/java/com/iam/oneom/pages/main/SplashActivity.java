@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.network.Web;
-import com.iam.oneom.core.network.request.DataConfigRequest;
+import com.iam.oneom.core.network.response.DataConfigResponse;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.widget.svg;
 
@@ -40,13 +40,13 @@ public class SplashActivity extends AppCompatActivity {
 
         imageView.setImageDrawable(svg.logo.drawable());
 
-        Web.instance.getInitialData().enqueue(new Callback<DataConfigRequest>() {
+        Web.instance.getInitialData().enqueue(new Callback<DataConfigResponse>() {
             @Override
-            public void onResponse(Call<DataConfigRequest> call, Response<DataConfigRequest> response) {
+            public void onResponse(Call<DataConfigResponse> call, Response<DataConfigResponse> response) {
 
                 Realm realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
-                DataConfigRequest request = response.body();
+                DataConfigResponse request = response.body();
                 realm.insertOrUpdate(request.getCountries());
                 realm.insertOrUpdate(request.getGenres());
                 realm.insertOrUpdate(request.getLang());
@@ -76,7 +76,7 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DataConfigRequest> call, Throwable t) {
+            public void onFailure(Call<DataConfigResponse> call, Throwable t) {
 
             }
         });

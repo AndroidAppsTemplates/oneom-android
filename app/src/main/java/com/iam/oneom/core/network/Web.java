@@ -4,14 +4,13 @@ package com.iam.oneom.core.network;
 import android.util.Log;
 
 import com.iam.oneom.core.GsonMapper;
-import com.iam.oneom.core.entities.model.Serial;
-import com.iam.oneom.core.network.request.DataConfigRequest;
-import com.iam.oneom.core.network.request.EpsRequest;
-import com.iam.oneom.core.network.request.SerialRequest;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
+import com.iam.oneom.core.network.response.DataConfigResponse;
+import com.iam.oneom.core.network.response.EpResponse;
+import com.iam.oneom.core.network.response.EpsResponse;
+import com.iam.oneom.core.network.response.SerialResponse;
 import com.iam.oneom.core.util.Editor;
 
-import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -87,7 +86,7 @@ public enum Web {
         webInterface = mRetrofit.create(WebInterface.class);
     }
 
-    public Call<DataConfigRequest> getInitialData() {
+    public Call<DataConfigResponse> getInitialData() {
         return webInterface.getInitialData();
     }
 
@@ -95,7 +94,7 @@ public enum Web {
         return webInterface.searchSerials(Editor.encodeToUTF8(searchString));
     }
 
-    public Observable<EpsRequest> getLastEpisodes(DownloadProgressListener progressListener) {
+    public Observable<EpsResponse> getLastEpisodes(DownloadProgressListener progressListener) {
         this.progressListener = progressListener;
         return webInterface.getLastEpisodes()
                 .subscribeOn(Schedulers.io())
@@ -103,10 +102,14 @@ public enum Web {
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public Observable<SerialRequest> getSerial(long id) {
+    public Observable<SerialResponse> getSerial(long id) {
         return webInterface.getSerial(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
+    }
+
+    public Call<EpResponse> getEpisode(long id) {
+        return webInterface.getEpisode(id);
     }
 }

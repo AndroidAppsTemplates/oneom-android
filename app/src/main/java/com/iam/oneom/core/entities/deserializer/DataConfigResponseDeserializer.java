@@ -14,17 +14,17 @@ import com.iam.oneom.core.entities.model.Quality;
 import com.iam.oneom.core.entities.model.QualityGroup;
 import com.iam.oneom.core.entities.model.Source;
 import com.iam.oneom.core.entities.model.Status;
-import com.iam.oneom.core.network.request.DataConfigRequest;
+import com.iam.oneom.core.network.response.DataConfigResponse;
 
 import java.lang.reflect.Type;
 
 import io.realm.RealmList;
 
-public class DataConfigRequestDeserializer implements JsonDeserializer<DataConfigRequest> {
+public class DataConfigResponseDeserializer implements JsonDeserializer<DataConfigResponse> {
 
     @Override
-    public DataConfigRequest deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        DataConfigRequest dataConfigRequest = new DataConfigRequest();
+    public DataConfigResponse deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        DataConfigResponse dataConfigRequest = new DataConfigResponse();
 
         final JsonObject jsonObject = (JsonObject) jsonElement;
 

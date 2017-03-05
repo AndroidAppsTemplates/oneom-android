@@ -1,4 +1,4 @@
-package com.iam.oneom.core.network.request;
+package com.iam.oneom.core.network.response;
 
 
 import com.iam.oneom.core.entities.model.Country;
@@ -13,7 +13,7 @@ import com.iam.oneom.core.entities.model.Status;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-public class DataConfigRequest extends RealmObject {
+public class DataConfigResponse extends RealmObject {
 
     RealmList<Lang> lang;
     RealmList<Quality> qualities;

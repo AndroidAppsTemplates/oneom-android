@@ -87,7 +87,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 .subscribe(s -> {
                     Realm.getDefaultInstance().executeTransaction(realm -> realm.insertOrUpdate(s.getSerial()));
                     this.serial = s.getSerial();
-                    loadBackground(Util.posterUrl(serial));
+                    loadBackground(Util.posterUrl(serial, Decorator.MAX));
                     configureRecycler();
                     hideProgressBar();
                 });

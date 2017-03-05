@@ -1,4 +1,4 @@
-package com.iam.oneom.core.network.request;
+package com.iam.oneom.core.network.response;
 
 import com.iam.oneom.core.entities.model.Episode;
 
@@ -6,7 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 
 
-public class EpsRequest extends RealmObject {
+public class EpsResponse extends RealmObject {
 
     private RealmList<Episode> eps;
 

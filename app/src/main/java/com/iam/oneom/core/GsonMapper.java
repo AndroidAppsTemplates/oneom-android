@@ -5,10 +5,11 @@ import android.support.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.iam.oneom.core.entities.deserializer.CountryDeserializer;
-import com.iam.oneom.core.entities.deserializer.DataConfigRequestDeserializer;
+import com.iam.oneom.core.entities.deserializer.DataConfigResponseDeserializer;
 import com.iam.oneom.core.entities.deserializer.DescriptionDeserializer;
+import com.iam.oneom.core.entities.deserializer.EpResponseDeserializer;
 import com.iam.oneom.core.entities.deserializer.EpisodeDeserializer;
-import com.iam.oneom.core.entities.deserializer.EpsRequestDeserializer;
+import com.iam.oneom.core.entities.deserializer.EpsResponseDeserializer;
 import com.iam.oneom.core.entities.deserializer.FileDeserializer;
 import com.iam.oneom.core.entities.deserializer.GenreDeserializer;
 import com.iam.oneom.core.entities.deserializer.LangDeserializer;
@@ -18,7 +19,7 @@ import com.iam.oneom.core.entities.deserializer.PosterDeserializer;
 import com.iam.oneom.core.entities.deserializer.QualityDeserializer;
 import com.iam.oneom.core.entities.deserializer.QualityGroupDeserializer;
 import com.iam.oneom.core.entities.deserializer.SerialDeserializer;
-import com.iam.oneom.core.entities.deserializer.SerialRequestDeserializer;
+import com.iam.oneom.core.entities.deserializer.SerialResponseDeserializer;
 import com.iam.oneom.core.entities.deserializer.SerialSearchRequestDeserializer;
 import com.iam.oneom.core.entities.deserializer.SerialSearchResultDeserializer;
 import com.iam.oneom.core.entities.deserializer.SourceDeserializer;
@@ -57,11 +58,12 @@ import com.iam.oneom.core.entities.serializer.SourceSerializer;
 import com.iam.oneom.core.entities.serializer.StatusSerializer;
 import com.iam.oneom.core.entities.serializer.SubtitleSerializer;
 import com.iam.oneom.core.entities.serializer.TorrentSerializer;
-import com.iam.oneom.core.network.request.DataConfigRequest;
-import com.iam.oneom.core.network.request.EpsRequest;
-import com.iam.oneom.core.network.request.SerialRequest;
 import com.iam.oneom.core.network.request.SerialSearchResult;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
+import com.iam.oneom.core.network.response.DataConfigResponse;
+import com.iam.oneom.core.network.response.EpResponse;
+import com.iam.oneom.core.network.response.EpsResponse;
+import com.iam.oneom.core.network.response.SerialResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,12 +80,13 @@ public enum GsonMapper {
                     .setDateFormat("yyyy-MM-dd")
                     .registerTypeAdapter(Class.forName(Country.class.getCanonicalName()), new CountrySerializer())
                     .registerTypeAdapter(Class.forName(Country.class.getCanonicalName()), new CountryDeserializer())
-                    .registerTypeAdapter(Class.forName(DataConfigRequest.class.getCanonicalName()), new DataConfigRequestDeserializer())
+                    .registerTypeAdapter(Class.forName(DataConfigResponse.class.getCanonicalName()), new DataConfigResponseDeserializer())
                     .registerTypeAdapter(Class.forName(Description.class.getCanonicalName()), new DescriptionDeserializer())
                     .registerTypeAdapter(Class.forName(Description.class.getCanonicalName()), new DescriptionSerializer())
                     .registerTypeAdapter(Class.forName(Episode.class.getCanonicalName()), new EpisodeDeserializer())
                     .registerTypeAdapter(Class.forName(Episode.class.getCanonicalName()), new EpisodeSerializer())
-                    .registerTypeAdapter(Class.forName(EpsRequest.class.getCanonicalName()), new EpsRequestDeserializer())
+                    .registerTypeAdapter(Class.forName(EpResponse.class.getCanonicalName()), new EpResponseDeserializer())
+                    .registerTypeAdapter(Class.forName(EpsResponse.class.getCanonicalName()), new EpsResponseDeserializer())
                     .registerTypeAdapter(Class.forName(File.class.getCanonicalName()), new FileDeserializer())
                     .registerTypeAdapter(Class.forName(File.class.getCanonicalName()), new FileSerializer())
                     .registerTypeAdapter(Class.forName(Genre.class.getCanonicalName()), new GenreDeserializer())
@@ -102,7 +105,7 @@ public enum GsonMapper {
                     .registerTypeAdapter(Class.forName(QualityGroup.class.getCanonicalName()), new QualityGroupSerializer())
                     .registerTypeAdapter(Class.forName(Serial.class.getCanonicalName()), new SerialDeserializer())
                     .registerTypeAdapter(Class.forName(Serial.class.getCanonicalName()), new SerialSerializer())
-                    .registerTypeAdapter(Class.forName(SerialRequest.class.getCanonicalName()), new SerialRequestDeserializer())
+                    .registerTypeAdapter(Class.forName(SerialResponse.class.getCanonicalName()), new SerialResponseDeserializer())
                     .registerTypeAdapter(Class.forName(SerialSearchResult.class.getCanonicalName()), new SerialSearchResultDeserializer())
                     .registerTypeAdapter(Class.forName(SerialsSearchRequest.class.getCanonicalName()), new SerialSearchRequestDeserializer())
                     .registerTypeAdapter(Class.forName(Source.class.getCanonicalName()), new SourceDeserializer())

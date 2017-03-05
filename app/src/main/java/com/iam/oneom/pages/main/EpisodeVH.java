@@ -13,6 +13,7 @@ import com.iam.oneom.R;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Torrent;
+import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.pages.main.EpisodePage.EpisodePageActivityNew;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
 
         Glide
                 .with(view.getContext())
-                .load(Util.posterUrl(ep))
+                .load(Util.posterUrl(ep, Decorator.W480))
                 .error(R.drawable.movie_icon_13)
                 .bitmapTransform(new RoundedCornersTransformation(view.getContext(), episode_item_image_corner, 0))
                 .into(image);

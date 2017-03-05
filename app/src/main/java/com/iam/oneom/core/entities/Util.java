@@ -46,15 +46,15 @@ public class Util {
         return serial.getTitle();
     }
 
-    public static String posterUrl(Episode episode) {
+    public static String posterUrl(Episode episode, String resolution) {
         if (episode == null || episode.getSerial() == null) {
             return "";
         }
 
-        return posterUrl(episode.getSerial());
+        return posterUrl(episode.getSerial(), resolution);
     }
 
-    public static String posterUrl(Serial serial) {
+    public static String posterUrl(Serial serial, String resolution) {
 
         if (serial == null) {
             return "";
@@ -64,7 +64,7 @@ public class Util {
             return "";
         }
 
-        return Web.url.poster_prefix + serial.getPoster().getName();
+        return Web.url.poster_prefix + resolution + serial.getPoster().getName();
     }
 
     public static int posterTint(Episode episode) {
@@ -210,5 +210,13 @@ public class Util {
             names.add(qualityGroup.getName());
         }
         return names;
+    }
+
+    public static String description(Episode episode, String defaultText) {
+        if (episode.getDescription() == null || episode.getDescription().size() == 0) {
+            return defaultText == null ? "" : defaultText;
+        }
+
+        return episode.getDescription().get(0).getBody();
     }
 }

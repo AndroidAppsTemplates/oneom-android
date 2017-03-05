@@ -6,14 +6,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.iam.oneom.core.entities.model.Serial;
-import com.iam.oneom.core.network.request.SerialRequest;
+import com.iam.oneom.core.network.response.SerialResponse;
 
 import java.lang.reflect.Type;
 
-public class SerialRequestDeserializer implements JsonDeserializer<SerialRequest> {
+public class SerialResponseDeserializer implements JsonDeserializer<SerialResponse> {
     @Override
-    public SerialRequest deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        SerialRequest request = new SerialRequest();
+    public SerialResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        SerialResponse request = new SerialResponse();
 
         final JsonObject jsonObject = (JsonObject) json;
 

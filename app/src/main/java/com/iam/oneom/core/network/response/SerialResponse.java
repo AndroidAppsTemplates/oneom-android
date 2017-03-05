@@ -1,8 +1,8 @@
-package com.iam.oneom.core.network.request;
+package com.iam.oneom.core.network.response;
 
 import com.iam.oneom.core.entities.model.Serial;
 
-public class SerialRequest {
+public class SerialResponse {
 
     private Serial serial;
 

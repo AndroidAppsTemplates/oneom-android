@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">OneOm</string>
-    <string name="media_page_episode_intent">media.page.episode.intent.oneom</string>
-    <string name="media_page_serial_intent">media.page.serial.intent.oneom</string>
     <string name="episode_player_intent">episode.player.intent.oneom</string>
     <string name="main_static_entities">fdsf.fdsdsf.dfdsfstaticndjlvljsventities</string>
     <string name="main_episode_list">fdsf.fdsepisodesvljsvelistties</string>
     <string name="url_for_web_view_activity">fdsf.fdsurelpisfoodesrvlwebjsveviewlisactivitytties</string>
+
+
     <string name="torrent_client_select_dialog_title">Select</string>
+    <string name="description">Description</string>
+    <string name="no_description">No description</string>
+    <string name="airdate">Airdate</string>
+    <string name="waiting">Waiting</string>
+
+    <string name="episode">Episode</string>
+    <string name="subtitles">Subtitles</string>
+    <string name="torrent">Torrent</string>
+    <string name="online">Online</string>
 </resources>

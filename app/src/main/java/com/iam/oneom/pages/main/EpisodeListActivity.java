@@ -96,7 +96,6 @@ public class EpisodeListActivity extends AppCompatActivity implements Callback<S
         invalidateRecycler();
     }
 
-
     class EpisodeGroupAdapter extends RecyclerView.Adapter<EpisodeGroupAdapter.GroupVH> {
 
         Map<Date, List<Episode>> groups;

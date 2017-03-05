@@ -1,12 +1,11 @@
 package com.iam.oneom.core.network;
 
 
-import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.entities.model.Serial;
-import com.iam.oneom.core.network.request.DataConfigRequest;
-import com.iam.oneom.core.network.request.EpsRequest;
-import com.iam.oneom.core.network.request.SerialRequest;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
+import com.iam.oneom.core.network.response.DataConfigResponse;
+import com.iam.oneom.core.network.response.EpResponse;
+import com.iam.oneom.core.network.response.EpsResponse;
+import com.iam.oneom.core.network.response.SerialResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,16 +17,18 @@ public interface WebInterface {
     String HOST = "https://oneom.tk";
 
     @GET("/data/config")
-    Call<DataConfigRequest> getInitialData();
+    Call<DataConfigResponse> getInitialData();
 
     @GET("/ep")
-    Observable<EpsRequest> getLastEpisodes();
+    Observable<EpsResponse> getLastEpisodes();
 
 
     @GET("/serial/{id}")
-    Observable<SerialRequest> getSerial(@Path("id") long id);
+    Observable<SerialResponse> getSerial(@Path("id") long id);
 
     @GET("/serial/search/{searchString}")
     Call<SerialsSearchRequest> searchSerials(@Path("searchString") String searchString);
 
+    @GET("/ep/{id}")
+    Call<EpResponse> getEpisode(@Path("id") long id);
 }

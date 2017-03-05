@@ -64,7 +64,7 @@ public class EpisodePageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         long id = intent.getExtras().getLong(EP_ID_EXTRA, 0);
         episode = Realm.getDefaultInstance().where(Episode.class).equalTo("id", id).findFirst();
-        loadBackground(Util.posterUrl(episode));
+        loadBackground(Util.posterUrl(episode, Decorator.MAX));
         searchString = episode.getSerial().getTitle();
         configureRecycler();
     }
@@ -173,14 +173,9 @@ public class EpisodePageActivity extends AppCompatActivity {
                         Decorator.setStatusBarColor(EpisodePageActivity.this, (int) averageColorInt);
                         bluringArea.setBackgroundColor((int) (0xE0000000 + averageColorInt));
 
-//                        RoundedBitmapDrawable circularBitmapDrawable =
-//                                RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);
-
                         Bitmap blurBitmap = Decorator.fastblur(resource, 1, 25);
 
                         posterImage.setImageBitmap(blurBitmap);
-
-//                        Blurer.applyBlur(new FullScreenBlurArea(bluringArea));
 
                     }
                 });

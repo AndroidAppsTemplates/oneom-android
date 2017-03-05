@@ -26,6 +26,9 @@ public final class Decorator {
     private Decorator() {
     }
 
+    public static final String MAX = "max/";
+    public static final String W480 = "480/";
+
     public static final int BLACK = 0xFF000000;
     public static final int WHITE = 0xFFFFFFFF;
     public static final int WHITE_TRANSPARENT_80 = 0xCCFFFFFF;
