@@ -9,14 +9,14 @@
     <ImageView
         android:id="@+id/poster"
         android:layout_width="match_parent"
-        android:layout_height="136dp" />
+        android:layout_height="102dp" />
 
     <TextView
         android:id="@+id/quality"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="16dp"
         android:gravity="center"
-        android:textSize="16dp"
+        android:textSize="13sp"
         android:layout_gravity="bottom"
         android:text="1080p"
         android:fontFamily="sans-serif-medium"

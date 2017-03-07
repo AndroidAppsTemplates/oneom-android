@@ -103,7 +103,10 @@ public enum Web {
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public Call<EpResponse> getEpisode(long id) {
-        return webInterface.getEpisode(id);
+    public Observable<EpResponse> getEpisode(long id) {
+        return webInterface.getEpisode(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
     }
 }

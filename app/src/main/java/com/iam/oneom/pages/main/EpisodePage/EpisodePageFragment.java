@@ -19,9 +19,7 @@ import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.network.Web;
-import com.iam.oneom.core.network.response.EpResponse;
-import com.iam.oneom.core.rx.EpisodeImageTintDefinedEvent;
+import com.iam.oneom.core.rx.EpisodeDataReceivedEvent;
 import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.util.Decorator;
 
@@ -29,12 +27,9 @@ import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
-public class EpisodePageFragment extends Fragment implements Callback<EpResponse> {
+public class EpisodePageFragment extends Fragment {
 
     private static final String ID_EXTRA = "ID_EXTRA";
 
@@ -74,27 +69,27 @@ public class EpisodePageFragment extends Fragment implements Callback<EpResponse
         ButterKnife.bind(this, view);
 
         setData();
-
-        if (episode != null) {
-            configureViews();
-        }
-
-
-        RxBus.INSTANCE.register(EpisodeImageTintDefinedEvent.class,
-                episodeImageReceivedEvent -> {
-                    configureColorSheme(episodeImageReceivedEvent.getTint());
-                });
-
+        configureViews();
         return view;
     }
 
     private void setData() {
         long id = getArguments().getLong(ID_EXTRA);
         episode = DbHelper.where(Episode.class).equalTo("id", id).findFirst();
-        Web.instance.getEpisode(id).enqueue(this);
+        RxBus.INSTANCE.register(EpisodeDataReceivedEvent.class,
+                episodeDataReceivedEvent -> {
+                    this.episode = episodeDataReceivedEvent.getEpisode();
+                    configureViews();
+                });
     }
 
     private void configureViews() {
+
+        if (episode == null) {
+            return;
+        }
+
+        descTitle.setText(String.format("%s%s", Util.episodeInSeasonString(episode), episode.getTitle() == null ? "" : (" " + episode.getTitle())));
 
         description.setText(
                 Html.fromHtml(
@@ -119,26 +114,6 @@ public class EpisodePageFragment extends Fragment implements Callback<EpResponse
                         smallPoster.setImageDrawable(circularBitmapDrawable);
                     }
                 });
-
-        configureColorSheme(Decorator.pureColor(Util.posterTint(episode)));
-    }
-
-    private void configureColorSheme(int tint) {
-
-        int textColor = Decorator.pureColor(tint) > middleColor ? darkColor : lightColor;
-
-        description.setTextColor(textColor);
-        descTitle.setTextColor(textColor);
-    }
-
-    @Override
-    public void onResponse(Call<EpResponse> call, Response<EpResponse> response) {
-        this.episode = response.body().getEpisode();
-        configureViews();
-    }
-
-    @Override
-    public void onFailure(Call<EpResponse> call, Throwable t) {
 
     }
 }

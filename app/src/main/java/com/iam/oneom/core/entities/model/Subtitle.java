@@ -1,10 +1,13 @@
 package com.iam.oneom.core.entities.model;
 
 
+import com.iam.oneom.core.entities.HasUrl;
+import com.iam.oneom.core.entities.Tagged;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Subtitle extends RealmObject {
+public class Subtitle extends RealmObject implements Tagged, HasUrl {
 
     @PrimaryKey
     private long id;
@@ -42,6 +45,11 @@ public class Subtitle extends RealmObject {
 
     public Lang getLang() {
         return lang;
+    }
+
+    @Override
+    public Quality getQuality() {
+        return null;
     }
 
     public void setLang(Lang lang) {

@@ -9,12 +9,12 @@ import com.iam.oneom.core.entities.model.Source;
 
 import java.util.List;
 
-public class OnlinePageFragment extends BaseSearchListFragment {
+public class TorrentPageFragment extends BaseSearchListFragment {
 
     private static final String ID_EXTRA = "ID_EXTRA";
 
-    public static OnlinePageFragment getFragment(long id) {
-        OnlinePageFragment fragment = new OnlinePageFragment();
+    public static TorrentPageFragment getFragment(long id) {
+        TorrentPageFragment fragment = new TorrentPageFragment();
         Bundle bundle = new Bundle();
         bundle.putLong(ID_EXTRA, id);
         fragment.setArguments(bundle);
@@ -23,12 +23,12 @@ public class OnlinePageFragment extends BaseSearchListFragment {
 
     @Override
     protected List<? extends Tagged> getRelatedItems() {
-        return getEpisode().getOnline();
+        return getEpisode().getTorrent();
     }
 
     @Override
     protected List<Source> getSources() {
-        return DbHelper.where(Source.class).equalTo("typeId", Source.ONLINE).findAll();
+        return DbHelper.where(Source.class).equalTo("typeId", Source.TORRENT).findAll();
     }
 
     @Override

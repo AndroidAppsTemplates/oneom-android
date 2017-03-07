@@ -48,6 +48,12 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<DataConfigResponse> call, Response<DataConfigResponse> response) {
 
+                if (response.code() != 200) {
+//                    getInitialData();
+                    nextActivity();
+                    return;
+                }
+
                 DataConfigResponse request = response.body();
 
                 DbHelper.insertAll(request.getCountries());
@@ -75,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<DataConfigResponse> call, Throwable t) {
-                getInitialData();
+                nextActivity();
             }
         });
     }

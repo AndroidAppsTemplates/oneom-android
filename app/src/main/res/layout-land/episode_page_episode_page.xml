@@ -23,6 +23,7 @@
             <TextView
                 android:id="@+id/desc_title"
                 style="@style/headerText"
+                android:textColor="@color/light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -30,9 +31,9 @@
 
             <TextView
                 android:id="@+id/description"
+                android:textColor="@color/middle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
                 android:text="@string/waiting_"
                 android:textSize="16dp" />

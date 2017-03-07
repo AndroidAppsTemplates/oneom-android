@@ -1,11 +1,12 @@
 package com.iam.oneom.core.entities.model;
 
+import com.iam.oneom.core.entities.HasUrl;
 import com.iam.oneom.core.entities.Tagged;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Online extends RealmObject implements Tagged {
+public class Online extends RealmObject implements Tagged, HasUrl {
 
     @PrimaryKey
     private long id;
@@ -26,10 +27,12 @@ public class Online extends RealmObject implements Tagged {
         return source;
     }
 
+    @Override
     public Lang getLang() {
         return lang;
     }
 
+    @Override
     public Quality getQuality() {
         return quality;
     }
@@ -42,6 +45,7 @@ public class Online extends RealmObject implements Tagged {
         return embedCode;
     }
 
+    @Override
     public String getUrl() {
         return url;
     }

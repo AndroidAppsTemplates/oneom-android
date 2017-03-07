@@ -87,7 +87,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 .subscribe(serialResponse -> {
                     DbHelper.insert(serialResponse.getSerial());
                     this.serial = serialResponse.getSerial();
-                    loadBackground(Util.posterUrl(serial, Decorator.MAX));
+                    loadBackground(Util.posterUrl(serial, Decorator.W480));
                     configureRecycler();
                     hideProgressBar();
                 });
@@ -412,17 +412,8 @@ public class SerialPageActivity extends AppCompatActivity {
                 .into(new BitmapImageViewTarget(posterImage) {
                     @Override
                     protected void setResource(Bitmap resource) {
-
-                        long averageColorInt = Decorator.getAverageColorInt(resource);
-
-
-                        bluringArea.setBackgroundColor((int) (0xf0000000 + averageColorInt));
-
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(posterImage.getContext().getResources(), resource);
-                        posterImage.setImageDrawable(circularBitmapDrawable);
-                        Blurer.applyBlur(new FullScreenBlurArea(bluringArea));
-
+                        posterImage.setImageBitmap(Decorator.fastblur(resource, 1, 50));
+                        bluringArea.setBackgroundColor(Decorator.setTransparencyPercent(92, Decorator.getAverageColorInt(resource)));
                     }
                 });
     }

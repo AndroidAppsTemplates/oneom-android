@@ -99,24 +99,6 @@ public class EpisodeListActivity extends AppCompatActivity implements Callback<S
         invalidateRecycler();
     }
 
-    public void getEp(long id) {
-        Web.instance.getEpisode(id).enqueue(new Callback<EpResponse>() {
-            @Override
-            public void onResponse(Call<EpResponse> call, Response<EpResponse> response) {
-                Episode episode = response.body().getEpisode();
-                if (episode != null && episode.getOnline() != null && episode.getOnline().size() > 0) {
-                    Log.d(TAG, "onResponse: " + id + " " + episode.getSerial().getTitle());
-                }
-                getEp(id-1);
-            }
-
-            @Override
-            public void onFailure(Call<EpResponse> call, Throwable t) {
-                getEp(id-1);
-            }
-        });
-    }
-
     class EpisodeGroupAdapter extends RecyclerView.Adapter<EpisodeGroupAdapter.GroupVH> {
 
         Map<Date, List<Episode>> groups;

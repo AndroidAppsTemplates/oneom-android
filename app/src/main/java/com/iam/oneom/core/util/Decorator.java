@@ -49,10 +49,6 @@ public final class Decorator {
     public static final int setTransparencyPercent(int transparencyPercent, int color) {
         int pureColor = pureColor(color);
         int transparencyHex = 0xff * transparencyPercent / 100;
-
-
-        Log.d(TAG, "setTransparencyPercent: " + Integer.toHexString(transparencyHex << 24));
-        Log.d(TAG, "setTransparencyPercent: " + Integer.toHexString(transparencyHex));
         return (transparencyHex << 24) + pureColor;
     }
 
@@ -316,10 +312,6 @@ public final class Decorator {
         return screenHeightPx;
     }
 
-
-    synchronized public static int getSizeForTable(int colsCount) {
-        return (screenWidthPx / colsCount);
-    }
 
     public static void configurePopup(View anchorView, ListPopupWindow lpw, AdapterView.OnItemClickListener listener, List<String> data) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(anchorView.getContext(), R.layout.popup_item, data);

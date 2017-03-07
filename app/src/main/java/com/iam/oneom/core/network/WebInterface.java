@@ -30,5 +30,5 @@ public interface WebInterface {
     Call<SerialsSearchRequest> searchSerials(@Path("searchString") String searchString);
 
     @GET("/ep/{id}")
-    Call<EpResponse> getEpisode(@Path("id") long id);
+    Observable<EpResponse> getEpisode(@Path("id") long id);
 }
