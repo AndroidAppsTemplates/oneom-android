@@ -7,19 +7,16 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.search.Key;
-import com.iam.oneom.core.search.Search;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;
 import com.iam.oneom.core.util.Web;
@@ -28,7 +25,6 @@ import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDec
 import com.iam.oneom.env.handling.recycler.layoutmanagers.LinearLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
 import com.iam.oneom.env.widget.text.Text;
-import com.iam.oneom.env.widget.text.font;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -89,7 +85,7 @@ class SubtitlesSearchVH extends BindableViewHolder {
 //            public void onClick(View v) {
 //                Decorator.configurePopup(selectSource, spw, new AdapterView.OnItemClickListener() {
 //                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    public void onItemClick(AdapterView<?> parent, View recyclerView, int position, long id) {
 //                        selectedSubtitleSourcePosition = position;
 //                        spw.dismiss();
 //                        resetViewHolder();
@@ -103,7 +99,7 @@ class SubtitlesSearchVH extends BindableViewHolder {
 //            public void onClick(View v) {
 //                Decorator.configurePopup(selectLang, lpw, new AdapterView.OnItemClickListener() {
 //                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    public void onItemClick(AdapterView<?> parent, View recyclerView, int position, long id) {
 //                        selectedSubtitleLanguagePosition = position;
 //                        lpw.dismiss();
 //                        resetViewHolder();
@@ -157,7 +153,7 @@ class SubtitlesSearchVH extends BindableViewHolder {
                 case FOOTER:
                     return new FooterVH(inflater.inflate(R.layout.media_page_episode_search_footer, parent, false));
             }
-            throw new RuntimeException(this.getClass().getName() + " has no view holder with type " + viewType);
+            throw new RuntimeException(this.getClass().getName() + " has no recyclerView holder with type " + viewType);
         }
 
         @Override

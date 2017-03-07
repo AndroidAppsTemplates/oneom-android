@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
+import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Lang;
@@ -141,13 +142,11 @@ class OnlineSearchVH extends BindableViewHolder {
 
     private void setTexts() {
 
-        List<Source> sources =
-                Realm.getDefaultInstance().where(Source.class).equalTo("typeId", Source.Type.Online.type).findAll();
+        List<Source> sources = DbHelper.where(Source.class).equalTo("typeId", Source.Type.Online.type).findAll();
         Source source = sources.get(selectedOnlineSourcePosition);
         selectSource.setText(source.getName());
 
-        List<Lang> langs =
-                Realm.getDefaultInstance().where(Lang.class).findAll();
+        List<Lang> langs = DbHelper.where(Lang.class).findAll();
         Lang lang = langs.get(selectedOnlineLanguagePosition);
         selectLang.setText(lang.getName());
     }
@@ -188,7 +187,7 @@ class OnlineSearchVH extends BindableViewHolder {
                     return new FooterVH(inflater.inflate(R.layout.media_page_episode_search_footer, parent, false));
             }
 
-            throw new RuntimeException("OnlineSearchAdapter hasn't view type vith value " + viewType);
+            throw new RuntimeException("OnlineSearchAdapter hasn't recyclerView type vith value " + viewType);
         }
 
 //        public void reloadData(Source.Origin origin) {

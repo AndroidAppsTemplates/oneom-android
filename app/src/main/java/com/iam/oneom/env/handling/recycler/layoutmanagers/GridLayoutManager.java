@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.iam.oneom.BuildConfig;
-import com.iam.oneom.pages.OneOm;
 
 import java.lang.reflect.Field;
 
@@ -87,7 +86,7 @@ public class GridLayoutManager extends android.support.v7.widget.GridLayoutManag
     public void setOverScrollMode(int overScrollMode) {
         if (overScrollMode < ViewCompat.OVER_SCROLL_ALWAYS || overScrollMode > ViewCompat.OVER_SCROLL_NEVER)
             throw new IllegalArgumentException("Unknown overscroll mode: " + overScrollMode);
-        if (this.view == null) throw new IllegalStateException("view == null");
+        if (this.view == null) throw new IllegalStateException("recyclerView == null");
         this.overScrollMode = overScrollMode;
         ViewCompat.setOverScrollMode(view, overScrollMode);
     }
@@ -139,7 +138,7 @@ public class GridLayoutManager extends android.support.v7.widget.GridLayoutManag
         final int adapterItemCount = getItemCount();
         final int rowsCount = adapterItemCount % 2 == 1 ? (adapterItemCount + 1) / spanCount : adapterItemCount / spanCount;
         // adapter always contains actual data while state might contain old data (f.e. data before the animation is
-        // done). As we want to measure the view with actual data we must use data from the adapter and not from  the
+        // done). As we want to measure the recyclerView with actual data we must use data from the adapter and not from  the
         // state
         for (int i = 0; i < adapterItemCount; i++) {
             if (vertical) {
@@ -294,7 +293,7 @@ public class GridLayoutManager extends android.support.v7.widget.GridLayoutManag
         dimensions[CHILD_WIDTH] = getDecoratedMeasuredWidth(child) + wPadding + wMargin + wDecoration * 2;
         dimensions[CHILD_HEIGHT] = getDecoratedMeasuredHeight(child) + hPadding + hMargin + hDecoration * 2;
 
-        // as view is recycled let's not keep old measured values
+        // as recyclerView is recycled let's not keep old measured values
         makeInsetsDirty(p);
         recycler.recycleView(child);
     }

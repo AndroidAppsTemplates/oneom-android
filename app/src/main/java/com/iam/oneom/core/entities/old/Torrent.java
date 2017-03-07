@@ -61,9 +61,9 @@ public class Torrent extends Entity implements Parcelable {
                 Elements etCols = html.select("td");
                 value = "http://extratorrent.cc" + etCols.get(0).select("a").attr("href");
                 url = "http://extratorrent.cc" + etCols.get(2).select("a").attr("href");
-                title = etCols.get(2).select("a").attr("title").replace("view ", "").replace(" torrent", "");
-                if (title.toLowerCase().equals("view comments")) {
-                    title = etCols.get(2).select("a").get(1).attr("title").replace("view ", "").replace(" torrent", "");
+                title = etCols.get(2).select("a").attr("title").replace("recyclerView ", "").replace(" torrent", "");
+                if (title.toLowerCase().equals("recyclerView comments")) {
+                    title = etCols.get(2).select("a").get(1).attr("title").replace("recyclerView ", "").replace(" torrent", "");
                 }
                 break;
             case eztv:

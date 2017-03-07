@@ -2,6 +2,7 @@ package com.iam.oneom.core.entities;
 
 import android.util.Log;
 
+import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Lang;
 import com.iam.oneom.core.entities.model.QualityGroup;
@@ -105,7 +106,12 @@ public class Util {
         if (serial.getPoster() == null) {
             return;
         }
-        serial.getPoster().setTintColor(tintColor);
+
+        Serial s = DbHelper.clone(serial);
+
+        s.getPoster().setTintColor(tintColor);
+
+        DbHelper.insert(serial);
     }
 
 

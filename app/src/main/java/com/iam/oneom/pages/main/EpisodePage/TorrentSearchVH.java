@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iam.oneom.R;
+import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Lang;
@@ -38,7 +39,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListener {
@@ -121,17 +121,17 @@ class TorrentSearchVH extends BindableViewHolder implements Search.OnSearchListe
 
     @NonNull
     private RealmResults<Lang> getTorrentLangs() {
-        return Realm.getDefaultInstance().where(Lang.class).findAll();
+        return DbHelper.where(Lang.class).findAll();
     }
 
     @NonNull
     private RealmResults<Source> getTorrentSources() {
-        return Realm.getDefaultInstance().where(Source.class).equalTo("typeId", Source.Type.Torrent.type).findAll();
+        return DbHelper.where(Source.class).equalTo("typeId", Source.Type.Torrent.type).findAll();
     }
 
     @NonNull
     private RealmResults<QualityGroup> getTorrentQG() {
-        return Realm.getDefaultInstance().where(QualityGroup.class).findAll();
+        return DbHelper.where(QualityGroup.class).findAll();
     }
 
     @Override

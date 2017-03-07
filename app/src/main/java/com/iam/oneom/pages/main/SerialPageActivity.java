@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.iam.oneom.R;
+import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.network.Web;
@@ -41,7 +42,6 @@ import com.iam.oneom.env.widget.text.Text;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 public class SerialPageActivity extends AppCompatActivity {
     private static final String TAG = SerialPageActivity.class.getSimpleName();
@@ -84,9 +84,9 @@ public class SerialPageActivity extends AppCompatActivity {
 
         showProgressBar();
         Web.instance.getSerial(serial_id)
-                .subscribe(s -> {
-                    Realm.getDefaultInstance().executeTransaction(realm -> realm.insertOrUpdate(s.getSerial()));
-                    this.serial = s.getSerial();
+                .subscribe(serialResponse -> {
+                    DbHelper.insert(serialResponse.getSerial());
+                    this.serial = serialResponse.getSerial();
                     loadBackground(Util.posterUrl(serial, Decorator.MAX));
                     configureRecycler();
                     hideProgressBar();
@@ -139,7 +139,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 case ITEM:
                     return new EpisodeVH(inflater.inflate(R.layout.episodes_list_item, parent, false));
             }
-            throw new RuntimeException("EpisodePageActivity.SerialAdapter has not view type with tag" + viewType);
+            throw new RuntimeException("EpisodePageActivity.SerialAdapter has not recyclerView type with tag" + viewType);
         }
 
         @Override

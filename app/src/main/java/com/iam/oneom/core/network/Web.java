@@ -45,15 +45,8 @@ public enum Web {
 
 
         mClient = new OkHttpClient.Builder()
-//                .addInterceptor(chain -> {
-//                    Response originalResponse = chain.proceed(chain.request());
-//
-//                    return originalResponse.newBuilder()
-//                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-//                            .build();
-//                })
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .addInterceptor(loggingInterceptor)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(chain -> {
 
                     Request original = chain.request();
@@ -73,6 +66,7 @@ public enum Web {
                             .body(new ProgressResponseBody(response.body(), progressListener))
                             .build();
                 })
+                .addInterceptor(loggingInterceptor)
                 .build();
 
         mRetrofit = new Retrofit.Builder()

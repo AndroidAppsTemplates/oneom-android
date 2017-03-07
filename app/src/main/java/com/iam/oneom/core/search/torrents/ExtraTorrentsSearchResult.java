@@ -29,9 +29,9 @@ public class ExtraTorrentsSearchResult extends SearchResult {
             Elements etCols = extraTorrentsTableRow.select("td");
 
 
-            String title = etCols.get(2).select("a").attr("title").replace("view ", "").replace(" torrent", "");
-            if (title.toLowerCase().equals("view comments")) {
-                title = etCols.get(2).select("a").get(1).attr("title").replace("view ", "").replace(" torrent", "");
+            String title = etCols.get(2).select("a").attr("title").replace("recyclerView ", "").replace(" torrent", "");
+            if (title.toLowerCase().equals("recyclerView comments")) {
+                title = etCols.get(2).select("a").get(1).attr("title").replace("recyclerView ", "").replace(" torrent", "");
             }
 
             HashMap<Key, String> parseTuple = new HashMap<>();

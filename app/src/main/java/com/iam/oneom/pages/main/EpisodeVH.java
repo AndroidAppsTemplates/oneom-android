@@ -63,6 +63,8 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
                 .bitmapTransform(new RoundedCornersTransformation(view.getContext(), episode_item_image_corner, 0))
                 .into(image);
         view.setOnClickListener(v -> {
+//            int[] epIds = v.getResources().getIntArray(R.array.has_online);
+//            EpisodePageActivityNew.open(v.getContext(), epIds[new Random().nextInt(epIds.length)]);
             EpisodePageActivityNew.open(v.getContext(), ep.getId());
         });
 

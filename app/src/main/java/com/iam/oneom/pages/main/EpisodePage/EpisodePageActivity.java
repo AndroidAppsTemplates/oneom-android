@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.iam.oneom.R;
+import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.search.Search;
@@ -27,7 +28,6 @@ import com.iam.oneom.env.widget.CircleProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
 
 public class EpisodePageActivity extends AppCompatActivity {
@@ -63,7 +63,7 @@ public class EpisodePageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         long id = intent.getExtras().getLong(EP_ID_EXTRA, 0);
-        episode = Realm.getDefaultInstance().where(Episode.class).equalTo("id", id).findFirst();
+        episode = DbHelper.where(Episode.class).equalTo("id", id).findFirst();
         loadBackground(Util.posterUrl(episode, Decorator.MAX));
         searchString = episode.getSerial().getTitle();
         configureRecycler();
@@ -94,7 +94,7 @@ public class EpisodePageActivity extends AppCompatActivity {
                 case SUBTITLES:
                     return new SubtitlesSearchVH(inflater.inflate(R.layout.media_page_episode_search_subtitle, parent, false), cpb, episode);
             }
-            throw new RuntimeException("EpisodePageActivity.EpisodePageActivityAdapter has not view type with tag" + viewType);
+            throw new RuntimeException("EpisodePageActivity.EpisodePageActivityAdapter has not recyclerView type with tag" + viewType);
         }
 
         @Override

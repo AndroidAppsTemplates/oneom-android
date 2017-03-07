@@ -42,6 +42,20 @@ public final class Decorator {
     private static int screenHeightPx;
     private static int appHeight;
 
+    public static final int pureColor(int color) {
+        return color % 0x1000000;
+    }
+
+    public static final int setTransparencyPercent(int transparencyPercent, int color) {
+        int pureColor = pureColor(color);
+        int transparencyHex = 0xff * transparencyPercent / 100;
+
+
+        Log.d(TAG, "setTransparencyPercent: " + Integer.toHexString(transparencyHex << 24));
+        Log.d(TAG, "setTransparencyPercent: " + Integer.toHexString(transparencyHex));
+        return (transparencyHex << 24) + pureColor;
+    }
+
     public static int getAverageColorInt(Bitmap bitmap) {
 
         int redBucket = 0;

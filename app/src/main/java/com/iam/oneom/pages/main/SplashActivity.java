@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.iam.oneom.R;
+import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.network.Web;
 import com.iam.oneom.core.network.response.DataConfigResponse;
@@ -16,7 +17,6 @@ import com.iam.oneom.env.widget.svg;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 import io.realm.RealmList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,45 +40,50 @@ public class SplashActivity extends AppCompatActivity {
 
         imageView.setImageDrawable(svg.logo.drawable());
 
+        getInitialData();
+    }
+
+    private void getInitialData() {
         Web.instance.getInitialData().enqueue(new Callback<DataConfigResponse>() {
             @Override
             public void onResponse(Call<DataConfigResponse> call, Response<DataConfigResponse> response) {
 
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
                 DataConfigResponse request = response.body();
-                realm.insertOrUpdate(request.getCountries());
-                realm.insertOrUpdate(request.getGenres());
-                realm.insertOrUpdate(request.getLang());
-                realm.insertOrUpdate(request.getNetworks());
-                realm.insertOrUpdate(request.getQualities());
-                realm.insertOrUpdate(request.getQualityGroups());
-                realm.insertOrUpdate(request.getSources());
-                realm.insertOrUpdate(request.getStatuses());
-                realm.commitTransaction();
 
+                DbHelper.insertAll(request.getCountries());
+                DbHelper.insertAll(request.getGenres());
+                DbHelper.insertAll(request.getLang());
+                DbHelper.insertAll(request.getNetworks());
+                DbHelper.insertAll(request.getQualities());
+                DbHelper.insertAll(request.getQualityGroups());
+                DbHelper.insertAll(request.getSources());
+                DbHelper.insertAll(request.getStatuses());
 
                 Web.instance.getLastEpisodes((downloaded, total) ->
                         Log.d(TAG, "onProgressUpdate: " + downloaded + "/" + total))
                         .subscribe(epsRequest -> {
-                            realm.beginTransaction();
                             RealmList<Episode> eps = epsRequest.getEps();
                             for (Episode episode : eps) {
                                 episode.setIsSheldule(true);
                             }
-                            realm.insertOrUpdate(eps);
-                            realm.commitTransaction();
-                            Intent intent = new Intent(SplashActivity.this, EpisodeListActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
+                            DbHelper.insertAll(eps);
+                            nextActivity();
+                        }, throwable -> {
+                            nextActivity();
                         });
             }
 
             @Override
             public void onFailure(Call<DataConfigResponse> call, Throwable t) {
-
+                getInitialData();
             }
         });
+    }
+
+    private void nextActivity() {
+        Intent intent = new Intent(SplashActivity.this, EpisodeListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

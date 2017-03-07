@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.iam.oneom.R;
+import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.network.Web;
 import com.iam.oneom.core.network.request.SerialSearchResult;
@@ -30,8 +31,10 @@ import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.network.response.EpResponse;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;
+import com.iam.oneom.env.handling.recycler.itemdecorations.EqualSpaceItemDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.LinearLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
+import com.iam.oneom.env.widget.svg;
 import com.iam.oneom.env.widget.text.Text;
 
 import java.util.ArrayList;
@@ -43,7 +46,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,25 +80,23 @@ public class EpisodeListActivity extends AppCompatActivity implements Callback<S
         setContentView(R.layout.episodes_list_activity);
         ButterKnife.bind(this);
 
-        episodes = Realm.getDefaultInstance().where(Episode.class).equalTo("isSheldule", true).findAllSorted("airdate", Sort.DESCENDING);
+        episodes = DbHelper.where(Episode.class).equalTo("isSheldule", true).findAllSorted("airdate", Sort.DESCENDING);
 
-        getEp(1467829L);
+        for (Episode e : episodes) {
+            if (groups.get(e.getAirdate()) == null) {
+                groups.put(e.getAirdate(), new ArrayList<>());
+                groups.get(e.getAirdate()).add(e);
+            } else {
+                groups.get(e.getAirdate()).add(e);
+            }
+        }
 
-//        for (Episode e : episodes) {
-//            if (groups.get(e.getAirdate()) == null) {
-//                groups.put(e.getAirdate(), new ArrayList<>());
-//                groups.get(e.getAirdate()).add(e);
-//            } else {
-//                groups.get(e.getAirdate()).add(e);
-//            }
-//        }
-//
-//        searchIcon.setImageDrawable(svg.search.drawable());
-//        searchET.addTextChangedListener(this);
-//
-//        episodesGrid.addItemDecoration(new EqualSpaceItemDecoration((int) Decorator.dipToPixels(this, 5)));
-//
-//        invalidateRecycler();
+        searchIcon.setImageDrawable(svg.search.drawable());
+        searchET.addTextChangedListener(this);
+
+        episodesGrid.addItemDecoration(new EqualSpaceItemDecoration((int) Decorator.dipToPixels(this, 5)));
+
+        invalidateRecycler();
     }
 
     public void getEp(long id) {
