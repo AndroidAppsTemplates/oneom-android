@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:cardBackgroundColor="@color/recycler_item_background"
-    app:cardCornerRadius="@dimen/episode_item_corner">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/date"
         android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textColor="@color/light"
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

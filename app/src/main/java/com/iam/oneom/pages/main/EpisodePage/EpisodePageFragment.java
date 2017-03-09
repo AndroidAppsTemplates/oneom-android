@@ -79,7 +79,12 @@ public class EpisodePageFragment extends Fragment {
         RxBus.INSTANCE.register(EpisodeDataReceivedEvent.class,
                 episodeDataReceivedEvent -> {
                     this.episode = episodeDataReceivedEvent.getEpisode();
-                    configureViews();
+                    description.setText(
+                            Html.fromHtml(
+                                    Util.description(episode, getString(R.string.no_description)
+                                    )
+                            )
+                    );
                 });
     }
 
@@ -89,14 +94,16 @@ public class EpisodePageFragment extends Fragment {
             return;
         }
 
-        descTitle.setText(String.format("%s%s", Util.episodeInSeasonString(episode), episode.getTitle() == null ? "" : (" " + episode.getTitle())));
+        if (episode.getDescription() != null && episode.getDescription().size() > 0) {
+            description.setText(
+                    Html.fromHtml(
+                            Util.description(episode, getString(R.string.no_description)
+                            )
+                    )
+            );
+        }
 
-        description.setText(
-                Html.fromHtml(
-                        Util.description(episode, getString(R.string.no_description)
-                        )
-                )
-        );
+        descTitle.setText(String.format("%s%s", Util.episodeInSeasonString(episode), episode.getTitle() == null ? "" : (" " + episode.getTitle())));
 
         Glide.with(this)
                 .load(Util.posterUrl(episode, Decorator.W480))

@@ -48,6 +48,15 @@ public final class Time {
         return out.dateFormat().format(date);
     }
 
+    public static String format(Date date, String out) {
+
+        if (date == null) {
+            return "";
+        }
+
+        return new SimpleDateFormat(out).format(date);
+    }
+
     public static String format(String date, TimeFormat in, TimeFormat out) throws ParseException {
         Date d = in.dateFormat().parse(date);
         return out.dateFormat().format(d);

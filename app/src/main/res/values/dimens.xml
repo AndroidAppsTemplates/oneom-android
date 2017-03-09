@@ -11,6 +11,7 @@
     <dimen name="online_related_spacing">12dp</dimen>
     <dimen name="online_related_width">81dp</dimen>
     <dimen name="online_related_height">120dp</dimen>
+    <dimen name="eps_list_spacing">8dp</dimen>
 
     <integer name="tag_bar_text_size">10</integer>
 </resources>

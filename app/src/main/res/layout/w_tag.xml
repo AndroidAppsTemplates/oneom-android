@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/tag_rounded_corners_background"
-    android:textColor="@color/tag_bar_text_color"
+    android:textColor="@color/light"
     android:gravity="center"
     android:lines="1"
     android:padding="2dp"

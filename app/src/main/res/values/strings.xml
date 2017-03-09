@@ -18,4 +18,8 @@
     <string name="online">Online</string>
     <string name="related">Related</string>
     <string name="waiting_">Waiting...</string>
+    <string name="episodes">Episodes</string>
+    <string name="last_updated">Last Updated: %1$s</string>
+    <string name="never">Never</string>
+    <string name="date_decor">-- %1$s --</string>
 </resources>

@@ -80,6 +80,15 @@ public enum Web {
         webInterface = mRetrofit.create(WebInterface.class);
     }
 
+    public static String generateErrorMessage(retrofit2.Response response) {
+        switch (response.code()) {
+            case 500:
+                return (response.code() + " Internal server error.");
+            default:
+                return (response.code() + " " + response.message());
+        }
+    }
+
     public Call<DataConfigResponse> getInitialData() {
         return webInterface.getInitialData();
     }

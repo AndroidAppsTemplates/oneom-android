@@ -22,11 +22,6 @@ import com.iam.oneom.core.entities.Tagged;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Source;
-import com.iam.oneom.core.network.Web;
-import com.iam.oneom.core.network.response.EpResponse;
-import com.iam.oneom.core.rx.EpisodeDataReceivedEvent;
-import com.iam.oneom.core.rx.EpisodeImageTintDefinedEvent;
-import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDecoration;
@@ -38,9 +33,6 @@ import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public abstract class BaseSearchListFragment extends Fragment {
 

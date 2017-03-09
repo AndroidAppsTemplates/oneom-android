@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="4dp"
     app:cardBackgroundColor="@color/recycler_item_background"
     app:cardCornerRadius="@dimen/episode_item_corner">
 
@@ -35,10 +36,8 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:lines="2"
-            android:shadowColor="@color/white"
-            android:shadowRadius="2"
             android:text="name"
-            android:textColor="@color/episode_item_serial_title_blue"
+            android:textColor="@color/light"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -51,9 +50,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:textSize="18sp"
-            android:shadowColor="@color/white"
-            android:shadowRadius="2"
-            android:textColor="@color/episode_item_serial_title_blue" />
+            android:textColor="@color/light" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/tagBar"

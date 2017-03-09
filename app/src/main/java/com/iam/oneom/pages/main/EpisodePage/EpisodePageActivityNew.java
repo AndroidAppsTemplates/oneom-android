@@ -1,6 +1,5 @@
 package com.iam.oneom.pages.main.EpisodePage;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,7 +23,6 @@ import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.network.Web;
 import com.iam.oneom.core.rx.EpisodeDataReceivedEvent;
-import com.iam.oneom.core.rx.EpisodeImageTintDefinedEvent;
 import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;

@@ -10,7 +10,7 @@
     <color name="transparent">#00ffffff</color>
     <color name="half_transparent">#88FFFFFF</color>
     <color name="quatro_transparent">#CCFFFFFF</color>
-    <color name="greenFont">#5cb85c</color>
+    <color name="greenFont">#2c682c</color>
     <color name="greenSeed">#008f0d</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorPrimary">#3F51B5</color>
@@ -39,7 +39,7 @@
     <color name="online_play_button_gradient_bottom">#245580</color>
     <color name="episode_item_serial_title_blue">#1d3a77</color>
     <color name="episode_item_ep_num_blue">#5d7ab7</color>
-    <color name="recycler_item_background">#4eee</color>
+    <color name="recycler_item_background">#c222</color>
     <color name="recycler_item_background_dark">#4aaa</color>
     <color name="bluring_background">#e0eeeeee</color>
     <color name="tag_bar_text_color">@color/episode_item_serial_title_blue</color>

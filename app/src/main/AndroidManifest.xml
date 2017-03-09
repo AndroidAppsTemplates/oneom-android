@@ -9,7 +9,7 @@
     <application android:allowBackup="true"
         android:name=".pages.OneOm"
         android:label="@string/app_name"
-        android:icon="@drawable/ic_logo"
+        android:icon="@drawable/one_om"
         android:supportsRtl="true"
         android:screenOrientation="landscape"
         android:configChanges="orientation|keyboardHidden"
@@ -20,6 +20,14 @@
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.EpisodeListActivity">
+
+        </activity>
+
+        <activity
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".pages.main.SerialSearchActivity">
 
         </activity>
 

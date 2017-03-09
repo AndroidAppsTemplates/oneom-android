@@ -1,31 +1,34 @@
 package com.iam.oneom.core;
 
+import android.content.Context;
+
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 
 public class DbHelper {
 
+    private static final long SCHEMA_VERSION = 0;
     private static DbHelper instance;
 
-    Realm realm;
-
-    private DbHelper() {
-        realm = Realm.getDefaultInstance();
+    static Realm getRealm() {
+        return Realm.getDefaultInstance();
     }
 
-    private static Realm getInstance() {
-        if (instance == null) {
-            instance = new DbHelper();
-        }
-
-        return instance.getRealm();
+    public static void init(Context context) {
+        Realm.init(context);
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder()
+                .schemaVersion(SCHEMA_VERSION)
+                .name("main_db.realm")
+                .deleteRealmIfMigrationNeeded()
+                .build());
     }
 
     public static <T extends RealmObject> RealmQuery<T> where(Class<T> tClass) {
-        Realm localInstance = getInstance();
+        Realm localInstance = getRealm();
         return localInstance.where(tClass);
     }
 
@@ -34,7 +37,7 @@ public class DbHelper {
     }
 
     public static void insert(RealmObject object, OnInsertionFinishListener l) {
-        getInstance().executeTransactionAsync(
+        getRealm().executeTransactionAsync(
                 r ->
                         r.insertOrUpdate(object),
                 () -> {
@@ -50,7 +53,7 @@ public class DbHelper {
     }
 
     public static void insertAll(List<? extends RealmObject> objects, OnInsertionFinishListener l) {
-        Realm localInstance = getInstance();
+        Realm localInstance = getRealm();
         localInstance.beginTransaction();
         localInstance.insertOrUpdate(objects);
         localInstance.commitTransaction();
@@ -67,11 +70,7 @@ public class DbHelper {
             return object;
         }
 
-        return getInstance().copyFromRealm(object);
-    }
-
-    private Realm getRealm() {
-        return realm;
+        return getRealm().copyFromRealm(object);
     }
 
     public interface OnInsertionFinishListener {

@@ -95,7 +95,7 @@ public class DataConfigResponseDeserializer implements JsonDeserializer<DataConf
         if (nArray != null && !nArray.isJsonNull()) {
             final RealmList<Network> networks = new RealmList<>();
             for (int i = 0; i < nArray.size(); ++i) {
-                networks.add(context.deserialize(nArray.get(i), Country.class));
+                networks.add(context.deserialize(nArray.get(i), Network.class));
             }
             dataConfigRequest.setNetworks(networks);
         }
