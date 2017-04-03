@@ -1,6 +1,8 @@
 package com.iam.oneom.core.entities.model;
 
-import java.util.Date;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.jsonadapter.DateAdapter;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -8,30 +10,52 @@ import io.realm.annotations.PrimaryKey;
 
 public class Serial extends RealmObject {
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("poster")
     private Poster poster;
+    @SerializedName("genre")
     private RealmList<Genre> genre;
+    @SerializedName("country")
     private RealmList<Country> country;
+    @SerializedName("network")
     private RealmList<Network> network;
+    @SerializedName("episode")
     private RealmList<Episode> episode;
+    @SerializedName("description")
     private RealmList<Description> description;
+    @SerializedName("status")
     private Status status;
+    @SerializedName("title")
     private String title;
+    @SerializedName("hide")
     private int hide;
+    @SerializedName("tvrage_id")
     private int tvrageId;
+    @SerializedName("tvmaze_id")
     private int tvmazeId;
+    @SerializedName("mdb_id")
     private int mdbId;
+    @SerializedName("tvdb_id")
     private int tvdbId;
-    private int vkGroupId;
+    @SerializedName("imdb_id")
     private String imbbId;
+    @SerializedName("imdb_rating")
     private String imdbRating;
+    @SerializedName("runtime")
     private int runtime;
-    private Date start; // "1950-07-04",
-    private Date end; // "1950-07-04",
+    @JsonAdapter(DateAdapter.class)
+    @SerializedName("start")
+    private Long start; // "1950-07-04",
+    @JsonAdapter(DateAdapter.class)
+    @SerializedName("end")
+    private Long end; // "1950-07-04",
+    @SerializedName("airtime")
     private String airtime;
+    @SerializedName("airday")
     private String airday;
+    @SerializedName("timezone")
     private String timezone;
-    private String vkGroupUpdate;
 
 
     public long getId() {
@@ -90,9 +114,9 @@ public class Serial extends RealmObject {
         return tvdbId;
     }
 
-    public int getVkGroupId() {
-        return vkGroupId;
-    }
+//    public int getVkGroupId() {
+//        return vkGroupId;
+//    }
 
     public String getImbbId() {
         return imbbId;
@@ -106,11 +130,11 @@ public class Serial extends RealmObject {
         return runtime;
     }
 
-    public Date getStart() {
+    public Long getStart() {
         return start;
     }
 
-    public Date getEnd() {
+    public Long getEnd() {
         return end;
     }
 
@@ -126,10 +150,10 @@ public class Serial extends RealmObject {
         return timezone;
     }
 
-    public String getVkGroupUpdate() {
-        return vkGroupUpdate;
-    }
-
+//    public String getVkGroupUpdate() {
+//        return vkGroupUpdate;
+//    }
+//
     public void setId(long id) {
         this.id = id;
     }
@@ -150,9 +174,9 @@ public class Serial extends RealmObject {
         this.description = description;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
-    }
+//    public void setEnd(Date end) {
+//        this.end = end;
+//    }
 
     public void setEpisode(RealmList<Episode> episode) {
         this.episode = episode;
@@ -190,9 +214,9 @@ public class Serial extends RealmObject {
         this.runtime = runtime;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
-    }
+//    public void setStart(Date start) {
+//        this.start = start;
+//    }
 
     public void setStatus(Status status) {
         this.status = status;
@@ -218,11 +242,11 @@ public class Serial extends RealmObject {
         this.tvrageId = tvrageId;
     }
 
-    public void setVkGroupId(int vkGroupId) {
-        this.vkGroupId = vkGroupId;
-    }
+//    public void setVkGroupId(int vkGroupId) {
+//        this.vkGroupId = vkGroupId;
+//    }
 
-    public void setVkGroupUpdate(String vkGroupUpdate) {
-        this.vkGroupUpdate = vkGroupUpdate;
-    }
+//    public void setVkGroupUpdate(String vkGroupUpdate) {
+//        this.vkGroupUpdate = vkGroupUpdate;
+//    }
 }

@@ -1,25 +1,29 @@
 package com.iam.oneom.core.entities.model;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.interfaces.Named;
+import com.iam.oneom.core.jsonadapter.CountryAdapter;
 
 import io.realm.RealmObject;
-import io.realm.RealmQuery;
 import io.realm.annotations.PrimaryKey;
 
+//TODO after country
 public class Network extends RealmObject implements Named {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("name")
     private String name;
-    private long countryId;
+    @JsonAdapter(CountryAdapter.class)
+    @SerializedName("country_id")
+    private Country country;
 
-    public long getCountryId() {
-        return countryId;
+    public Country getCountryId() {
+        return country;
     }
 
-    public void setCountryId(long countryId) {
-        this.countryId = countryId;
-    }
 
     @Override
     public String getName() {

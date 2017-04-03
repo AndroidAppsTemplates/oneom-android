@@ -1,5 +1,7 @@
 package com.iam.oneom.core.entities.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -7,13 +9,21 @@ import io.realm.annotations.PrimaryKey;
 public class File extends RealmObject {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("alt")
     private String alt;
+    @SerializedName("description")
     private String description;
+    @SerializedName("original")
     private String original;
+    @SerializedName("path")
     private String path;
+    @SerializedName("type")
     private String type;
+    @SerializedName("size")
     private long size;
 
     public long getId() {

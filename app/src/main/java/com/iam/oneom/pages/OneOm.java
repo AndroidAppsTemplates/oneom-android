@@ -6,7 +6,6 @@ import android.util.Log;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.util.Device;
 import com.iam.oneom.core.util.ErrorHandler;
-import com.iam.oneom.env.widget.svg;
 import com.orhanobut.hawk.Hawk;
 
 public class OneOm extends Application {
@@ -19,7 +18,7 @@ public class OneOm extends Application {
         Device.init(this);
         DbHelper.init(this);
 
-        svg.init(getApplicationContext());
+//        svg.init(getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(final Thread thread, final Throwable ex) {

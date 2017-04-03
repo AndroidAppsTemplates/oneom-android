@@ -1,6 +1,8 @@
 package com.iam.oneom.core.entities.model;
 
-import java.util.Date;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.jsonadapter.DateAdapter;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -9,20 +11,35 @@ import io.realm.annotations.PrimaryKey;
 public class Episode extends RealmObject {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
 
+    @SerializedName("torrent")
     private RealmList<Torrent> torrent;
+    @SerializedName("online")
     private RealmList<Online> online;
+    @SerializedName("subtitle")
     private RealmList<Subtitle> subtitle;
+    @SerializedName("description")
     private RealmList<Description> description;
+    @SerializedName("serial")
     private Serial serial;
+    @SerializedName("ep")
     private String ep;
+    @SerializedName("season")
     private String season;
+    @SerializedName("rait")
     private String rait;
+    @SerializedName("title")
     private String title;
-    private String vkPostId;
-    private Date airdate;
-    private String videoStreamUrl;
+    @SerializedName("fb_post_id")
+    private String fbPostId;
+    @JsonAdapter(DateAdapter.class)
+    @SerializedName("airdate")
+    private Long airdate;
+//    @SerializedName("video_stream_url")
+//    private String videoStreamUrl;
+    @SerializedName("is_schedule")
     private boolean isSheldule;
 
     public long getId() {
@@ -65,17 +82,17 @@ public class Episode extends RealmObject {
         return title;
     }
 
-    public String getVkPostId() {
-        return vkPostId;
-    }
+//    public String getVkPostId() {
+//        return vkPostId;
+//    }
 
-    public Date getAirdate() {
+    public Long getAirdate() {
         return airdate;
     }
 
-    public String getVideoStreamUrl() {
-        return videoStreamUrl;
-    }
+//    public String getVideoStreamUrl() {
+//        return videoStreamUrl;
+//    }
 
     public void setId(long id) {
         this.id = id;
@@ -113,21 +130,21 @@ public class Episode extends RealmObject {
         this.title = title;
     }
 
-    public void setVkPostId(String vkPostId) {
-        this.vkPostId = vkPostId;
-    }
+//    public void setVkPostId(String vkPostId) {
+//        this.vkPostId = vkPostId;
+//    }
 
     public void setDescription(RealmList<Description> description) {
         this.description = description;
     }
 
-    public void setAirdate(Date airdate) {
+    public void setAirdate(Long airdate) {
         this.airdate = airdate;
     }
-
-    public void setVideoStreamUrl(String videoStreamUrl) {
-        this.videoStreamUrl = videoStreamUrl;
-    }
+//
+//    public void setVideoStreamUrl(String videoStreamUrl) {
+//        this.videoStreamUrl = videoStreamUrl;
+//    }
 
     public void setIsSheldule(boolean isSheldule) {
         this.isSheldule = isSheldule;

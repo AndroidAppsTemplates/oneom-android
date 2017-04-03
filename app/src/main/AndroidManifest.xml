@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:icon="@drawable/one_om"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:screenOrientation="landscape"
         android:configChanges="orientation|keyboardHidden"
         android:theme="@style/AppTheme">

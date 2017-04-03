@@ -1,6 +1,7 @@
 package com.iam.oneom.core.entities.model;
 
 
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.HasUrl;
 import com.iam.oneom.core.entities.Tagged;
 
@@ -10,13 +11,21 @@ import io.realm.annotations.PrimaryKey;
 public class Subtitle extends RealmObject implements Tagged, HasUrl {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("title")
     private String title;
+    @SerializedName("url")
     private String url;
+    @SerializedName("lang")
     private Lang lang;
+    @SerializedName("source")
     private Source source;
+    @SerializedName("file_id")
     private int fileId;
+    @SerializedName("assoc_id")
     private int assocId;
+    @SerializedName("assoc_type")
     private String assocType;
 
     public long getId() {

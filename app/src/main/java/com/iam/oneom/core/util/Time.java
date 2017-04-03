@@ -32,7 +32,7 @@ public final class Time {
             this.sdf = sdf;
         }
 
-        SimpleDateFormat dateFormat() {
+        public SimpleDateFormat dateFormat() {
             return sdf;
         }
 

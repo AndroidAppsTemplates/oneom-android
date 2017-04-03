@@ -12,6 +12,7 @@ import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.pages.main.SerialPageActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +41,7 @@ class EpisodesHeaderVH extends BindableViewHolder {
 
     private void makeInfo() {
         if (info.size() == 0) {
-            info.add(Time.format(episode.getAirdate(), Time.TimeFormat.IDN));
+            info.add(Time.format(new Date(episode.getAirdate()), Time.TimeFormat.IDN));
             info.add(episode.getTitle() + " " + Util.episodeInSeasonString(episode));
             if (episode.getTorrent() != null && episode.getTorrent().size() > 0) {
                 for (Torrent torrent : episode.getTorrent()) {
@@ -54,6 +55,6 @@ class EpisodesHeaderVH extends BindableViewHolder {
         serialName.setText(episode.getSerial().getTitle());
         serialName.setOnClickListener(v -> SerialPageActivity.start(view.getContext(), episode.getSerial().getId()));
         episodeName.setText(Util.episodeInSeasonString(episode) + " " + episode.getTitle());
-        airdate.setText(Time.format(episode.getAirdate(), Time.TimeFormat.TEXT));
+        airdate.setText(Time.format(new Date(episode.getAirdate()), Time.TimeFormat.TEXT));
     }
 }

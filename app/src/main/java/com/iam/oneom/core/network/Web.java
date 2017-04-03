@@ -36,8 +36,6 @@ public enum Web {
     private OkHttpClient mClient;
     private Retrofit mRetrofit;
 
-    public String MOCK_TOKEN = "bearer vA2CLcOkcIB27FgXuTRU_yvIzp-Fck0QLWRqwGNYqGZBqTQylk-uMdK4y1lJeSmb-qQ79VFYmzXEu_8DCO-oK2SBCmTtzG7y__L47wYCG8NLzDuXHxnulBUJLCvaKOJrSokvbY6YQPRbPzZnFpX-Nayy7hvhInfwcQtYDkG0NpxDpxnjxxrNU6tAdX1YSJYpC3nv9xMHdDQxRbSiVAO_N05B32NVOZ-2H8ES6jGYFVAamplS9tizGiWAo4jPimNpMX1m8tl1mDr9Fnz5R--6ancrBVf4SZsGZuC-MRDvqAFgHgr1vdNXsUeIhiIwBPvtpI3zX57Qob6KjDfVbteb8CEPees5dcX1o2UI7vtxTC0";
-
     Web() {
         HttpLoggingInterceptor loggingInterceptor =
                 new HttpLoggingInterceptor(message -> Log.d(TAG, "Web: " + message));

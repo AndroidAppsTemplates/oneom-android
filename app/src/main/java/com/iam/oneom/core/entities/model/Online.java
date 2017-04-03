@@ -1,5 +1,6 @@
 package com.iam.oneom.core.entities.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.HasUrl;
 import com.iam.oneom.core.entities.Tagged;
 
@@ -9,14 +10,23 @@ import io.realm.annotations.PrimaryKey;
 public class Online extends RealmObject implements Tagged, HasUrl {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("source")
     private Source source;
+    @SerializedName("lang")
     private Lang lang;
+    @SerializedName("quality")
     private Quality quality;
+    @SerializedName("title")
     private String title;
+    @SerializedName("embed_code")
     private String embedCode;
+    @SerializedName("url")
     private String url;
+    @SerializedName("video_url")
     private String videoUrl;
+    @SerializedName("poster_url")
     private String posterUrl;
 
     public long getId() {

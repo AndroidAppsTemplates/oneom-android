@@ -1,14 +1,17 @@
 package com.iam.oneom.core.network.request;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 
-public class SerialsSearchRequest extends RealmObject {
+public class SerialsSearchRequest {
 
+    @SerializedName("text")
     private String text;
-    private RealmList<SerialSearchResult> results;
+    @SerializedName("serials")
+    private List<SerialSearchResult> results;
 
     public String getText() {
         return text;
@@ -18,7 +21,7 @@ public class SerialsSearchRequest extends RealmObject {
         this.text = text;
     }
 
-    public RealmList<SerialSearchResult> getResults() {
+    public List<SerialSearchResult> getResults() {
         return results;
     }
 

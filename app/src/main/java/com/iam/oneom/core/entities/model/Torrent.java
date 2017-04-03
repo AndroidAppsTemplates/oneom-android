@@ -1,23 +1,37 @@
 package com.iam.oneom.core.entities.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.HasUrl;
 import com.iam.oneom.core.entities.Tagged;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.internal.KeepMember;
 
 public class Torrent extends RealmObject implements Tagged, HasUrl {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("lang")
     private Lang lang;
+    @SerializedName("quality")
     private Quality quality;
+    @SerializedName("source")
     private Source source;
+    @SerializedName("url")
     private String url;
+    @SerializedName("tit;e")
     private String title;
+    @SerializedName("vk_post_id")
     private String vkPostId;
+    @SerializedName("value")
     private String value;
+    @SerializedName("size")
+    private long size;
+    @SerializedName("seed")
+    private int seed;
+    @SerializedName("leech")
+    private int leech;
 
     public long getId() {
         return id;

@@ -1,25 +1,32 @@
 package com.iam.oneom.core.entities.model;
 
-import io.realm.Realm;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.jsonadapter.LangAdapter;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Description extends RealmObject {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("assoc_id")
     private long assocId;
+    @SerializedName("assoc_type")
     private String assocType;
+    @SerializedName("body")
     private String body;
+    @SerializedName("type_id")
     private long typeId;
-    private long lang;
+    // TODO
+    @JsonAdapter(LangAdapter.class)
+    @SerializedName("lang_id")
+    private Lang lang;
 
-    public long getLang() {
+    public Lang getLang() {
         return lang;
-    }
-
-    public void setLangId(long lang) {
-        this.lang = lang;
     }
 
     public String getAssocType() {

@@ -1,5 +1,6 @@
 package com.iam.oneom.core.network.response;
 
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.model.Episode;
 
 /**
@@ -8,6 +9,7 @@ import com.iam.oneom.core.entities.model.Episode;
 
 public class EpResponse {
 
+    @SerializedName("ep")
     private Episode episode;
 
     public Episode getEpisode() {

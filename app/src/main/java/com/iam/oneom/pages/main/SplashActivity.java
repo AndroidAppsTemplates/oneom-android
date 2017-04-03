@@ -18,7 +18,6 @@ import com.iam.oneom.core.network.response.DataConfigResponse;
 import com.iam.oneom.core.rx.EpsReceivedEvent;
 import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.util.Decorator;
-import com.iam.oneom.env.widget.svg;
 
 import java.util.Date;
 
@@ -56,8 +55,8 @@ public class SplashActivity extends AppCompatActivity {
 
         Decorator.init(this);
 
-        imageView.setImageDrawable(svg.logo.drawable());
-
+//        imageView.setImageDrawable(svg.logo.drawable(this));
+//
         checkAndDownload();
     }
 

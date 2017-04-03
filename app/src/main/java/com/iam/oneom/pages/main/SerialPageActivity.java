@@ -9,8 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -35,9 +33,9 @@ import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
-import com.iam.oneom.env.widget.blur.Blurer;
-import com.iam.oneom.env.widget.blur.FullScreenBlurArea;
 import com.iam.oneom.env.widget.text.Text;
+
+import java.util.Date;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -319,10 +317,10 @@ public class SerialPageActivity extends AppCompatActivity {
                                 value.setText(Util.serialStatusName(serial));
                                 break;
                             case AIR_START:
-                                value.setText(Time.format(serial.getStart(), Time.TimeFormat.IDN));
+                                value.setText(Time.format(new Date(serial.getStart()), Time.TimeFormat.IDN));
                                 break;
                             case AIR_END:
-                                value.setText(Time.format(serial.getEnd(), Time.TimeFormat.IDN));
+                                value.setText(Time.format(new Date(serial.getEnd()), Time.TimeFormat.IDN));
                                 break;
                         }
                     }

@@ -1,5 +1,7 @@
 package com.iam.oneom.core.network.request;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -10,7 +12,9 @@ import io.realm.annotations.PrimaryKey;
 public class SerialSearchResult extends RealmObject {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("title")
     private String title;
 
     public long getId() {

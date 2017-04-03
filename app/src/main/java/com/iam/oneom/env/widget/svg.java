@@ -9,12 +9,11 @@ import android.graphics.drawable.PictureDrawable;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 import com.iam.oneom.R;
-import com.iam.oneom.pages.OneOm;
 
 public enum svg {
 
     down("idown", R.raw.idown),
-    logo("logo", R.raw.logo),
+    logo("logo_bg", R.raw.logo),
     search("isearch", R.raw.isearch);
 
     svg(String name, int resourse) {
@@ -22,11 +21,11 @@ public enum svg {
         this.resourse = resourse;
     }
 
-    public Bitmap bitmap () {
+    public Bitmap bitmap (Context context) {
         Bitmap bitmap;
-        Drawable picture = drawable();
+        Drawable picture = drawable(context);
 
-        if (drawable().getIntrinsicWidth() <= 0 || drawable().getIntrinsicHeight() <= 0) {
+        if (picture.getIntrinsicWidth() <= 0 || picture.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
         } else {
             bitmap = Bitmap.createBitmap(picture.getIntrinsicWidth(), picture.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -48,7 +47,7 @@ public enum svg {
 
     }
 
-    public PictureDrawable drawable() {
+    public PictureDrawable drawable(Context context) {
         SVG svg = null;
         try {
             svg = SVG.getFromResource(context, resourse);
@@ -61,11 +60,11 @@ public enum svg {
         return new PictureDrawable(svg.renderToPicture());
     }
 
-    public static void init(Context context) {
-        svg.context = context;
-    }
+//    public static void init(Context context) {
+//        svg.context = context;
+//    }
 
-    static Context context;
+//    static Context context;
     String name;
     int resourse;
 }

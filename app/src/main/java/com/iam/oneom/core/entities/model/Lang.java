@@ -1,5 +1,6 @@
 package com.iam.oneom.core.entities.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.interfaces.Named;
 
 import io.realm.RealmObject;
@@ -8,9 +9,13 @@ import io.realm.annotations.PrimaryKey;
 public class Lang extends RealmObject implements Named {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("opensubtitles_short")
     private String openSubtitlesShort;
+    @SerializedName("short")
     private String shortName;
+    @SerializedName("name")
     private String name;
 
     @Override

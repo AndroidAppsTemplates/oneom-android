@@ -2,6 +2,7 @@ package com.iam.oneom.core.entities.model;
 
 import android.support.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.interfaces.Named;
 import com.iam.oneom.core.util.ErrorHandler;
 
@@ -15,15 +16,25 @@ public class Source extends RealmObject implements Named {
     public static final int ONLINE = 3;
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
+    @SerializedName("type_id")
     private int typeId; // TODO implement into deserializer
+    @SerializedName("active")
     private int active;
+    @SerializedName("search_page")
     private String searchPage;
+    @SerializedName("search")
     private String search;
+    @SerializedName("search_step")
     private String searchStep;
+    @SerializedName("name")
     private String name;
+    @SerializedName("data")
     private String data;
+    @SerializedName("login")
     private int login;
+    @SerializedName("url")
     private String url;
 //    private Origin origin;
 

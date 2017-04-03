@@ -1,6 +1,7 @@
 package com.iam.oneom.pages.main;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,7 +30,6 @@ import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.LinearLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
-import com.iam.oneom.env.widget.svg;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -103,7 +103,7 @@ public class EpisodeListActivity extends AppCompatActivity implements Toolbar.On
         setSupportActionBar(toolbar);
 
         toolbar.setOnMenuItemClickListener(this);
-        background.setImageBitmap(Decorator.fastblur(svg.logo.bitmap(), 2, 50));
+        background.setImageBitmap(Decorator.fastblur(BitmapFactory.decodeResource(getResources(), R.drawable.logo_bg, null), 1, 100));
 
         getSupportActionBar().setTitle(R.string.episodes);
         getSupportActionBar().setSubtitle(getString(R.string.last_updated,
@@ -119,11 +119,15 @@ public class EpisodeListActivity extends AppCompatActivity implements Toolbar.On
 
         groups = new LinkedHashMap<>();
         for (Episode e : episodes) {
-            if (groups.get(e.getAirdate()) == null) {
-                groups.put(e.getAirdate(), new ArrayList<>());
-                groups.get(e.getAirdate()).add(e);
+            if (e.getAirdate() == null) {
+                continue;
+            }
+
+            if (groups.get(new Date(e.getAirdate())) == null) {
+                groups.put(new Date(e.getAirdate()), new ArrayList<>());
+                groups.get(new Date(e.getAirdate())).add(e);
             } else {
-                groups.get(e.getAirdate()).add(e);
+                groups.get(new Date(e.getAirdate())).add(e);
             }
         }
 

@@ -1,6 +1,7 @@
 package com.iam.oneom.core.network.response;
 
 
+import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.entities.model.Country;
 import com.iam.oneom.core.entities.model.Genre;
 import com.iam.oneom.core.entities.model.Lang;
@@ -11,17 +12,24 @@ import com.iam.oneom.core.entities.model.Source;
 import com.iam.oneom.core.entities.model.Status;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 
-public class DataConfigResponse extends RealmObject {
+public class DataConfigResponse {
 
+    @SerializedName("lang")
     RealmList<Lang> lang;
-    RealmList<Quality> qualities;
+    @SerializedName("gquality")
     RealmList<QualityGroup> qualityGroups;
+    @SerializedName("quality")
+    RealmList<Quality> qualities;
+    @SerializedName("genre")
     RealmList<Genre> genres;
+    @SerializedName("source")
     RealmList<Source> sources;
+    @SerializedName("country")
     RealmList<Country> countries;
+    @SerializedName("network")
     RealmList<Network> networks;
+    @SerializedName("status")
     RealmList<Status> statuses;
 
     public RealmList<Lang> getLang() {
