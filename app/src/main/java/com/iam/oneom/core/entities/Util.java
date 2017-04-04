@@ -225,4 +225,8 @@ public class Util {
 
         return episode.getDescription().get(0).getBody();
     }
+
+    public static boolean isEmptySource(Source source) {
+        return source.getSearchPage() == null || source.getSearchPage().length() == 0;
+    }
 }

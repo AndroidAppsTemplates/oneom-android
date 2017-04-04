@@ -47,12 +47,17 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.EpisodePage.EpisodePageActivity" />
+            android:name=".pages.main.episodepage.EpisodePageActivity" />
         <activity
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.EpisodePage.EpisodePageActivityNew" />
+            android:name=".pages.main.search.BaseSearchActivity" />
+        <activity
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".pages.main.episodepage.EpisodePageActivityNew" />
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="landscape"

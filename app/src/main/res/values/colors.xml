@@ -6,6 +6,7 @@
     <color name="black">#000000</color>
     <color name="quart_gray">#444</color>
     <color name="half_gray">#888</color>
+    <color name="whity_gray">#CCC</color>
     <color name="white">#fff</color>
     <color name="transparent">#00ffffff</color>
     <color name="half_transparent">#88FFFFFF</color>

@@ -36,6 +36,8 @@ public class Source extends RealmObject implements Named {
     private int login;
     @SerializedName("url")
     private String url;
+    @SerializedName("weight")
+    private String weight;
 //    private Origin origin;
 
     public long getId() {

@@ -1,4 +1,4 @@
-package com.iam.oneom.pages.main.EpisodePage;
+package com.iam.oneom.pages.main.episodepage;
 
 import android.os.Bundle;
 
@@ -19,6 +19,11 @@ public class OnlinePageFragment extends BaseSearchListFragment {
         bundle.putLong(ID_EXTRA, id);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    protected void startNextActivity(Source source) {
+
     }
 
     @Override

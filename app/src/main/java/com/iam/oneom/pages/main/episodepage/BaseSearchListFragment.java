@@ -1,4 +1,4 @@
-package com.iam.oneom.pages.main.EpisodePage;
+package com.iam.oneom.pages.main.episodepage;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -162,26 +163,43 @@ public abstract class BaseSearchListFragment extends Fragment {
             TextView textView;
             @BindView(R.id.icon_next)
             ImageView iconNext;
+            @BindColor(R.color.white)
+            int active;
+            @BindColor(R.color.half_gray)
+            int not_active;
+
+            private View view;
 
             public ItemVH(View itemView) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
+                this.view = itemView;
             }
 
             @Override
             public void onBind(int position) {
                 Source source = sources.get(isRelatedExists() ? position - 1 : position);
                 textView.setText(source.getName());
+                textView.setTextColor(Util.isEmptySource(source) ? not_active : active);
                 divider.setVisibility(position == getItemCount() - 1 ? View.GONE : View.VISIBLE);
+                view.setOnClickListener(v -> {
+                    if (Util.isEmptySource(source)) {
+                        Toast.makeText(getActivity(), getString(R.string.no_searh_data, source.getName()), Toast.LENGTH_LONG).show();
+                    } else {
+                        startNextActivity(source);
+                    }
+                });
             }
         }
     }
+
+    protected abstract void startNextActivity(Source source);
 
     protected abstract List<? extends Tagged> getRelatedItems();
 
     protected abstract List<Source> getSources();
 
-    protected class HeaderAdapter <T extends Tagged & HasUrl> extends RecyclerView.Adapter<HeaderAdapter.ItemVH> {
+    protected class HeaderAdapter<T extends Tagged & HasUrl> extends RecyclerView.Adapter<HeaderAdapter.ItemVH> {
 
         private List<T> tagged;
 
@@ -240,5 +258,5 @@ public abstract class BaseSearchListFragment extends Fragment {
         }
     }
 
-    protected abstract<T extends Tagged> String getRelatedText(T tagged);
+    protected abstract <T extends Tagged> String getRelatedText(T tagged);
 }

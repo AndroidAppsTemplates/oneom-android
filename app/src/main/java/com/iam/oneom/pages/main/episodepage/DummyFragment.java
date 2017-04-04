@@ -1,4 +1,4 @@
-package com.iam.oneom.pages.main.EpisodePage;
+package com.iam.oneom.pages.main.episodepage;
 
 import android.support.v4.app.Fragment;
 
