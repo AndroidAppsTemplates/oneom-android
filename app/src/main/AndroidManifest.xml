@@ -52,7 +52,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.search.BaseSearchActivity" />
+            android:name=".pages.main.search.OnlinesSearchActivity" />
         <activity
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"

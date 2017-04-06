@@ -23,4 +23,5 @@
     <string name="never">Never</string>
     <string name="date_decor">-- %1$s --</string>
     <string name="no_searh_data">No search data for %1$s, will appear in future updates</string>
+    <string name="search">Search</string>
 </resources>
