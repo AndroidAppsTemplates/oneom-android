@@ -6,19 +6,19 @@ import com.iam.oneom.core.entities.model.Episode;
 import java.util.List;
 
 
-public class EpsResponse {
+public class EpsDateResponse {
 
-    @SerializedName("future_eps")
-    private List<Episode> future_eps;
+    @SerializedName("count")
+    private int count;
     @SerializedName("eps")
     private List<Episode> eps;
 
-    public List<Episode> getFutureEps() {
-        return future_eps;
+    public int getCount() {
+        return count;
     }
 
-    public EpsResponse setFutureEps(List<Episode> future_eps) {
-        this.future_eps = future_eps;
+    public EpsDateResponse setCount(int count) {
+        this.count = count;
         return this;
     }
 

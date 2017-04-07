@@ -11,24 +11,17 @@ import android.widget.TextView;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
-import com.iam.oneom.core.SecureStore;
 import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.network.Web;
-import com.iam.oneom.core.network.response.DataConfigResponse;
-import com.iam.oneom.core.rx.EpsReceivedEvent;
 import com.iam.oneom.core.rx.RxBus;
+import com.iam.oneom.core.rx.UpdateFinishedEvent;
+import com.iam.oneom.core.update.Updater;
 import com.iam.oneom.core.util.Decorator;
-
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.RealmList;
 import io.realm.RealmResults;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscription;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -41,9 +34,12 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.error)
     TextView error;
 
+    Subscription subscription;
+
     @OnClick(R.id.refresh)
     public void onRefreshClick(View v) {
-        getInitialData(true);
+        hideError();
+        Updater.update(this);
     }
 
     @Override
@@ -55,85 +51,25 @@ public class SplashActivity extends AppCompatActivity {
 
         Decorator.init(this);
 
-//        imageView.setImageDrawable(svg.logo.drawable(this));
-//
-        checkAndDownload();
+        subscription = RxBus.INSTANCE.register(UpdateFinishedEvent.class, updateFinishedEvent -> {
+            if (updateFinishedEvent.getThrowable() != null) {
+                showError(updateFinishedEvent.getThrowable().getMessage());
+                updateFinishedEvent.getThrowable().printStackTrace();
+                if (isThereEpisodesInDbCreated()) {
+                    nextActivity();
+                }
+            } else {
+                nextActivity();
+            }
+        });
+
+        Updater.update(this);
+
     }
 
     private boolean isThereEpisodesInDbCreated() {
         RealmResults<Episode> episodes = DbHelper.where(Episode.class).findAll();
-
         return (episodes != null && episodes.size() > 0);
-    }
-
-    private void checkAndDownload() {
-        if (isThereEpisodesInDbCreated()) {
-            nextActivity();
-        }
-
-        getInitialData(!isThereEpisodesInDbCreated());
-    }
-
-    private void getInitialData(boolean needLaunchActivity) {
-
-        hideError();
-
-        Web.instance.getInitialData().enqueue(new Callback<DataConfigResponse>() {
-            @Override
-            public void onResponse(Call<DataConfigResponse> call, Response<DataConfigResponse> response) {
-
-                if (response.code() != 200) {
-                    showError(Web.generateErrorMessage(response));
-                    return;
-                }
-
-                DataConfigResponse request = response.body();
-
-                DbHelper.insertAll(request.getCountries());
-                DbHelper.insertAll(request.getGenres());
-                DbHelper.insertAll(request.getLang());
-                DbHelper.insertAll(request.getNetworks());
-                DbHelper.insertAll(request.getQualities());
-                DbHelper.insertAll(request.getQualityGroups());
-                DbHelper.insertAll(request.getSources());
-                DbHelper.insertAll(request.getStatuses());
-
-                getShelduledEpisodes(needLaunchActivity);
-            }
-
-            @Override
-            public void onFailure(Call<DataConfigResponse> call, Throwable throwable) {
-                showError(throwable.getMessage());
-                throwable.printStackTrace();
-            }
-        });
-    }
-
-    private void getShelduledEpisodes(boolean needLaunchActivity) {
-        Web.instance.getLastEpisodes(null)
-                .subscribe(epsRequest -> {
-
-                    RealmList<Episode> eps = epsRequest.getEps();
-
-                    for (Episode episode : eps) {
-                        episode.setIsSheldule(true);
-                    }
-
-                    DbHelper.insertAll(eps);
-
-                    if (needLaunchActivity) {
-                        nextActivity();
-                        return;
-                    }
-
-                    SecureStore.setEpisodesLastUpdated(new Date().getTime());
-
-                    RxBus.INSTANCE.post(new EpsReceivedEvent(eps, SecureStore.getEpisodesLastUpdated()));
-
-                }, throwable -> {
-                    showError(throwable.getMessage());
-                    throwable.printStackTrace();
-                });
     }
 
     private void showError(String errorMessage) {
@@ -148,6 +84,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void nextActivity() {
+        subscription.unsubscribe();
         Intent intent = new Intent(SplashActivity.this, EpisodeListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

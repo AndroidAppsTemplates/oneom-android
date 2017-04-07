@@ -5,6 +5,7 @@ import android.util.Log;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Lang;
+import com.iam.oneom.core.entities.model.Poster;
 import com.iam.oneom.core.entities.model.QualityGroup;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.entities.model.Source;
@@ -61,11 +62,13 @@ public class Util {
             return "";
         }
 
-        if (serial.getPoster() == null) {
+        Poster poster = serial.getPoster();
+
+        if (poster == null) {
             return "";
         }
 
-        return Web.url.poster_prefix + resolution + serial.getPoster().getName();
+        return Web.url.poster_prefix + poster.getPath() + "/" + resolution + poster.getName();
     }
 
     public static int posterTint(Episode episode) {

@@ -7,6 +7,12 @@ import java.util.Date;
 
 public final class Time {
 
+    public static final long SECOND = 1000L;
+    public static final long MINUTE = SECOND * 60L;
+    public static final long HOUR = MINUTE * 60L;
+    public static final long DAY = HOUR * 24L;
+    public static final long MONTH = DAY * 30L;
+
     public static Date parse(String date, TimeFormat timeFormat) {
         if (date == null) {
             return new Date(0);
@@ -60,6 +66,10 @@ public final class Time {
     public static String format(String date, TimeFormat in, TimeFormat out) throws ParseException {
         Date d = in.dateFormat().parse(date);
         return out.dateFormat().format(d);
+    }
+
+    public static String toString(long millis) {
+        return format(new Date(millis), TimeFormat.IDN);
     }
 
     public static String getMonthName(int num) {

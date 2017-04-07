@@ -37,8 +37,9 @@ public class Episode extends RealmObject {
     @JsonAdapter(DateAdapter.class)
     @SerializedName("airdate")
     private Long airdate;
-//    @SerializedName("video_stream_url")
-//    private String videoStreamUrl;
+    @JsonAdapter(DateAdapter.class)
+    @SerializedName("updated_at")
+    private long updatedAt;
     @SerializedName("is_schedule")
     private boolean isSheldule;
 

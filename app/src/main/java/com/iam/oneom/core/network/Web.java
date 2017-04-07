@@ -7,8 +7,10 @@ import com.iam.oneom.core.GsonMapper;
 import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.network.response.DataConfigResponse;
 import com.iam.oneom.core.network.response.EpResponse;
+import com.iam.oneom.core.network.response.EpsDateResponse;
 import com.iam.oneom.core.network.response.EpsResponse;
 import com.iam.oneom.core.network.response.SerialResponse;
+import com.iam.oneom.core.update.UpdateException;
 import com.iam.oneom.core.util.Editor;
 
 import java.util.concurrent.TimeUnit;
@@ -91,6 +93,14 @@ public enum Web {
         return webInterface.getInitialData();
     }
 
+    public DataConfigResponse getInitialDataFlat() throws UpdateException {
+        try {
+            return webInterface.getInitialData().execute().body();
+        } catch (Exception e) {
+            throw new UpdateException(e);
+        }
+    }
+
     public Call<SerialsSearchRequest> searchSerials(String searchString) {
         return webInterface.searchSerials(Editor.encodeToUTF8(searchString));
     }
@@ -98,6 +108,21 @@ public enum Web {
     public Observable<EpsResponse> getLastEpisodes(DownloadProgressListener progressListener) {
         this.progressListener = progressListener;
         return webInterface.getLastEpisodes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    public EpsResponse getLastEpisodesFlat() throws UpdateException {
+        try {
+            return webInterface.getLastEpisodesFlat().execute().body();
+        } catch (Exception e) {
+            throw new UpdateException(e);
+        }
+    }
+
+    public Observable<EpsDateResponse> getLastEpisodesByDate(String start, String end) {
+        return webInterface.getEpisodesByDateObservable(start, end)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
@@ -115,5 +140,13 @@ public enum Web {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
+    }
+
+    public EpsDateResponse getDateEpisodesFlat(String start) throws UpdateException {
+        try {
+            return webInterface.getEpisodesByDate(start, null).execute().body();
+        } catch (Exception e) {
+            throw new UpdateException(e);
+        }
     }
 }

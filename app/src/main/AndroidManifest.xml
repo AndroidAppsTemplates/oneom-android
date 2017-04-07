@@ -16,6 +16,9 @@
         android:configChanges="orientation|keyboardHidden"
         android:theme="@style/AppTheme">
 
+        <service android:name=".core.update.Updater" />
+
+
         <activity
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
