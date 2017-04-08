@@ -2,10 +2,7 @@ package com.iam.oneom.core.entities.model;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.iam.oneom.core.jsonadapter.DateAdapter;
 import com.iam.oneom.core.jsonadapter.DateLongAdapter;
-
-import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -37,9 +34,9 @@ public class Episode extends RealmObject {
     private String title;
     @SerializedName("fb_post_id")
     private String fbPostId;
-    @JsonAdapter(DateAdapter.class)
+    @JsonAdapter(DateLongAdapter.class)
     @SerializedName("airdate")
-    private Date airdate;
+    private Long airdate;
     @JsonAdapter(DateLongAdapter.class)
     @SerializedName("updated_at")
     private long updatedAt;
@@ -86,7 +83,7 @@ public class Episode extends RealmObject {
         return title;
     }
 
-    public Date getAirdate() {
+    public Long getAirdate() {
         return airdate;
     }
 

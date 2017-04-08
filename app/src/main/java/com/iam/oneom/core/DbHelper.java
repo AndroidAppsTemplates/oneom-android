@@ -11,8 +11,7 @@ import io.realm.RealmQuery;
 
 public class DbHelper {
 
-    private static final long SCHEMA_VERSION = 1;
-    private static DbHelper instance;
+    private static final long SCHEMA_VERSION = 4;
 
     static Realm getRealm() {
         return Realm.getDefaultInstance();
@@ -62,9 +61,9 @@ public class DbHelper {
         }
     }
 
-    public static final <T extends RealmObject> T clone(T object) {
+    public static <T extends RealmObject> T clone(T object) {
         if (object == null) {
-            return object;
+            return null;
         }
         if (!(RealmObject.isManaged(object) && RealmObject.isValid(object))) {
             return object;

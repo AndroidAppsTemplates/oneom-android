@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.util.DateDescendingOrderComparator;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-/**
- * Created by iam on 08.04.17.
- */
+import java.util.TreeMap;
 
 class EpisodesAdapter extends RecyclerView.Adapter<GroupVH> {
 
@@ -24,10 +22,10 @@ class EpisodesAdapter extends RecyclerView.Adapter<GroupVH> {
     private LayoutInflater inflater;
 
 
-    public EpisodesAdapter(Context context, Map<Date, List<Episode>> groups) {
+    EpisodesAdapter(Context context, List<Episode> episodes) {
         inflater = LayoutInflater.from(context);
-        this.groups = groups;
-        this.keys = new ArrayList(groups.keySet());
+        addData(episodes);
+        this.keys = new ArrayList<>(groups.keySet());
     }
 
     @Override
@@ -46,9 +44,39 @@ class EpisodesAdapter extends RecyclerView.Adapter<GroupVH> {
         return groups.size();
     }
 
+    void addData(List<Episode> episodes) {
+        if (episodes == null || episodes.size() == 0) {
+            return;
+        }
 
-    public void addGroups(Map<Date, List<Episode>> groups) {
+        Map<Date, List<Episode>> groups = new TreeMap<>(new DateDescendingOrderComparator());
+
+        for (Episode e : episodes) {
+
+            Date airdate = new Date(e.getAirdate());
+
+            if (airdate == null) {
+                continue;
+            }
+
+            if (groups.get(airdate) == null) {
+                groups.put(airdate, new ArrayList<>());
+                groups.get(airdate).add(e);
+            } else {
+                groups.get(airdate).add(e);
+            }
+        }
+
+        addGroups(groups);
+    }
+
+    private void addGroups(Map<Date, List<Episode>> groups) {
         if (groups == null || groups.size() == 0) {
+            return;
+        }
+
+        if (this.groups == null) {
+            this.groups = groups;
             return;
         }
 
@@ -77,7 +105,7 @@ class EpisodesAdapter extends RecyclerView.Adapter<GroupVH> {
         }
     }
 
-    public boolean containsEpisode(List<Episode> episodes, Episode episode) {
+    private boolean containsEpisode(List<Episode> episodes, Episode episode) {
         long id = episode.getId();
         for (Episode e : episodes) {
             if (e.getId() == id) {

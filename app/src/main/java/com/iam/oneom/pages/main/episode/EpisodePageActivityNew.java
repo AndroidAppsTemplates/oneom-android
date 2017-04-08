@@ -29,6 +29,7 @@ import com.iam.oneom.core.util.Time;
 import com.iam.oneom.pages.main.SerialPageActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindColor;
@@ -114,7 +115,7 @@ public class EpisodePageActivityNew extends AppCompatActivity {
         }
 
         toolbar.setTitle(Util.title(episode));
-        toolbar.setSubtitle(getString(R.string.airdate) + ": " + Time.format(episode.getAirdate(), Time.TimeFormat.TEXT));
+        toolbar.setSubtitle(getString(R.string.airdate) + ": " + Time.format(new Date(episode.getAirdate()), Time.TimeFormat.TEXT));
         toolbar.setOnClickListener(v -> SerialPageActivity.start(this, episode.getSerial().getId()));
 
         configureColors();

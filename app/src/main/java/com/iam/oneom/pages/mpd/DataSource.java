@@ -16,5 +16,6 @@ public interface DataSource<T> {
     }
 
     void getModels();
+    void unsubscribe();
     void refresh(Context context);
 }

@@ -34,6 +34,7 @@ import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDec
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
 import com.iam.oneom.env.widget.text.Text;
+import com.iam.oneom.view.recycler.EpisodeVH;
 
 import java.util.Date;
 

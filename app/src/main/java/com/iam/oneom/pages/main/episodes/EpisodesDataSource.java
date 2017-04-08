@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.RealmQuery;
-import io.realm.Sort;
+import rx.Subscription;
 
 /**
  * Created by iam on 08.04.17.
@@ -25,11 +25,12 @@ import io.realm.Sort;
 
 class EpisodesDataSource implements PagingDataSource<Episode> {
 
-    OnLoadListener<Episode> l;
+    private OnLoadListener<Episode> l;
+    private Subscription subscription;
 
     public EpisodesDataSource(OnLoadListener<Episode> l) {
         this.l = l;
-        RxBus.INSTANCE.register(UpdateFinishedEvent.class,
+        subscription = RxBus.INSTANCE.register(UpdateFinishedEvent.class,
                 updateFinishedEvent -> {
                     if (l != null) {
                         l.onLoad(new ArrayList<>());
@@ -42,14 +43,26 @@ class EpisodesDataSource implements PagingDataSource<Episode> {
 
     @Override
     public void getPrevious() {
-        Number updatedAt = query().min("updatedAt");
+        Number updatedAt = query().min("airdate");
         long end = updatedAt.longValue();
         if (end <= 0) {
             return;
         }
 
-        long start = end - Time.MONTH;
+        long start = end - 2 * Time.MONTH;
         if (start <= 0) {
+            start = 0;
+        }
+
+        List<Episode> episodes = query()
+                .lessThan("airdate", end)
+                .greaterThan("airdate", start)
+                .findAll();
+
+        if (episodes != null && episodes.size() != 0) {
+            if (l != null) {
+                l.onLoad(episodes);
+            }
             return;
         }
 
@@ -78,18 +91,22 @@ class EpisodesDataSource implements PagingDataSource<Episode> {
     @Override
     public void getModels() {
         List<Episode> episodes = query()
-                .findAllSorted("airdate", Sort.DESCENDING);
+                .lessThan("updatedAt", new Date(new Date().getTime() + Time.YEAR).getTime())
+                .greaterThan("updatedAt", new Date(new Date().getTime() - 2 * Time.MONTH).getTime())
+                .findAll();
         if (l != null) {
             l.onLoad(episodes);
         }
     }
 
+    @Override
+    public void unsubscribe() {
+        subscription.unsubscribe();
+    }
+
     @NonNull
     private RealmQuery<Episode> query() {
-        return DbHelper.where(Episode.class)
-                .lessThan("airdate", new Date(new Date().getTime() + Time.YEAR))
-                .greaterThan("airdate", new Date(new Date().getTime() - 2 * Time.MONTH))
-                ;
+        return DbHelper.where(Episode.class);
     }
 
     @Override

@@ -14,20 +14,17 @@ import android.widget.Toast;
 import com.iam.oneom.R;
 import com.iam.oneom.core.SecureStore;
 import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.util.DateDescendingOrderComparator;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.LinearLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
+import com.iam.oneom.pages.mpd.PagingPresenter;
 import com.iam.oneom.pages.mpd.View;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import butterknife.BindColor;
 import butterknife.BindDimen;
@@ -36,10 +33,6 @@ import butterknife.ButterKnife;
 
 public class EpisodeListActivity extends AppCompatActivity
         implements Toolbar.OnMenuItemClickListener, View<Episode> {
-
-    private static final String TAG = EpisodeListActivity.class.getSimpleName();
-
-//    ListPopupWindow popupWindow;
 
     @BindView(R.id.progress)
     CircleProgressBar progressBar;
@@ -62,9 +55,9 @@ public class EpisodeListActivity extends AppCompatActivity
     @BindColor(R.color.middle)
     protected int middleColor;
 
-    EpisodesListPresenter presenter;
+    private PagingPresenter presenter;
 
-    EpisodesAdapter adapter;
+    private EpisodesAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,14 +79,11 @@ public class EpisodeListActivity extends AppCompatActivity
 
     private void configureViews() {
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    presenter.refresh(EpisodeListActivity.this);
-                } else {
-                    presenter.loadMore();
-                }
+        swipeRefreshLayout.setOnRefreshListener(direction -> {
+            if (direction == SwipyRefreshLayoutDirection.TOP) {
+                presenter.refresh(EpisodeListActivity.this);
+            } else {
+                presenter.loadMore();
             }
         });
 
@@ -110,47 +100,15 @@ public class EpisodeListActivity extends AppCompatActivity
     }
 
     private void configureViewsData() {
+        if (getSupportActionBar() == null) {
+            return;
+        }
+
         getSupportActionBar().setTitle(R.string.episodes);
         getSupportActionBar().setSubtitle(getString(R.string.last_updated,
                 SecureStore.getEpisodesLastUpdated() == 0 ?
                         getString(R.string.never) : Time.format(new Date(SecureStore.getEpisodesLastUpdated()), "HH:mm, dd MMM yyyy")));
 
-    }
-
-    private void formGroups(List<Episode> episodes) {
-
-        if (episodes == null || episodes.size() == 0) {
-            return;
-        }
-
-        Map<Date, List<Episode>> groups = new TreeMap<>(new DateDescendingOrderComparator());
-
-        for (Episode e : episodes) {
-
-            Date airdate = e.getAirdate();
-
-            if (airdate == null) {
-                continue;
-            }
-
-            if (groups.get(airdate) == null) {
-                groups.put(airdate, new ArrayList<>());
-                groups.get(airdate).add(e);
-            } else {
-                groups.get(airdate).add(e);
-            }
-        }
-
-        invalidateRecycler(groups);
-    }
-
-    private void invalidateRecycler(Map<Date, List<Episode>> groups) {
-        if (adapter == null) {
-            adapter = new EpisodesAdapter(this, groups);
-            episodesGrid.setAdapter(adapter);
-        } else {
-            adapter.addGroups(groups);
-        }
     }
 
     @Override
@@ -177,7 +135,12 @@ public class EpisodeListActivity extends AppCompatActivity
 
     @Override
     public void show(List<Episode> list) {
-        formGroups(list);
+        if (adapter == null) {
+            adapter = new EpisodesAdapter(this, list);
+            episodesGrid.setAdapter(adapter);
+        } else {
+            adapter.addData(list);
+        }
         configureViewsData();
     }
 

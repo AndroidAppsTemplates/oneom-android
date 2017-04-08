@@ -36,6 +36,7 @@ class EpisodesListPresenter implements PagingPresenter<Episode>, DataSource.OnLo
 
     @Override
     public void onDestroy() {
+        dataSource.unsubscribe();
         view = null;
     }
 

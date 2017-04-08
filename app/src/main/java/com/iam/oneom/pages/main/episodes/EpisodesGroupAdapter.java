@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.pages.main.EpisodeVH;
+import com.iam.oneom.view.recycler.EpisodeVH;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,8 +17,8 @@ import java.util.List;
 
 class EpisodesGroupAdapter extends RecyclerView.Adapter<EpisodeVH> {
 
-    LayoutInflater inflater;
-    List<Episode> episodes = new ArrayList<>();
+    private LayoutInflater inflater;
+    private List<Episode> episodes;
 
     public EpisodesGroupAdapter(List<Episode> episodes, Context context) {
         if (context != null) inflater = LayoutInflater.from(context);
@@ -38,6 +37,6 @@ class EpisodesGroupAdapter extends RecyclerView.Adapter<EpisodeVH> {
 
     @Override
     public int getItemCount() {
-        return episodes.size();// + 1;
+        return episodes.size();
     }
 }
