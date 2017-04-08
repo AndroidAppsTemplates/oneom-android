@@ -1,8 +1,8 @@
 package com.iam.oneom.view.recycler;
 
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,8 +30,16 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
     protected TextView title;
     @BindView(R.id.ep)
     protected TextView ep;
-    @BindView(R.id.tagBar)
-    protected RecyclerView tagbar;
+    @BindView(R.id.t_appearance_label)
+    protected FrameLayout t_appearance_label;
+    @BindView(R.id.t_appearance_text)
+    protected TextView t_appearance_text;
+    @BindView(R.id.o_appearance_label)
+    protected FrameLayout o_appearance_label;
+    @BindView(R.id.o_appearance_text)
+    protected TextView o_appearance_text;
+//    @BindView(R.id.tagBar)
+//    protected RecyclerView tagbar;
 
     @BindDimen(R.dimen.episode_item_corner)
     protected int episode_item_image_corner;
@@ -61,9 +69,12 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
         view.setOnClickListener(v -> {
             EpisodePageActivityNew.open(v.getContext(), ep.getId());
         });
-
-        tagbar.setAdapter(new TagAdapter(tagbar.getContext(), tags));
-        tagbar.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
+        t_appearance_label.setVisibility(Util.hasTorrents(ep) ? View.VISIBLE : View.GONE);
+        o_appearance_label.setVisibility(Util.hasOnlines(ep) ? View.VISIBLE : View.GONE);
+        t_appearance_text.setText(String.valueOf(Util.torrentsCount(ep)));
+        o_appearance_text.setText(String.valueOf(Util.onlinesCount(ep)));
+//        tagbar.setAdapter(new TagAdapter(tagbar.getContext(), tags));
+//        tagbar.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
 
     }
 }

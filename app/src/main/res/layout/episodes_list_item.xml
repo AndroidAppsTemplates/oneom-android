@@ -52,11 +52,62 @@
             android:textSize="18sp"
             android:textColor="@color/light" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/tagBar"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_torrent_white_24px"/>
+                <FrameLayout
+                    android:id="@+id/t_appearance_label"
+                    android:layout_gravity="end"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:background="@drawable/green_round_6dp">
+                    <TextView
+                        android:id="@+id/t_appearance_text"
+                        android:text="99"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_subscriptions_white_24px"/>
+                <FrameLayout
+                    android:id="@+id/o_appearance_label"
+                    android:layout_gravity="end"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:background="@drawable/green_round_6dp">
+                    <TextView
+                        android:id="@+id/o_appearance_text"
+                        android:text="99"
+                        android:textSize="8sp"
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+            </FrameLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

@@ -232,4 +232,20 @@ public class Util {
     public static boolean isEmptySource(Source source) {
         return source.getSearchPage() == null || source.getSearchPage().length() == 0;
     }
+
+    public static boolean hasOnlines(Episode episode) {
+        return episode.getOnline() != null && episode.getOnline().size() > 0;
+    }
+
+    public static int onlinesCount(Episode episode) {
+        return episode.getOnline() == null ? 0 : episode.getOnline().size();
+    }
+
+    public static boolean hasTorrents(Episode episode) {
+        return episode.getTorrent() != null && episode.getTorrent().size() > 0;
+    }
+
+    public static int torrentsCount(Episode episode) {
+        return episode.getTorrent() == null ? 0 : episode.getTorrent().size();
+    }
 }

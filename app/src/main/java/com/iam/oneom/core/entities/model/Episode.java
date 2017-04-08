@@ -63,6 +63,10 @@ public class Episode extends RealmObject {
         return description;
     }
 
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
     public Serial getSerial() {
         return serial;
     }

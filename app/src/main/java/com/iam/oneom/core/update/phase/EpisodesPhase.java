@@ -17,10 +17,22 @@ public class EpisodesPhase extends Phase {
     public void run() throws UpdateException {
         if (System.currentTimeMillis() - lastUpdated() < Time.MONTH) {
             EpsDateResponse response = Web.instance.getDateEpisodesFlat(Time.toString(lastUpdated()));
+
+            for (Episode episode : response.getEps()) {
+                episode.setIsSheldule(true);
+            }
             DbHelper.insertAll(response.getEps());
         } else {
             EpsResponse response = Web.instance.getLastEpisodesFlat();
+
+            for (Episode episode : response.getEps()) {
+                episode.setIsSheldule(true);
+            }
             DbHelper.insertAll(response.getEps());
+
+            for (Episode episode : response.getFutureEps()) {
+                episode.setIsSheldule(true);
+            }
             DbHelper.insertAll(response.getFutureEps());
         }
 

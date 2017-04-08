@@ -44,4 +44,5 @@
     <color name="recycler_item_background_dark">#4aaa</color>
     <color name="bluring_background">#e0eeeeee</color>
     <color name="tag_bar_text_color">@color/episode_item_serial_title_blue</color>
+    <color name="green_transparent">#ee008800</color>
 </resources>
