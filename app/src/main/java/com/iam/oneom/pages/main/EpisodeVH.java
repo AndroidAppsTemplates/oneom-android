@@ -14,7 +14,7 @@ import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Torrent;
 import com.iam.oneom.core.util.Decorator;
-import com.iam.oneom.pages.main.episodepage.EpisodePageActivityNew;
+import com.iam.oneom.pages.main.episode.EpisodePageActivityNew;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,8 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
     }
 
     public void onBind(Episode ep) {
-        String titleText = ep.getSerial().getTitle();
+
+        String titleText = Util.title(ep);
         title.setText(titleText);
         this.ep.setText(Util.episodeInSeasonString(ep));
         ArrayList<String> tags = new ArrayList<>();

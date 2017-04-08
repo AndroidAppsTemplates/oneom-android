@@ -12,6 +12,7 @@ public final class Time {
     public static final long HOUR = MINUTE * 60L;
     public static final long DAY = HOUR * 24L;
     public static final long MONTH = DAY * 30L;
+    public static final long YEAR = MONTH * 12L;
 
     public static Date parse(String date, TimeFormat timeFormat) {
         if (date == null) {

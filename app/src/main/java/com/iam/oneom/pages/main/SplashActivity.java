@@ -16,6 +16,7 @@ import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.rx.UpdateFinishedEvent;
 import com.iam.oneom.core.update.Updater;
 import com.iam.oneom.core.util.Decorator;
+import com.iam.oneom.pages.main.episodes.EpisodeListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -2,8 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="@android:string/search_go"
         android:id="@+id/search"
         android:icon="@drawable/ic_search_white_24px"
-        app:showAsAction="always"/>
+        android:title="@android:string/search_go"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_more_vert_white_24px"
+        android:title="@string/settings"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/future"
+                android:icon="@drawable/ic_schedule_white_24px"
+                android:title="@string/future_episodes"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/torrents"
+                android:icon="@drawable/ic_torrent_white_24px"
+                android:title="@string/with_torrents"
+                app:showAsAction="never" />
+        </menu>
+    </item>
 </menu>

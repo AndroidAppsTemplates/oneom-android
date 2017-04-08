@@ -3,6 +3,9 @@ package com.iam.oneom.core.entities.model;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.iam.oneom.core.jsonadapter.DateAdapter;
+import com.iam.oneom.core.jsonadapter.DateLongAdapter;
+
+import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -36,8 +39,8 @@ public class Episode extends RealmObject {
     private String fbPostId;
     @JsonAdapter(DateAdapter.class)
     @SerializedName("airdate")
-    private Long airdate;
-    @JsonAdapter(DateAdapter.class)
+    private Date airdate;
+    @JsonAdapter(DateLongAdapter.class)
     @SerializedName("updated_at")
     private long updatedAt;
     @SerializedName("is_schedule")
@@ -83,17 +86,9 @@ public class Episode extends RealmObject {
         return title;
     }
 
-//    public String getVkPostId() {
-//        return vkPostId;
-//    }
-
-    public Long getAirdate() {
+    public Date getAirdate() {
         return airdate;
     }
-
-//    public String getVideoStreamUrl() {
-//        return videoStreamUrl;
-//    }
 
     public void setId(long id) {
         this.id = id;
@@ -131,21 +126,9 @@ public class Episode extends RealmObject {
         this.title = title;
     }
 
-//    public void setVkPostId(String vkPostId) {
-//        this.vkPostId = vkPostId;
-//    }
-
     public void setDescription(RealmList<Description> description) {
         this.description = description;
     }
-
-    public void setAirdate(Long airdate) {
-        this.airdate = airdate;
-    }
-//
-//    public void setVideoStreamUrl(String videoStreamUrl) {
-//        this.videoStreamUrl = videoStreamUrl;
-//    }
 
     public void setIsSheldule(boolean isSheldule) {
         this.isSheldule = isSheldule;

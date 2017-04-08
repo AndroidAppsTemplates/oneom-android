@@ -24,4 +24,7 @@
     <string name="date_decor">-- %1$s --</string>
     <string name="no_searh_data">No search data for %1$s, will appear in future updates</string>
     <string name="search">Search</string>
+    <string name="future_episodes">Future episodes</string>
+    <string name="with_torrents">With torrents</string>
+    <string name="settings">Settings</string>
 </resources>

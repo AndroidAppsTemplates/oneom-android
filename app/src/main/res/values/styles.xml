@@ -1,5 +1,21 @@
 <resources>
 
+    <style name="toolbarColored" parent="AppTheme">
+        <item name="android:background">@color/dark</item>
+        <item name="android:textColorSecondary">@color/light</item>
+        <item name="popupTheme">@style/PopupMenuStyle</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+
+    <style name="PopupMenuStyle" parent="android:Widget.Holo.Light.PopupMenu">
+        <item name="android:textColor">@color/light</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:dropDownHorizontalOffset">-4dp</item>
+        <item name="android:dropDownVerticalOffset">48dp</item>
+    </style>
+
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/dark</item>
         <item name="tabPaddingStart">6dp</item>

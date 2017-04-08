@@ -23,7 +23,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.EpisodeListActivity">
+            android:name=".pages.main.episodes.EpisodeListActivity">
 
         </activity>
 
@@ -50,7 +50,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.episodepage.EpisodePageActivity" />
+            android:name=".pages.main.episode.EpisodePageActivity" />
         <activity
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
@@ -60,7 +60,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.episodepage.EpisodePageActivityNew" />
+            android:name=".pages.main.episode.EpisodePageActivityNew" />
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="landscape"

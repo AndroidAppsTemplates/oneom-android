@@ -7,9 +7,12 @@
     <TextView
         android:id="@+id/date"
         android:textSize="20sp"
+        android:text="-- 30 may 2017 --"
         android:textColor="@color/light"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
+        android:gravity="center"
         android:layout_width="match_parent"
+        android:background="@drawable/rounded_corners_4dp_dark_transparent_background"
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView

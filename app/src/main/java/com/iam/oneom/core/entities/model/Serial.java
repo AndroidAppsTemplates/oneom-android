@@ -2,7 +2,7 @@ package com.iam.oneom.core.entities.model;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.iam.oneom.core.jsonadapter.DateAdapter;
+import com.iam.oneom.core.jsonadapter.DateLongAdapter;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -44,10 +44,10 @@ public class Serial extends RealmObject {
     private String imdbRating;
     @SerializedName("runtime")
     private int runtime;
-    @JsonAdapter(DateAdapter.class)
+    @JsonAdapter(DateLongAdapter.class)
     @SerializedName("start")
     private Long start; // "1950-07-04",
-    @JsonAdapter(DateAdapter.class)
+    @JsonAdapter(DateLongAdapter.class)
     @SerializedName("end")
     private Long end; // "1950-07-04",
     @SerializedName("airtime")
