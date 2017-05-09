@@ -41,6 +41,21 @@ public class Editor {
         return parts[parts.length - 1];
     }
 
+    public static String addPairs(String root, String key, String value) throws UnsupportedEncodingException {
+        StringBuilder result = new StringBuilder();
+
+        result.append(root);
+
+        if (!root.equals("")) result.append("&");
+
+
+        result.append(URLEncoder.encode(key, "UTF-8"));
+        result.append("=");
+        result.append(URLEncoder.encode(value, "UTF-8"));
+
+        return result.toString();
+    }
+
     public static ArrayList<String> splitTOWords(String s) {
         ArrayList<String> result = new ArrayList<>();
         String[] words = s.split(pattern.notALetter);

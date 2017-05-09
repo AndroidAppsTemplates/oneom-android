@@ -1,7 +1,6 @@
 package com.iam.oneom.pages;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.util.Device;
@@ -18,14 +17,8 @@ public class OneOm extends Application {
         Device.init(this);
         DbHelper.init(this);
 
-//        svg.init(getApplicationContext());
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(final Thread thread, final Throwable ex) {
-                Log.d("DEH", "Default exception handler");
-                ex.printStackTrace();
-                ErrorHandler.handleError(thread, ex);
-            }
+        Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> {
+            new ErrorHandler().handleError(thread, ex, true);
         });
     }
 

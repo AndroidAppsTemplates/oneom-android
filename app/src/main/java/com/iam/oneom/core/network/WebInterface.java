@@ -8,8 +8,13 @@ import com.iam.oneom.core.network.response.EpsDateResponse;
 import com.iam.oneom.core.network.response.EpsResponse;
 import com.iam.oneom.core.network.response.SerialResponse;
 
+import java.util.Map;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.FieldMap;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -41,4 +46,7 @@ public interface WebInterface {
 
     @GET("/ep/{id}")
     Observable<EpResponse> getEpisode(@Path("id") long id);
+
+    @POST("/error/java")
+    Call<ResponseBody> sendError(@FieldMap Map<String, String> data);
 }

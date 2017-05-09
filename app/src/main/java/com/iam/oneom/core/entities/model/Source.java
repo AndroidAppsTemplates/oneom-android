@@ -140,7 +140,7 @@ public class Source extends RealmObject implements Named {
             try {
                 throw new RuntimeException("Unknown source type " + type_id);
             } catch (Exception e) {
-                ErrorHandler.handleError(Thread.currentThread(), e);
+                new ErrorHandler().handleError(Thread.currentThread(), e, true);
             }
             return null;
         }

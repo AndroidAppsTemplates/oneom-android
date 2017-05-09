@@ -1,6 +1,6 @@
 package com.iam.oneom.core.search.subtitles;
 
-import com.iam.oneom.core.entities.old.Lang;
+import com.iam.oneom.core.entities.model.Lang;
 import com.iam.oneom.core.search.Key;
 import com.iam.oneom.core.search.SearchResult;
 

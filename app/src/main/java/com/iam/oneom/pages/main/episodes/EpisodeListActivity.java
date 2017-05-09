@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.util.Time;
 import com.iam.oneom.databinding.EpisodesListActivityBinding;
 import com.iam.oneom.pages.mpd.PagingPresenter;
 import com.iam.oneom.pages.mpd.View;
@@ -63,6 +64,7 @@ public class EpisodeListActivity extends AppCompatActivity
 
     @Override
     public void show(List<Episode> list) {
+        viewModel.lastUpdated.set(Time.episodesLastUpdated(this));
         viewModel.items.addAll(list);
     }
 

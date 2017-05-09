@@ -13,6 +13,8 @@ import com.iam.oneom.core.network.response.SerialResponse;
 import com.iam.oneom.core.update.UpdateException;
 import com.iam.oneom.core.util.Editor;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -118,6 +120,14 @@ public enum Web {
             return webInterface.getLastEpisodesFlat().execute().body();
         } catch (Exception e) {
             throw new UpdateException(e);
+        }
+    }
+
+    public void sendError(Map<String, String> data) {
+        try {
+            webInterface.sendError(data).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

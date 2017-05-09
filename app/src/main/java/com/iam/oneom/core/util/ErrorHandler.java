@@ -1,102 +1,108 @@
 package com.iam.oneom.core.util;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
 import com.iam.oneom.BuildConfig;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ErrorHandler {
 
-    private ErrorHandler() {}
+    private static final String BUILD_TYPE = "_____build_type";
+    private static final String TIME = "___________time";
+    private static final String THREAD = "____thread_name";
+    private static final String DEVICE_BRAND = "___device_brand";
+    private static final String DEVICE_CPU = "_____device_cpu";
+    private static final String DEVICE_TYPE = "____device_type";
+    private static final String DEVICE_DISPLAY = "_device_display";
+    private static final String DEVICE_MODEL = "___device_model";
+    private static final String DEVICE_SDK = "_____device_sdk";
+    private static final String DEVICE_RAM = "_____device_ram";
+    private static final String DEVICE_OS = "______device_os";
 
-    public static void handleError(Thread thread, Throwable exception, String... message) {
-        ErrorReportAsyncTask task;
-        if (message.length > 0 && message.length % 2 == 1) {
-            task = new ErrorReportAsyncTask(thread, exception, message);
-        } else {
-            task = new ErrorReportAsyncTask(thread, exception, "uncaught");
+    private static final String STACKTRACE_FORMAT = "stack_trace_%03d";
+    private static final String CAUSED_BY = "Caused by: ";
+    private static final String AT = "\t\tat ";
+    private static final String MB_RAM = "MB RAM";
+    private static final String EMPTY = "";
+
+    private int i = 0;
+
+    public void handleError(Thread thread, Throwable exception, boolean log) {
+        Map<String, String> data = collectErrorData(thread, exception);
+        if (log) {
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                System.out.println(entry.getKey() + " " + entry.getValue());
+            }
         }
-        task.execute();
+        com.iam.oneom.core.network.Web.instance.sendError(data);
     }
 
-    private static class ErrorReportAsyncTask extends AsyncTask<String, Void, Void> {
+    private Map<String, String> collectErrorData(Thread thread, Throwable exception) {
+        Map<String, String> data = new TreeMap<>();
 
-        private Thread thread;
-        private Throwable exception;
-        private String[] message;
+        data.putAll(getDeviceDataPairs());
+        data.putAll(getMainDataMap(thread, exception));
+        data.putAll(getCauseStackTraceMap(exception));
 
-        private String pairs = "";
-        private int i = 0;
+        return data;
 
-        public ErrorReportAsyncTask(Thread thread, Throwable exception, String... message) {
-            this.thread = thread;
-            this.exception = exception;
-            this.message = message;
-        }
-
-        private void writeCause(Throwable e) throws UnsupportedEncodingException {
-            final Throwable cause = e.getCause();
-            if (cause == null) return;
-            else {
-                Log.d("cause", cause.toString());
-                pairs = Web.addPairs(pairs, String.format("stack_trace_%03d", i++), "Caused by: " + cause.toString());
-                writeStackTraceToData(cause);
-                writeCause(cause);
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            try {
-                pairs = Web.addPairs(pairs, format("version"), BuildConfig.DEBUG ? "DEBUG" : "RELEASE");
-                for (int i = 1, l = message.length; i < l; i += 2) {
-                    pairs = Web.addPairs(pairs, message[i], message[i + 1]);
-                }
-
-                Device device = Device.instance();
-
-                pairs = Web.addPairs(pairs, format("android"), device.OS_VERSION);
-                pairs = Web.addPairs(pairs, format("time"), new Date(System.currentTimeMillis()).toString());
-                pairs = Web.addPairs(pairs, format("device_bra"), device.BRAND);
-                pairs = Web.addPairs(pairs, format("device_cpu"), device.CPU);
-                pairs = Web.addPairs(pairs, format("device_typ"), device.DEVICE_TYPE);
-                pairs = Web.addPairs(pairs, format("device_dis"), device.DISPLAY_INFO);
-                pairs = Web.addPairs(pairs, format("device_mod"), device.MODEL);
-                pairs = Web.addPairs(pairs, format("device_sdk"), device.SDK);
-                pairs = Web.addPairs(pairs, format("device_ram"), device.RAM_MEGABYTES + "MB RAM");
-                pairs = Web.addPairs(pairs, format("thread_name"), thread.getName());
-                pairs = Web.addPairs(pairs, format("about"), message[0]);
-                pairs = Web.addPairs(pairs, format("error"), exception.toString());
-                System.out.println(pairs);
-                writeStackTraceToData(exception);
-                writeCause(exception);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void writeStackTraceToData(Throwable e) throws UnsupportedEncodingException {
-            for (StackTraceElement s : e.getStackTrace()) {
-                pairs = Web.addPairs(pairs, String.format("stack_trace_%03d", i++), "\t\tat " + s.toString());
-            }
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-            Web.POST(Web.url.domain + Web.url.error, pairs);
-            return null;
-        }
-
-        private String format(String s) {
-            StringBuilder space = new StringBuilder();
-            for (int i = 0, needs_ = 15 - s.length(); i < needs_; i++) {
-                space.append("_");
-            }
-            return space.append(s).toString();
-        }
     }
 
+    private Map<String, String> getMainDataMap(Thread thread, Throwable exception) {
+        Map<String, String> data = new TreeMap<>();
+
+        data.put(BUILD_TYPE, BuildConfig.BUILD_TYPE);
+        data.put(TIME, new Date(System.currentTimeMillis()).toString());
+        data.put(THREAD, thread.getName());
+
+        return data;
+    }
+
+    private Map<String, String> getDeviceDataPairs() {
+        Map<String, String> data = new TreeMap<>();
+
+        Device device = Device.instance();
+
+        data.put(DEVICE_BRAND, device.BRAND);
+        data.put(DEVICE_CPU, device.CPU);
+        data.put(DEVICE_TYPE, device.DEVICE_TYPE);
+        data.put(DEVICE_DISPLAY, device.DISPLAY_INFO);
+        data.put(DEVICE_MODEL, device.MODEL);
+        data.put(DEVICE_SDK, device.SDK);
+        data.put(DEVICE_RAM, device.RAM_MEGABYTES + MB_RAM);
+        data.put(DEVICE_OS, device.OS_VERSION);
+
+        return data;
+    }
+
+    private Map<String, String> getCauseStackTraceMap(Throwable e) {
+        Map<String, String> data = new TreeMap<>();
+
+        if (e == null) {
+            return data;
+        }
+
+        data.put(String.format(Locale.ENGLISH, STACKTRACE_FORMAT, i++),
+                (i == 1 ? EMPTY : CAUSED_BY) + e.toString());
+        data.putAll(getThrowableStackTraceMap(e));
+        data.putAll(getCauseStackTraceMap(e.getCause()));
+
+        return data;
+    }
+
+    private Map<String, String> getThrowableStackTraceMap(Throwable e) {
+        Map<String, String> data = new TreeMap<>();
+
+        if (e == null) {
+            return data;
+        }
+
+        for (StackTraceElement s : e.getStackTrace()) {
+            data.put(String.format(Locale.ENGLISH, STACKTRACE_FORMAT, i++), AT + s.toString());
+        }
+
+        return data;
+    }
 }

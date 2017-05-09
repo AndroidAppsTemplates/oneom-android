@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.old.Source;
 import com.iam.oneom.pages.main.WebViewActivity;
 
 import java.io.BufferedReader;
@@ -19,39 +18,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 public class Web {
-    public static ConcurrentHashMap<String, SocketAddress> proxies = new ConcurrentHashMap<>();
+//    public static ConcurrentHashMap<String, SocketAddress> proxies = new ConcurrentHashMap<>();
     public class url {
-//        public static final String proxies = "http://multiproxy.org/txt_all/proxy.txt";
         public static final String proxies = "http://www.freeproxy-list.ru/api/proxy?anonymity=false&token=demo";
         public static final String domain = "https://oneom.tk";
         public static final String poster_prefix = "https://fileom.s3.amazonaws.com/";
@@ -212,225 +190,225 @@ public class Web {
         return null;
     }
 
-    public static String search(Source.Origin origin, ArrayList<String> params) {
-        return search(origin, params, 10, false);
-    }
+//    public static String search(Source.Origin origin, ArrayList<String> params) {
+//        return search(origin, params, 10, false);
+//    }
+//
+//    public static String search(Source.Origin origin, ArrayList<String> params, int time) {
+//        return search(origin, params, time, false);
+//    }
+//
+//    public static String search(Source.Origin origin, ArrayList<String> params, boolean useProxy) {
+//        return search(origin, params, 10, useProxy);
+//    }
 
-    public static String search(Source.Origin origin, ArrayList<String> params, int time) {
-        return search(origin, params, time, false);
-    }
+//    public static String search(Source.Origin origin, ArrayList<String> params, int time, boolean useProxy) {
+//
+//        try {
+//
+//            String searchPageURL = Source.getByOrigin(origin).searchPage();
+//            if (searchPageURL.length() == 0) {
+//                searchPageURL = Source.getByOrigin(origin).search();
+//            }
+//
+//            Log.d("search_url", searchPageURL + "");
+//
+//
+//            switch (origin) {
+//                case opensubtitles:
+//                    if (params.size() < 5)
+//                        throw new RuntimeException("Search for " + origin.name() + " must contains at least 5 params");
+//                    String lang = params.get(0), langId = params.get(1), season = params.get(2), episode = params.get(3);
+//                    String serialName = URLEncoder.encode(params.get(4), "UTF-8");
+//                    searchPageURL = searchPageURL.replaceFirst("\\{lang\\}", lang);
+//                    searchPageURL = searchPageURL.replaceAll("\\{lang_id\\}", langId);
+//                    searchPageURL = searchPageURL.replaceAll("\\{season\\}", season);
+//                    searchPageURL = searchPageURL.replaceAll("\\{ep\\}", episode);
+//                    searchPageURL = searchPageURL.replaceAll("\\{serial_name\\}", serialName);
+//                    break;
+//                default:
+//                    String searchString = URLEncoder.encode(params.get(0), "UTF-8");
+//                    String  page = params.get(1);
+//                    searchPageURL = searchPageURL.replaceFirst("\\{searchString\\}", searchString);
+//                    searchPageURL = searchPageURL.replaceAll("\\{page\\}", page);
+//                    break;
+//
+//            }
+//
+//            Log.i("url", searchPageURL);
+//            StringBuilder content = new StringBuilder();
+////            if (ACache.get(OneOm.context).equals())
+//            URL url = new URL(searchPageURL);
+//            // httpurlcinnection включить прокси(?)
+//            // глобальная переменная - оспользовать прокси
+//            //
+//            Proxy proxy;
+//            if (useProxy) {
+//                SocketAddress sa = searchProxy(searchPageURL);
+//                proxy = sa == null ? Proxy.NO_PROXY : new Proxy(Proxy.Type.HTTP, sa);
+//            } else proxy = Proxy.NO_PROXY;
+//
+//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(proxy);
+//            urlConnection.setRequestProperty("User-Agent", System.getProperty("http.agent"));
+//            urlConnection.setRequestMethod("GET");
+//            urlConnection.connect();
+//            InputStream inputStream = urlConnection.getInputStream();
+//            InputStreamReader reader = new InputStreamReader(inputStream);
+//            BufferedReader bufferedReader = new BufferedReader(reader);
+//
+//            String line;
+//            while ((line = bufferedReader.readLine()) != null) {
+//                content.append(line);
+//            }
+//            bufferedReader.close();
+//            String result = content.toString();
+//            Log.i("response in search", urlConnection.getResponseCode() + "");
+//            Log.i("response in search", url.getPath());
+//            Log.i("response in search", result);
+//            Log.i("response in search", urlConnection.getResponseMessage());
+//            Log.i("response in search", urlConnection.getHeaderFields().toString());
+//            System.out.println(result);
+////            ACache.get(OneOm.context).put(searchPageURL, result, time);
+//            return result;
+//        } catch (IOException e) {
+////            OneOm.handleError(Thread.currentThread(), e, "Web.search(Origin,ArrayList<String>,int,boolean) IOException");
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
-    public static String search(Source.Origin origin, ArrayList<String> params, boolean useProxy) {
-        return search(origin, params, 10, useProxy);
-    }
+//    public static SocketAddress searchProxy(String targetUrl) {
+//        if (proxies.size() == 0) {
+//            String proxyResponse = Web.GET(url.proxies, false, null);
+//            if (proxyResponse != null) {
+//                ArrayList<String> proxyList = new ArrayList<>(Arrays.asList(proxyResponse.split("\n")));
+//                for (String p : proxyList) {
+//                    String[] proxy = p.split(":");
+//                    String ip = proxy[0];
+//                    int port = Integer.parseInt(proxy[1]);
+//                    final InetSocketAddress socketAddress = new InetSocketAddress(ip, port);
+//                    proxies.put(ip, socketAddress);
+//                }
+//                return lookOverProxies(targetUrl);
+//            }
+//        } else {
+//            return lookOverProxies(targetUrl);
+//        }
+//
+//
+//        return null;
+//    }
+//
+//    public static SocketAddress lookOverProxies(final String targetUrl) {
+//        final ExecutorService service = Executors.newFixedThreadPool(proxies.size());
+//        Log.d("host-port", proxies.size() + "");
+//
+//        ArrayList<Callable<SocketAddress>> searchThreads = new ArrayList<>();
+//
+//        for (final Map.Entry<String, SocketAddress> entry : proxies.entrySet()) {
+//            searchThreads.add(new Callable<SocketAddress>() {
+//                @Override
+//                public SocketAddress call() throws Exception {
+//                    Log.d("host-port", entry.getKey() + " " + entry.getValue());
+//                    SocketAddress socketAddress = checkProxy("http://www.google.com", entry.getKey(), entry.getValue());
+//                    if (socketAddress != null) {
+//                        socketAddress = checkProxy(targetUrl, entry.getKey(), entry.getValue());
+//                    }
+//
+//                    return socketAddress;
+//                }
+//            });
+//        }
+//
+//        for (Callable<SocketAddress> callable : searchThreads) {
+//            Future<SocketAddress> result = service.submit(callable);
+//
+//            SocketAddress socketAddress = null;
+//            try {
+//                socketAddress = result.get();
+//            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (socketAddress != null) {
+//                return socketAddress;
+//            }
+//        }
+//
+//        service.shutdown();
+//        try {
+//            service.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+//        } catch (InterruptedException e) {
+////            OneOm.handleError(Thread.currentThread(), e, "Web.lookOverProxies(String) InterruptedException");
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
 
-    public static String search(Source.Origin origin, ArrayList<String> params, int time, boolean useProxy) {
+//    private static SocketAddress checkProxy(String url, String key, SocketAddress value) {
+//        String response = GET(url, false, value);
+//        if (response != null) {
+//            return value;
+//        } else {
+//            synchronized (proxies) {
+//                proxies.remove(key);
+//            }
+//            return null;
+//        }
+//    }
 
-        try {
-
-            String searchPageURL = Source.getByOrigin(origin).searchPage();
-            if (searchPageURL.length() == 0) {
-                searchPageURL = Source.getByOrigin(origin).search();
-            }
-
-            Log.d("search_url", searchPageURL + "");
-
-
-            switch (origin) {
-                case opensubtitles:
-                    if (params.size() < 5)
-                        throw new RuntimeException("Search for " + origin.name() + " must contains at least 5 params");
-                    String lang = params.get(0), langId = params.get(1), season = params.get(2), episode = params.get(3);
-                    String serialName = URLEncoder.encode(params.get(4), "UTF-8");
-                    searchPageURL = searchPageURL.replaceFirst("\\{lang\\}", lang);
-                    searchPageURL = searchPageURL.replaceAll("\\{lang_id\\}", langId);
-                    searchPageURL = searchPageURL.replaceAll("\\{season\\}", season);
-                    searchPageURL = searchPageURL.replaceAll("\\{ep\\}", episode);
-                    searchPageURL = searchPageURL.replaceAll("\\{serial_name\\}", serialName);
-                    break;
-                default:
-                    String searchString = URLEncoder.encode(params.get(0), "UTF-8");
-                    String  page = params.get(1);
-                    searchPageURL = searchPageURL.replaceFirst("\\{searchString\\}", searchString);
-                    searchPageURL = searchPageURL.replaceAll("\\{page\\}", page);
-                    break;
-
-            }
-
-            Log.i("url", searchPageURL);
-            StringBuilder content = new StringBuilder();
-//            if (ACache.get(OneOm.context).equals())
-            URL url = new URL(searchPageURL);
-            // httpurlcinnection включить прокси(?)
-            // глобальная переменная - оспользовать прокси
-            //
-            Proxy proxy;
-            if (useProxy) {
-                SocketAddress sa = searchProxy(searchPageURL);
-                proxy = sa == null ? Proxy.NO_PROXY : new Proxy(Proxy.Type.HTTP, sa);
-            } else proxy = Proxy.NO_PROXY;
-
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(proxy);
-            urlConnection.setRequestProperty("User-Agent", System.getProperty("http.agent"));
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-            InputStream inputStream = urlConnection.getInputStream();
-            InputStreamReader reader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line);
-            }
-            bufferedReader.close();
-            String result = content.toString();
-            Log.i("response in search", urlConnection.getResponseCode() + "");
-            Log.i("response in search", url.getPath());
-            Log.i("response in search", result);
-            Log.i("response in search", urlConnection.getResponseMessage());
-            Log.i("response in search", urlConnection.getHeaderFields().toString());
-            System.out.println(result);
-//            ACache.get(OneOm.context).put(searchPageURL, result, time);
-            return result;
-        } catch (IOException e) {
-//            OneOm.handleError(Thread.currentThread(), e, "Web.search(Origin,ArrayList<String>,int,boolean) IOException");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static SocketAddress searchProxy(String targetUrl) {
-        if (proxies.size() == 0) {
-            String proxyResponse = Web.GET(url.proxies, false, null);
-            if (proxyResponse != null) {
-                ArrayList<String> proxyList = new ArrayList<>(Arrays.asList(proxyResponse.split("\n")));
-                for (String p : proxyList) {
-                    String[] proxy = p.split(":");
-                    String ip = proxy[0];
-                    int port = Integer.parseInt(proxy[1]);
-                    final InetSocketAddress socketAddress = new InetSocketAddress(ip, port);
-                    proxies.put(ip, socketAddress);
-                }
-                return lookOverProxies(targetUrl);
-            }
-        } else {
-            return lookOverProxies(targetUrl);
-        }
-
-
-        return null;
-    }
-
-    public static SocketAddress lookOverProxies(final String targetUrl) {
-        final ExecutorService service = Executors.newFixedThreadPool(proxies.size());
-        Log.d("host-port", proxies.size() + "");
-
-        ArrayList<Callable<SocketAddress>> searchThreads = new ArrayList<>();
-
-        for (final Map.Entry<String, SocketAddress> entry : proxies.entrySet()) {
-            searchThreads.add(new Callable<SocketAddress>() {
-                @Override
-                public SocketAddress call() throws Exception {
-                    Log.d("host-port", entry.getKey() + " " + entry.getValue());
-                    SocketAddress socketAddress = checkProxy("http://www.google.com", entry.getKey(), entry.getValue());
-                    if (socketAddress != null) {
-                        socketAddress = checkProxy(targetUrl, entry.getKey(), entry.getValue());
-                    }
-
-                    return socketAddress;
-                }
-            });
-        }
-
-        for (Callable<SocketAddress> callable : searchThreads) {
-            Future<SocketAddress> result = service.submit(callable);
-
-            SocketAddress socketAddress = null;
-            try {
-                socketAddress = result.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            if (socketAddress != null) {
-                return socketAddress;
-            }
-        }
-
-        service.shutdown();
-        try {
-            service.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-        } catch (InterruptedException e) {
-//            OneOm.handleError(Thread.currentThread(), e, "Web.lookOverProxies(String) InterruptedException");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private static SocketAddress checkProxy(String url, String key, SocketAddress value) {
-        String response = GET(url, false, value);
-        if (response != null) {
-            return value;
-        } else {
-            synchronized (proxies) {
-                proxies.remove(key);
-            }
-            return null;
-        }
-    }
-
-    public static String disableSSLCertificateChecking(String s, boolean fromOneOm) {
-        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-
-            @Override
-            public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-                // Not implemented
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-                // Not implemented
-            }
-        } };
-
-        try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-            StringBuilder content = new StringBuilder();
-
-            URL url = new URL(s);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestProperty("User-Agent", System.getProperty("http.agent"));
-            if (fromOneOm) urlConnection.setRequestProperty("Content-Type", header.appjson);
-            if (fromOneOm) urlConnection.setRequestProperty("Accept", header.appjson);
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-            InputStream inputStream = urlConnection.getInputStream();
-            InputStreamReader reader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line);
-            }
-            bufferedReader.close();
-            return content.toString();
-
-
-        } catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
-//            OneOm.handleError(Thread.currentThread(), e, "Web.disableSSLSertificateChecking()");
-            e.printStackTrace();
-        }
-        return s;
-    }
+//    public static String disableSSLCertificateChecking(String s, boolean fromOneOm) {
+//        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+//            public X509Certificate[] getAcceptedIssuers() {
+//                return null;
+//            }
+//
+//            @Override
+//            public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+//                // Not implemented
+//            }
+//
+//            @Override
+//            public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+//                // Not implemented
+//            }
+//        } };
+//
+//        try {
+//            SSLContext sc = SSLContext.getInstance("TLS");
+//
+//            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+//
+//            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+//
+//            StringBuilder content = new StringBuilder();
+//
+//            URL url = new URL(s);
+//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+//            urlConnection.setRequestProperty("User-Agent", System.getProperty("http.agent"));
+//            if (fromOneOm) urlConnection.setRequestProperty("Content-Type", header.appjson);
+//            if (fromOneOm) urlConnection.setRequestProperty("Accept", header.appjson);
+//            urlConnection.setRequestMethod("GET");
+//            urlConnection.connect();
+//            InputStream inputStream = urlConnection.getInputStream();
+//            InputStreamReader reader = new InputStreamReader(inputStream);
+//            BufferedReader bufferedReader = new BufferedReader(reader);
+//
+//            String line;
+//            while ((line = bufferedReader.readLine()) != null) {
+//                content.append(line);
+//            }
+//            bufferedReader.close();
+//            return content.toString();
+//
+//
+//        } catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
+////            OneOm.handleError(Thread.currentThread(), e, "Web.disableSSLSertificateChecking()");
+//            e.printStackTrace();
+//        }
+//        return s;
+//    }
 
     public static String POST(String requestURL, HashMap<String, String> postDataParams) {
 
@@ -546,21 +524,6 @@ public class Web {
             return true;
         }
         return false;
-    }
-
-    public static String addPairs(String root, String key, String value) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-
-        result.append(root);
-
-        if (!root.equals("")) result.append("&");
-
-
-        result.append(URLEncoder.encode(key, "UTF-8"));
-        result.append("=");
-        result.append(URLEncoder.encode(value, "UTF-8"));
-
-        return result.toString();
     }
 
 
