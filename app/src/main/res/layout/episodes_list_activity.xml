@@ -1,50 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:theme="@style/toolbarColored"
-        android:id="@+id/toolbar"
-        android:background="@color/dark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+<layout>
 
-    <FrameLayout
+    <data>
+
+        <import
+            alias="swipeDirection"
+            type="com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="com.iam.oneom.core.util.Decorator"/>
+
+        <import type="android.support.v7.widget.Toolbar.OnMenuItemClickListener"/>
+
+        <import type="com.iam.oneom.pages.main.episodes.EpisodeListActivity"/>
+
+        <import type="com.iam.oneom.core.util.Time" />
+
+        <variable
+            name="viewModel"
+            type="com.iam.oneom.pages.main.episodes.ViewModel" />
+
+        <variable
+            name="presenter"
+            type="com.iam.oneom.pages.mpd.PagingPresenter" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/background"
-            android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/logo_bg"/>
+            android:layout_height="wrap_content"
+            app:onMenuItemClick="@{(item) -> ((OnMenuItemClickListener)context).onMenuItemClick(item)}"
+            android:title="@{@string/episodes}"
+            android:subtitle='@{@string/last_updated(viewModel.lastUpdated)}'
+            android:theme="@style/toolbarColored" />
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:background="@color/dark_transparent"
             android:layout_height="match_parent">
 
-            <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-                android:id="@+id/swipe_refresh_layout"
+            <ImageView
+                android:id="@+id/background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srl_direction="both">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/mainrecycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+                android:layout_gravity="center"
+                app:image="@{Decorator.bluredLogoBackground(context)}"
+                android:src="@drawable/logo_bg" />
 
-            <com.iam.oneom.env.widget.CircleProgressBar
-                android:id="@+id/progress"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:visibility="invisible" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/dark_transparent">
+
+                <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+                    android:id="@+id/swipe_refresh_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:refreshing="@{viewModel.loading}"
+                    app:presenter="@{presenter}"
+                    app:viewModel="@{viewModel}"
+                    app:srl_direction="both">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/mainrecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:itemBinding="@{viewModel.itemBinding}"
+                        app:items="@{viewModel.items}"
+                        app:layoutManager="@{LayoutManagers.grid(3)}" />
+                </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+                <com.iam.oneom.env.widget.CircleProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
         </FrameLayout>
 
-    </FrameLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

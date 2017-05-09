@@ -1,5 +1,10 @@
 package com.iam.oneom.core.util;
 
+import android.content.Context;
+
+import com.iam.oneom.R;
+import com.iam.oneom.core.SecureStore;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +30,11 @@ public final class Time {
             e.printStackTrace();
             return parse(null, timeFormat);
         }
+    }
+
+    public static String episodesLastUpdated(Context context) {
+        return SecureStore.getEpisodesLastUpdated() == 0 ?
+                context.getString(R.string.never) : Time.format(new Date(SecureStore.getEpisodesLastUpdated()), "HH:mm, dd MMM yyyy");
     }
 
     public enum TimeFormat {

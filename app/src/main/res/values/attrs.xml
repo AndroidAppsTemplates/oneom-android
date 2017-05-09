@@ -7,4 +7,10 @@
         <attr name="posterImageCorner" format="dimension" />
         <attr name="url" format="string" />
     </declare-styleable>
+    <declare-styleable name="SwipeRefreshLayout">
+        <attr name="presenter" format="reference"/>
+        <attr name="viewModel" format="reference"/>
+        <attr name="image" format="reference"/>
+        <attr name="onMenuItemClick" format="reference"/>
+    </declare-styleable>
 </resources>

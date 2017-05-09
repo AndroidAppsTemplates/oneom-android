@@ -14,7 +14,7 @@ import java.util.List;
  * Created by iam on 08.04.17.
  */
 
-class EpisodesListPresenter implements PagingPresenter<Episode>, DataSource.OnLoadListener<Episode> {
+public class EpisodesListPresenter implements PagingPresenter<Episode>, DataSource.OnLoadListener<Episode> {
 
     private View<Episode> view;
     private PagingDataSource<Episode> dataSource;

@@ -2,7 +2,8 @@
 
     <style name="toolbarColored" parent="AppTheme">
         <item name="android:background">@color/dark</item>
-        <item name="android:textColorSecondary">@color/light</item>
+        <item name="android:textColorPrimary">@color/light</item>
+        <item name="android:textColorSecondary">@color/middle</item>
         <item name="popupTheme">@style/PopupMenuStyle</item>
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
     </style>
