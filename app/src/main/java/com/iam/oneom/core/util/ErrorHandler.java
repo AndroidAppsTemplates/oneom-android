@@ -43,14 +43,14 @@ public class ErrorHandler {
         Map<String, String> data = new TreeMap<>();
 
         data.putAll(getDeviceDataPairs());
-        data.putAll(getMainDataMap(thread, exception));
+        data.putAll(getMainDataMap(thread));
         data.putAll(getCauseStackTraceMap(exception));
 
         return data;
 
     }
 
-    private Map<String, String> getMainDataMap(Thread thread, Throwable exception) {
+    private Map<String, String> getMainDataMap(Thread thread) {
         Map<String, String> data = new TreeMap<>();
 
         data.put(BUILD_TYPE, BuildConfig.BUILD_TYPE);
