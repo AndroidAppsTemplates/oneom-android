@@ -20,7 +20,7 @@ public class Serial extends RealmObject {
     private RealmList<Country> country;
     @SerializedName("network")
     private RealmList<Network> network;
-    @SerializedName("episode")
+    @SerializedName("ep")
     private RealmList<Episode> episode;
     @SerializedName("description")
     private RealmList<Description> description;

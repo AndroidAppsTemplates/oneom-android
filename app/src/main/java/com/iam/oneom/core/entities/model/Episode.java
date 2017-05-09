@@ -25,9 +25,9 @@ public class Episode extends RealmObject {
     @SerializedName("serial")
     private Serial serial;
     @SerializedName("ep")
-    private String ep;
+    private int ep;
     @SerializedName("season")
-    private String season;
+    private int season;
     @SerializedName("rait")
     private String rait;
     @SerializedName("title")
@@ -42,6 +42,46 @@ public class Episode extends RealmObject {
     private long updatedAt;
     @SerializedName("is_schedule")
     private boolean isSheldule;
+
+    public int getEp() {
+        return ep;
+    }
+
+    public void setEp(int ep) {
+        this.ep = ep;
+    }
+
+    public int getSeason() {
+        return season;
+    }
+
+    public void setSeason(int season) {
+        this.season = season;
+    }
+
+    public String getFbPostId() {
+        return fbPostId;
+    }
+
+    public boolean isSheldule() {
+        return isSheldule;
+    }
+
+    public void setFbPostId(String fbPostId) {
+        this.fbPostId = fbPostId;
+    }
+
+    public void setAirdate(Long airdate) {
+        this.airdate = airdate;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setSheldule(boolean sheldule) {
+        isSheldule = sheldule;
+    }
 
     public long getId() {
         return id;
@@ -71,14 +111,6 @@ public class Episode extends RealmObject {
         return serial;
     }
 
-    public String getEp() {
-        return ep;
-    }
-
-    public String getSeason() {
-        return season;
-    }
-
     public String getRait() {
         return rait;
     }
@@ -101,14 +133,6 @@ public class Episode extends RealmObject {
 
     public void setOnline(RealmList<Online> online) {
         this.online = online;
-    }
-
-    public void setEp(String ep) {
-        this.ep = ep;
-    }
-
-    public void setSeason(String season) {
-        this.season = season;
     }
 
     public void setSubtitle(RealmList<Subtitle> subtitle) {

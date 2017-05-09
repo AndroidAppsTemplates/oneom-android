@@ -10,11 +10,8 @@ import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
-import com.iam.oneom.core.entities.model.Torrent;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.pages.main.episode.EpisodePageActivityNew;
-
-import java.util.ArrayList;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -54,10 +51,6 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
 
         this.title.setText(Util.title(ep));
         this.ep.setText(Util.episodeInSeasonString(ep));
-        ArrayList<String> tags = new ArrayList<>();
-        for (Torrent torrent : ep.getTorrent()) {
-            tags.add(Util.qualityTag(torrent));
-        }
 
         Glide
                 .with(view.getContext())

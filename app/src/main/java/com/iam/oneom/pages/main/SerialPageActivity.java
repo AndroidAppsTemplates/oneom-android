@@ -58,7 +58,7 @@ public class SerialPageActivity extends AppCompatActivity {
     @BindView(R.id.bluring_area)
     FrameLayout bluringArea;
 
-    private int selected = 0;
+    private int selected = 1;
 
     @BindDimen(R.dimen.serial_page_items_spacing)
     int serialPageItemsSpacing;
@@ -144,7 +144,7 @@ public class SerialPageActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof EpisodeVH) {
-                ((EpisodeVH) holder).onBind(Util.episodesForSeasonList(serial, selected + 1).get(position - 2));
+                ((EpisodeVH) holder).onBind(Util.episodesForSeasonList(serial, selected).get(position - 2));
             } else if (holder instanceof SerialHeaderVH) {
                 ((SerialHeaderVH) holder).onBind();
             } else if (holder instanceof SeasonSelectorVH) {
@@ -154,7 +154,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 2 + Util.episodesCountForSeason(serial, selected + 1);
+            return 2 + Util.episodesCountForSeason(serial, selected);
         }
 
         @Override
@@ -178,7 +178,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
         @Override
         public void refresh() {
-            serialAdapter.notifyItemRangeChanged(2, Util.episodesCountForSeason(serial, selected + 1));
+            serialAdapter.notifyItemRangeChanged(2, Util.episodesCountForSeason(serial, selected));
         }
 
         class SerialHeaderVH extends RecyclerView.ViewHolder {
@@ -359,14 +359,10 @@ public class SerialPageActivity extends AppCompatActivity {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
                 pager.setAdapter(new SeasonNumberAdapter(getSupportFragmentManager()));
-                prev.setOnClickListener(v -> {
-                    int toSelect = selected - 1 < 0 ? 0 : selected - 1;
-                    pager.setCurrentItem(toSelect);
-                });
+                prev.setOnClickListener(v -> pager.setCurrentItem(selected - 1 < 1 ? 0 : selected - 2));
                 next.setOnClickListener(v -> {
-                    int toSelect = selected + 1 >= Util.seasonsCountForSerial(serial) - 1 ?
-                                Util.seasonsCountForSerial(serial) - 1 : selected + 1;
-                    pager.setCurrentItem(toSelect);
+                    int seasonsCount = Util.seasonsCountForSerial(serial);
+                    pager.setCurrentItem(selected + 1 >= seasonsCount ? seasonsCount - 1 : selected);
                 });
             }
 
@@ -374,7 +370,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageSelected(int position) {
-                        selected = position;
+                        selected = position + 1;
                         serialAdapter.refresh();
                     }
                 });

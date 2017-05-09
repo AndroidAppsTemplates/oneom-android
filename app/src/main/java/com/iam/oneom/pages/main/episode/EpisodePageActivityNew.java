@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -51,6 +52,9 @@ public class EpisodePageActivityNew extends AppCompatActivity {
         Intent intent = new Intent(context, EpisodePageActivityNew.class);
         intent.putExtra(EP_ID_EXTRA, epId);
         context.startActivity(intent);
+    }
+    public static void open(View view, long epId) {
+        open(view.getContext(), epId);
     }
 
     @BindView(R.id.poster)

@@ -104,6 +104,7 @@ class EpisodesDataSource implements PagingDataSource<Episode> {
     @Override
     public void getModels() {
         RealmQuery<Episode> episodeRealmQuery = query()
+                .equalTo("isSheldule", true)
                 .lessThan("airdate", new Date(new Date().getTime() + Time.YEAR).getTime())
                 .greaterThan("airdate", new Date(new Date().getTime() - 2 * Time.MONTH).getTime());
 

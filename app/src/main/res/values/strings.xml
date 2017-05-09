@@ -4,6 +4,8 @@
     <string name="main_static_entities">fdsf.fdsdsf.dfdsfstaticndjlvljsventities</string>
     <string name="main_episode_list">fdsf.fdsepisodesvljsvelistties</string>
     <string name="url_for_web_view_activity">fdsf.fdsurelpisfoodesrvlwebjsveviewlisactivitytties</string>
+    <string name="ep">E%1$dS%2$d</string>
+
 
 
     <string name="torrent_client_select_dialog_title">Select</string>

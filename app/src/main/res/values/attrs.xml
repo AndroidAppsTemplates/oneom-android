@@ -3,4 +3,8 @@
     <declare-styleable name="RoundedCornersImageView">
         <attr name="rcl_cornerRadius" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="db">
+        <attr name="posterImageCorner" format="dimension" />
+        <attr name="url" format="string" />
+    </declare-styleable>
 </resources>

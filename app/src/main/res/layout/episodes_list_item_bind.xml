@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.iam.oneom.core.util.Decorator" />
+
+        <import
+            alias="v"
+            type="android.view.View" />
+
+        <import type="com.iam.oneom.pages.main.episode.EpisodePageActivityNew" />
+
+        <import type="com.iam.oneom.core.entities.Util" />
+
+        <import type="com.iam.oneom.core.util.Editor" />
+
+        <variable
+            name="ep"
+            type="com.iam.oneom.core.entities.model.Episode" />
+    </data>
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:onClick="@{(view) -> EpisodePageActivityNew.open(view, ep.id)}"
+        android:orientation="vertical"
+        app:cardBackgroundColor="@color/recycler_item_background"
+        app:cardCornerRadius="@dimen/episode_item_corner">
+
+        <LinearLayout
+            android:id="@+id/frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/episode_item_padding"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/episode_item_image_corner">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/episode_item_image_size"
+                    android:scaleType="centerCrop"
+                    app:posterImageCorner="@{@dimen/episode_item_corner}"
+                    app:url="@{Util.posterUrl(ep, Decorator.W480)}" />
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@{Util.title(ep)}"
+                android:textColor="@color/light"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/ep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text='@{String.format("E%02dS%02d", ep.ep, ep.season)}'
+                android:textColor="@color/light"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/ic_torrent_white_24px" />
+
+                    <FrameLayout
+                        android:id="@+id/t_appearance_label"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="end"
+                        android:background="@drawable/green_round_6dp"
+                        android:visibility="@{Util.hasTorrents(ep) ? v.VISIBLE : v.GONE}">
+
+                        <TextView
+                            android:id="@+id/t_appearance_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@{String.valueOf(Util.torrentsCount(ep))}"
+                            android:textColor="@color/light"
+                            android:textSize="8sp" />
+                    </FrameLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/ic_subscriptions_white_24px" />
+
+                    <FrameLayout
+                        android:id="@+id/o_appearance_label"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="end"
+                        android:background="@drawable/green_round_6dp"
+                        android:visibility="@{Util.hasOnlines(ep) ? v.VISIBLE : v.GONE}">
+
+                        <TextView
+                            android:id="@+id/o_appearance_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@{String.valueOf(Util.onlinesCount(ep))}"
+                            android:textColor="@color/light"
+                            android:textSize="8sp" />
+                    </FrameLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

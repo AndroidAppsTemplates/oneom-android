@@ -18,22 +18,22 @@ public class Util {
 
     // Returns formatted episode in season number EQ: S03E24
     public static String episodeInSeasonString(Episode episode) {
-        String s = episode.getSeason();
-        String e = episode.getEp();
+        int s = episode.getSeason();
+        int e = episode.getEp();
 
-        if (s == null && e == null) {
+        if (s == 0 && e == 0) {
             return "";
         }
 
-        if (s == null) {
-            return String.format("E%02d", Integer.parseInt(e));
+        if (s == 0) {
+            return String.format("E%02d", e);
         }
 
-        if (e == null) {
-            return String.format("S%02d", Integer.parseInt(s));
+        if (e == 0) {
+            return String.format("S%02d", s);
         }
 
-        return String.format("S%02dE%02d", Integer.parseInt(s), Integer.parseInt(e));
+        return String.format("S%02dE%02d", s, e);
     }
 
     public static String title(Episode episode) {
@@ -63,6 +63,7 @@ public class Util {
         }
 
         Poster poster = serial.getPoster();
+
 
         if (poster == null) {
             return "";
@@ -118,7 +119,6 @@ public class Util {
     }
 
 
-
     public static String serialStatusName(Serial serial) {
         if (serial == null || serial.getStatus() == null) {
             return "Unknown";
@@ -130,7 +130,7 @@ public class Util {
         List<Episode> res = new ArrayList<>();
 
         for (Episode e : serial.getEpisode()) {
-            if (Integer.parseInt(e.getSeason()) == seasonNumber) res.add(e);
+            if (e.getSeason() == seasonNumber) res.add(e);
         }
         return res;
     }
@@ -144,11 +144,11 @@ public class Util {
 
         for (Episode episode : serial.getEpisode()) {
 
-            if (episode.getSeason() == null) {
+            if (episode.getSeason() == 0) {
                 return 0;
             }
 
-            int i = Integer.parseInt(episode.getSeason());
+            int i = episode.getSeason();
 
             if (i <= epCount) {
                 continue;

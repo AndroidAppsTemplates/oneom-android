@@ -1,7 +1,6 @@
 package com.iam.oneom.core.util;
 
 import com.iam.oneom.core.entities.interfaces.Named;
-import com.iam.oneom.pages.OneOm;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -12,9 +11,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import retrofit2.http.Path;
-
 public class Editor {
+
 
     static class pattern {
         public static String notALetter = "\\W+";

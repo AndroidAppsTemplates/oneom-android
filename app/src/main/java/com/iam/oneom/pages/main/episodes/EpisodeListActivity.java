@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,7 +17,6 @@ import com.iam.oneom.core.SecureStore;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.Time;
-import com.iam.oneom.env.handling.recycler.layoutmanagers.LinearLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
 import com.iam.oneom.pages.mpd.PagingPresenter;
 import com.iam.oneom.pages.mpd.View;
@@ -33,6 +33,8 @@ import butterknife.ButterKnife;
 
 public class EpisodeListActivity extends AppCompatActivity
         implements Toolbar.OnMenuItemClickListener, View<Episode> {
+
+    private static final int EPISODES_IN_ROW = 3;
 
     @BindView(R.id.progress)
     CircleProgressBar progressBar;
@@ -92,7 +94,8 @@ public class EpisodeListActivity extends AppCompatActivity
         toolbar.setTitleTextColor(lightColor);
         toolbar.setSubtitleTextColor(middleColor);
 
-        episodesGrid.setLayoutManager(new LinearLayoutManager(this));
+
+        episodesGrid.setLayoutManager(new GridLayoutManager(this, EPISODES_IN_ROW));
 
         toolbar.setOnMenuItemClickListener(this);
         background.setImageBitmap(Decorator.fastblur(BitmapFactory.decodeResource(getResources(), R.drawable.logo_bg, null), 1, 100));
