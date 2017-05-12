@@ -4,12 +4,12 @@ package com.iam.oneom.core.network;
 import android.util.Log;
 
 import com.iam.oneom.core.GsonMapper;
-import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.network.response.DataConfigResponse;
 import com.iam.oneom.core.network.response.EpResponse;
 import com.iam.oneom.core.network.response.EpsDateResponse;
 import com.iam.oneom.core.network.response.EpsResponse;
 import com.iam.oneom.core.network.response.SerialResponse;
+import com.iam.oneom.core.network.response.SerialsSearchResponse;
 import com.iam.oneom.core.update.UpdateException;
 import com.iam.oneom.core.util.Editor;
 
@@ -103,8 +103,10 @@ public enum Web {
         }
     }
 
-    public Call<SerialsSearchRequest> searchSerials(String searchString) {
-        return webInterface.searchSerials(Editor.encodeToUTF8(searchString));
+    public Observable<SerialsSearchResponse> searchSerials(String searchString) {
+        return webInterface.searchSerials(Editor.encodeToUTF8(searchString))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<EpsResponse> getLastEpisodes(DownloadProgressListener progressListener) {

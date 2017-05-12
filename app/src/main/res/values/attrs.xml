@@ -13,4 +13,8 @@
         <attr name="image" format="reference"/>
         <attr name="onMenuItemClick" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="SerialSearch">
+        <attr name="addTextChangedListener" format="reference"/>
+    </declare-styleable>
 </resources>

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'me.tatarka.retrolambda'
 
 allprojects {
     repositories {
@@ -73,9 +72,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile "com.jakewharton:butterknife:8.4.0"
-    provided "com.jakewharton:butterknife-compiler:8.4.0"
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.4.0"
     compile "com.orhanobut:hawk:2.0.1"
-    compile "com.google.code.gson:gson:2.7"
+    compile "com.google.code.gson:gson:2.8.0"
     compile "com.github.mabbas007:TagsEditText:v1.0.2"
     compile "com.android.support:multidex:1.0.1"
 //    compile "com.android.support:multidex:1apt.0.1"
@@ -104,7 +103,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:2.1.0"
     compile "com.squareup.retrofit2:adapter-rxjava:2.1.0"
     compile "com.squareup.retrofit2:converter-gson:2.1.0"
-    compile "com.squareup.okhttp3:okhttp:3.4.2"
+    compile "com.squareup.okhttp3:okhttp:3.6.0"
     compile "com.squareup.okhttp3:logging-interceptor:3.4.2"
 
     //rx

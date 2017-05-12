@@ -13,6 +13,7 @@ import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.util.Time;
 import com.iam.oneom.databinding.EpisodesListActivityBinding;
+import com.iam.oneom.pages.main.serial.SerialSearchActivity;
 import com.iam.oneom.pages.mpd.PagingPresenter;
 import com.iam.oneom.pages.mpd.View;
 
@@ -48,6 +49,11 @@ public class EpisodeListActivity extends AppCompatActivity
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                SerialSearchActivity.start(this);
+                return true;
+        }
         return false;
     }
 
