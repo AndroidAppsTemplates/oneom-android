@@ -13,6 +13,7 @@ import java.util.Map;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -41,12 +42,13 @@ public interface WebInterface {
     @GET("/serial/{id}")
     Observable<SerialResponse> getSerial(@Path("id") long id);
 
-    @GET("/serial/search/{searchString}")
-    Call<SerialsSearchRequest> searchSerials(@Path("searchString") String searchString);
+    @GET("/serial/search")
+    Call<SerialsSearchRequest> searchSerials(@Query("title") String searchString);
 
     @GET("/ep/{id}")
     Observable<EpResponse> getEpisode(@Path("id") long id);
 
-    @POST("/error/java")
+    @FormUrlEncoded
+    @POST("/errors/java")
     Call<ResponseBody> sendError(@FieldMap Map<String, String> data);
 }

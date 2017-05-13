@@ -52,8 +52,6 @@ public class SplashActivity extends AppCompatActivity {
 
         Decorator.init(this);
 
-        int a = 10 / 0;
-
         subscription = RxBus.INSTANCE.register(UpdateFinishedEvent.class, updateFinishedEvent -> {
             if (updateFinishedEvent.getThrowable() != null) {
                 showError(updateFinishedEvent.getThrowable().getMessage());

@@ -55,7 +55,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.search.OnlinesSearchActivity" />
+            android:name=".pages.main.search.vodlocker.VodlockerSearchActivity" />
         <activity
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"

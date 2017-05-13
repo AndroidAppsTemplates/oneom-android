@@ -6,7 +6,7 @@ import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.Tagged;
 import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Source;
-import com.iam.oneom.pages.main.search.OnlinesSearchActivity;
+import com.iam.oneom.pages.main.search.vodlocker.VodlockerSearchActivity;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class OnlinePageFragment extends BaseSearchListFragment {
 
     @Override
     protected void startNextActivity(Source source) {
-        OnlinesSearchActivity.start(getActivity(), OnlinesSearchActivity.class, source.getId(), getEpisode().getId());
+        VodlockerSearchActivity.start(getActivity(), source.getId(), getEpisode().getId());
     }
 
     @Override

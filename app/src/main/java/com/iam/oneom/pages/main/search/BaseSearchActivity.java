@@ -16,6 +16,7 @@ import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Source;
+import com.iam.oneom.pages.main.search.vodlocker.VodlockerSearchActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,11 +46,21 @@ public abstract class BaseSearchActivity<T> extends AppCompatActivity implements
     public static final String EP_ID_EXTRA = "EP_ID_EXTRA";
     public static final String SOURCE_ID_EXTRA = "SOURCE_ID_EXTRA";
 
-    public static final void start(Context context, Class<?> cls, long sourceId, long epId) {
-        Intent intent = new Intent(context, cls);
+    public static final void start(Context context, long sourceId, long epId) {
+        Source source = DbHelper.where(Source.class).equalTo("id", sourceId).findFirst();
+        Intent intent = new Intent(context, getActivityClass(source));
         intent.putExtra(EP_ID_EXTRA, epId);
         intent.putExtra(SOURCE_ID_EXTRA, sourceId);
         context.startActivity(intent);
+    }
+
+    private static Class<?> getActivityClass(Source source) {
+        switch (source.getName()) {
+            case Source.VODLOCKER:
+                return VodlockerSearchActivity.class;
+        }
+
+        return null;
     }
 
     @Override

@@ -15,6 +15,8 @@ public class Source extends RealmObject implements Named {
     public static final int SUBTITLE = 2;
     public static final int ONLINE = 3;
 
+    public static final String VODLOCKER = "VodLocker";
+
     @PrimaryKey
     @SerializedName("id")
     private long id;
@@ -146,22 +148,5 @@ public class Source extends RealmObject implements Named {
         }
 
         public int type;
-    }
-
-    public enum Origin {
-        vodlocker,
-        piratebay,
-        extratorrent,
-        kickasstorrents,
-        opensubtitles,
-        rarbg,
-        eztv,
-        // TODO make a handler
-        torrentdownloads,
-        tracker1337x,
-        rutor,
-        rutracker,
-        bitsnoop,
-        torrentz;
     }
 }

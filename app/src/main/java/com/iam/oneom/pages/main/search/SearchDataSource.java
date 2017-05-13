@@ -8,11 +8,11 @@ import java.util.List;
 
 public abstract class SearchDataSource<T> {
 
-    interface OnSearchListener<T> {
+    public interface OnSearchListener<T> {
         void getResults(List<T> results);
     }
 
-    OnSearchListener listener;
+    protected OnSearchListener<T> listener;
 
     public SearchDataSource(OnSearchListener<T> listener) {
         this.listener = listener;

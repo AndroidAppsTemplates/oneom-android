@@ -13,15 +13,16 @@ import com.iam.oneom.core.network.response.SerialResponse;
 import com.iam.oneom.core.update.UpdateException;
 import com.iam.oneom.core.util.Editor;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -124,11 +125,17 @@ public enum Web {
     }
 
     public void sendError(Map<String, String> data) {
-        try {
-            webInterface.sendError(data).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        webInterface.sendError(data).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     public Observable<EpsDateResponse> getLastEpisodesByDate(String start, String end) {
