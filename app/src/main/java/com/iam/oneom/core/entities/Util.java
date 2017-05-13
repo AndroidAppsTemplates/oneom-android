@@ -36,6 +36,36 @@ public class Util {
         return String.format("S%02dE%02d", s, e);
     }
 
+    public static String countries(Serial serial) {
+        if (serial.getCountry() == null ||serial.getCountry().size() == 0) {
+            return "";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0, l = serial.getCountry().size(); i < l; i++) {
+            stringBuilder.append(serial.getCountry().get(i).getName());
+            if (i != l - 1) {
+                stringBuilder.append(", ");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String networks(Serial serial) {
+        if (serial.getNetwork() == null ||serial.getNetwork().size() == 0) {
+            return "";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0, l = serial.getNetwork().size(); i < l; i++) {
+            stringBuilder.append(serial.getNetwork().get(i).getName());
+            if (i != l - 1) {
+                stringBuilder.append(", ");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
     public static String title(Episode episode) {
         if (episode == null || episode.getSerial() == null) {
             return "";

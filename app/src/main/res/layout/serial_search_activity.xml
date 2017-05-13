@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.TextWatcher"/>
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers"/>
+        <variable
+            name="vm"
+            type="com.iam.oneom.pages.main.serial.SerialSearchViewModel"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{vm.serialName}"
+                app:addTextChangedListener="@{vm.watcher}"
+                android:hint="@string/enter_serial_name"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            app:itemBinding="@{vm.itemBinding}"
+            app:items="@{vm.serials}"
+            app:layoutManager="@{LayoutManagers.linear()}"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</layout>

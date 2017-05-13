@@ -1,12 +1,12 @@
 package com.iam.oneom.core.network;
 
 
-import com.iam.oneom.core.network.request.SerialsSearchRequest;
 import com.iam.oneom.core.network.response.DataConfigResponse;
 import com.iam.oneom.core.network.response.EpResponse;
 import com.iam.oneom.core.network.response.EpsDateResponse;
 import com.iam.oneom.core.network.response.EpsResponse;
 import com.iam.oneom.core.network.response.SerialResponse;
+import com.iam.oneom.core.network.response.SerialsSearchResponse;
 
 import java.util.Map;
 
@@ -51,4 +51,5 @@ public interface WebInterface {
     @FormUrlEncoded
     @POST("/errors/java")
     Call<ResponseBody> sendError(@FieldMap Map<String, String> data);
+
 }

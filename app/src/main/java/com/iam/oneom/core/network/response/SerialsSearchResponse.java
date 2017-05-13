@@ -1,17 +1,16 @@
-package com.iam.oneom.core.network.request;
+package com.iam.oneom.core.network.response;
 
 import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.entities.model.Serial;
 
 import java.util.List;
 
-import io.realm.RealmList;
-
-public class SerialsSearchRequest {
+public class SerialsSearchResponse {
 
     @SerializedName("text")
     private String text;
     @SerializedName("serials")
-    private List<SerialSearchResult> results;
+    private List<Serial> results;
 
     public String getText() {
         return text;
@@ -21,11 +20,7 @@ public class SerialsSearchRequest {
         this.text = text;
     }
 
-    public List<SerialSearchResult> getResults() {
+    public List<Serial> getResults() {
         return results;
-    }
-
-    public void setResults(RealmList<SerialSearchResult> results) {
-        this.results = results;
     }
 }

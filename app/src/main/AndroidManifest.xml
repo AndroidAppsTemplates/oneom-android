@@ -76,6 +76,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.WebViewActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".pages.main.serial.SerialSearchActivity" />
 
     </application>
 

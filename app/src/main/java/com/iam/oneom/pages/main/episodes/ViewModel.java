@@ -38,7 +38,7 @@ public class ViewModel {
     }
 
 
-    @BindingAdapter({"bind:presenter", "bind:viewModel"})
+    @BindingAdapter({"presenter", "viewModel"})
     public static void setPaddingLeft(SwipyRefreshLayout view, PagingPresenter presenter, ViewModel viewModel) {
         view.setOnRefreshListener(direction -> {
             viewModel.loading.set(true);
@@ -60,12 +60,12 @@ public class ViewModel {
                 .into(view);
     }
 
-    @BindingAdapter("bind:image")
+    @BindingAdapter("image")
     public static void setBackground(ImageView imageView, Bitmap bitmap) {
         imageView.setImageBitmap(bitmap);
     }
 
-    @BindingAdapter("bind:onMenuItemClick")
+    @BindingAdapter("onMenuItemClick")
     public static void setOnMenuItemClickListener(Toolbar toolbar, Toolbar.OnMenuItemClickListener listener) {
         toolbar.setOnMenuItemClickListener(listener);
     }
