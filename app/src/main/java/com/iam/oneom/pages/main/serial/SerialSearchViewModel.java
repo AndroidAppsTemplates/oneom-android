@@ -29,7 +29,7 @@ public class SerialSearchViewModel {
 
     public final ObservableList<Serial> serials = new ObservableArrayList<>();
     public final ObservableField<String> serialName = new ObservableField<>("");
-    public final ItemBinding<Serial> itemBinding = ItemBinding.of(BR.ep, R.layout.serial_search_item);
+    public final ItemBinding<Serial> itemBinding = ItemBinding.of(BR.serial, R.layout.serial_search_item);
 
 
     @BindingAdapter("addTextChangedListener")

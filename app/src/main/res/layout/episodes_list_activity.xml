@@ -51,8 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:image="@{Decorator.bluredLogoBackground(context)}"
-                android:src="@drawable/logo_bg" />
+                app:image="@{Decorator.bluredLogoBackground(context)}" />
 
             <FrameLayout
                 android:layout_width="match_parent"

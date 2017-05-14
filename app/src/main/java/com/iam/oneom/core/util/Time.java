@@ -37,9 +37,14 @@ public final class Time {
                 context.getString(R.string.never) : Time.format(new Date(SecureStore.getEpisodesLastUpdated()), "HH:mm, dd MMM yyyy");
     }
 
+    public static Date getYear(Date date) throws ParseException {
+        return TimeFormat.YEAR.dateFormat().parse(TimeFormat.YEAR.dateFormat().format(date));
+    }
+
     public enum TimeFormat {
         IDN(new SimpleDateFormat("yyyy-MM-dd")),
         TEXT(new SimpleDateFormat("dd MMMM, yyyy")),
+        YEAR(new SimpleDateFormat("yyyy")),
         ITDN(new SimpleDateFormat("kk:mm:ss")),
         OutputDTwTZ(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")),
         OutputDT(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")),

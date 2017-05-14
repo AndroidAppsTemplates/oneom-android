@@ -42,8 +42,8 @@ public interface WebInterface {
     @GET("/serial/{id}")
     Observable<SerialResponse> getSerial(@Path("id") long id);
 
-    @GET("/serial/search")
-    Call<SerialsSearchRequest> searchSerials(@Query("title") String searchString);
+    @GET("/search/serial")
+    Observable<SerialsSearchResponse> searchSerials(@Query("title") String searchString);
 
     @GET("/ep/{id}")
     Observable<EpResponse> getEpisode(@Path("id") long id);

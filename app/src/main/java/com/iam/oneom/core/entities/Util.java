@@ -1,7 +1,9 @@
 package com.iam.oneom.core.entities;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Lang;
@@ -9,9 +11,12 @@ import com.iam.oneom.core.entities.model.Poster;
 import com.iam.oneom.core.entities.model.QualityGroup;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.entities.model.Source;
+import com.iam.oneom.core.util.Time;
 import com.iam.oneom.core.util.Web;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Util {
@@ -36,8 +41,38 @@ public class Util {
         return String.format("S%02dE%02d", s, e);
     }
 
+    public static String period(Context context, Serial serial) {
+
+        Long start = serial.getStart();
+        Long end = serial.getEnd();
+
+        if (start == null) {
+            return context.getString(R.string.unknown);
+        }
+
+        String addition = "";
+
+        try {
+            if (end == null || end == 0) {
+                addition = "";
+            } else if (Time.getYear(new Date(end)).getTime() < 0) {
+                addition = "";
+            } else if (Time.getYear(new Date(start)).equals(Time.getYear(new Date(end)))) {
+                addition = "";
+            } else if (new Date(end).after(new Date())) {
+                addition = " - " + context.getString(R.string.till_now);
+            } else {
+                addition = " - " + Time.format(new Date(end), Time.TimeFormat.YEAR);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return Time.format(new Date(start), Time.TimeFormat.YEAR) + addition;
+    }
+
     public static String countries(Serial serial) {
-        if (serial.getCountry() == null ||serial.getCountry().size() == 0) {
+        if (serial.getCountry() == null || serial.getCountry().size() == 0) {
             return "";
         }
 
@@ -52,7 +87,7 @@ public class Util {
     }
 
     public static String networks(Serial serial) {
-        if (serial.getNetwork() == null ||serial.getNetwork().size() == 0) {
+        if (serial.getNetwork() == null || serial.getNetwork().size() == 0) {
             return "";
         }
 

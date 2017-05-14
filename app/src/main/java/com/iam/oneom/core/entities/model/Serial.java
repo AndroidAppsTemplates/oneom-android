@@ -150,10 +150,6 @@ public class Serial extends RealmObject {
         return timezone;
     }
 
-//    public String getVkGroupUpdate() {
-//        return vkGroupUpdate;
-//    }
-//
     public void setId(long id) {
         this.id = id;
     }
@@ -214,10 +210,6 @@ public class Serial extends RealmObject {
         this.runtime = runtime;
     }
 
-//    public void setStart(Date start) {
-//        this.start = start;
-//    }
-
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -241,12 +233,4 @@ public class Serial extends RealmObject {
     public void setTvrageId(int tvrageId) {
         this.tvrageId = tvrageId;
     }
-
-//    public void setVkGroupId(int vkGroupId) {
-//        this.vkGroupId = vkGroupId;
-//    }
-
-//    public void setVkGroupUpdate(String vkGroupUpdate) {
-//        this.vkGroupUpdate = vkGroupUpdate;
-//    }
 }
