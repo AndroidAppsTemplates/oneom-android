@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.iam.oneom.BR;
 import com.iam.oneom.R;
 import com.iam.oneom.core.entities.model.Episode;
@@ -19,7 +18,6 @@ import com.iam.oneom.pages.mpd.PagingPresenter;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 /**
@@ -48,16 +46,6 @@ public class ViewModel {
                 presenter.loadMore();
             }
         });
-    }
-
-    @BindingAdapter({"url", "posterImageCorner"})
-    public static void loadImage(ImageView view, String url, float posterImageCorner) {
-        Glide
-                .with(view.getContext())
-                .load(url)
-                .error(R.drawable.movie_icon_13)
-                .bitmapTransform(new RoundedCornersTransformation(view.getContext(), (int) posterImageCorner, 0))
-                .into(view);
     }
 
     @BindingAdapter("image")

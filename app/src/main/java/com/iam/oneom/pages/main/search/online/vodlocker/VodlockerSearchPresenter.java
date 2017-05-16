@@ -1,4 +1,4 @@
-package com.iam.oneom.pages.main.search.vodlocker;
+package com.iam.oneom.pages.main.search.online.vodlocker;
 
 import com.iam.oneom.core.entities.model.Source;
 import com.iam.oneom.pages.main.search.DisplayView;
@@ -30,7 +30,7 @@ public class VodlockerSearchPresenter implements Presenter<VodlockerSearchResult
 
     @Override
     public void onDestroy() {
-
+        view = null;
     }
 
     @Override

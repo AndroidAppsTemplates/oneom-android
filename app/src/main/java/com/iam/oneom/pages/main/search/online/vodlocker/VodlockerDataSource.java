@@ -1,10 +1,12 @@
-package com.iam.oneom.pages.main.search.vodlocker;
+package com.iam.oneom.pages.main.search.online.vodlocker;
 
 import com.iam.oneom.core.CustomRequest;
 import com.iam.oneom.pages.main.search.SearchDataSource;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class VodlockerDataSource extends SearchDataSource<VodlockerSearchResult>
     @Override
     public void search(String searchString, String searchForm) {
 
-        CustomRequest.instance.request(searchForm.replace("{searchString}", searchString).replace(".com", ".li"))
+        CustomRequest.instance.request(searchForm.replace("{searchString}", searchString).replace("{page}", "1"))
                 .subscribe(s -> {
                     if (listener != null) {
                         listener.getResults(parse(s));
@@ -32,8 +34,16 @@ public class VodlockerDataSource extends SearchDataSource<VodlockerSearchResult>
 
     private List<VodlockerSearchResult> parse(String s) {
         Document document = Jsoup.parse(s);
+        Elements elements = document.body().getElementsByClass("vid_block");
 
-        return new ArrayList<>();
+        ArrayList<VodlockerSearchResult> results = new ArrayList<>();
+
+        for (Element e : elements) {
+            VodlockerSearchResult result = new VodlockerSearchResult();
+            result.parse(e.toString());
+        }
+
+        return results;
     }
 
     @Override

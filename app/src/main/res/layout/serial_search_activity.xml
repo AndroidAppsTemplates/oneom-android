@@ -5,7 +5,9 @@
     <data>
         <import type="android.text.TextWatcher"/>
         <import type="com.iam.oneom.core.util.Decorator" />
-        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers"/>
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
         <variable
             name="vm"
             type="com.iam.oneom.pages.main.serial.SerialSearchViewModel"/>

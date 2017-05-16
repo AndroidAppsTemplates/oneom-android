@@ -31,15 +31,6 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.SerialSearchActivity">
-
-        </activity>
-
-
-        <activity
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -55,7 +46,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.search.vodlocker.VodlockerSearchActivity" />
+            android:name=".pages.main.search.online.vodlocker.VodlockerSearchActivity" />
         <activity
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"

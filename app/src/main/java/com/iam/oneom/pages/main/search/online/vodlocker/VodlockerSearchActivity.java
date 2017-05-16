@@ -1,7 +1,8 @@
-package com.iam.oneom.pages.main.search.vodlocker;
+package com.iam.oneom.pages.main.search.online.vodlocker;
 
-import com.iam.oneom.pages.main.search.BaseSearchActivity;
 import com.iam.oneom.pages.main.search.Presenter;
+import com.iam.oneom.pages.main.search.online.OnlinesSearchActivity;
+import com.iam.oneom.pages.main.search.online.OnlinesSearchViewModel;
 
 import java.util.List;
 
@@ -9,12 +10,11 @@ import java.util.List;
  * Created by iam on 03.04.17.
  */
 
-public class VodlockerSearchActivity extends BaseSearchActivity<VodlockerSearchResult> {
-
+public class VodlockerSearchActivity extends OnlinesSearchActivity<VodlockerSearchResult> {
 
     @Override
     public void onSearchFinished(List<VodlockerSearchResult> results) {
-
+        getViewModel().set(results);
     }
 
     @Override
@@ -30,5 +30,10 @@ public class VodlockerSearchActivity extends BaseSearchActivity<VodlockerSearchR
         }
 
         return null;
+    }
+
+    @Override
+    protected OnlinesSearchViewModel<VodlockerSearchResult> createViewModel() {
+        return new VodlockerViewModel();
     }
 }

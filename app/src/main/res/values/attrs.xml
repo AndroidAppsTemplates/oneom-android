@@ -3,10 +3,15 @@
     <declare-styleable name="RoundedCornersImageView">
         <attr name="rcl_cornerRadius" format="dimension" />
     </declare-styleable>
-    <declare-styleable name="db">
-        <attr name="posterImageCorner" format="dimension" />
+
+    <declare-styleable name="image">
+        <attr name="imageCorner" format="dimension" />
         <attr name="url" format="string" />
+        <attr name="rounded" format="boolean" />
+        <attr name="error" format="integer" />
     </declare-styleable>
+
+
     <declare-styleable name="SwipeRefreshLayout">
         <attr name="presenter" format="reference"/>
         <attr name="viewModel" format="reference"/>

@@ -1,4 +1,6 @@
-package com.iam.oneom.pages.main.search;
+package com.iam.oneom.pages.main.search.online;
+
+import com.iam.oneom.pages.main.search.SearchResult;
 
 /**
  * Created by iam on 07.04.17.

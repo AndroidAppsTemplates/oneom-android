@@ -313,4 +313,8 @@ public class Util {
     public static int torrentsCount(Episode episode) {
         return episode.getTorrent() == null ? 0 : episode.getTorrent().size();
     }
+
+    public static String searchString(Episode episode) {
+        return episode.getSerial().getTitle();
+    }
 }
