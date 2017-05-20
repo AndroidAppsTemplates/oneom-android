@@ -12,6 +12,7 @@ import com.iam.oneom.core.network.response.SerialResponse;
 import com.iam.oneom.core.network.response.SerialsSearchResponse;
 import com.iam.oneom.core.update.UpdateException;
 import com.iam.oneom.core.util.Editor;
+import com.iam.oneom.core.util.Time;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -142,6 +143,13 @@ public enum Web {
 
     public Observable<EpsDateResponse> getLastEpisodesByDate(String start, String end) {
         return webInterface.getEpisodesByDateObservable(start, end)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io());
+    }
+
+    public Observable<EpsDateResponse> getLastEpisodesByDate(long start, long end) {
+        return webInterface.getEpisodesByDateObservable(Time.toString(start), Time.toString(end))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());

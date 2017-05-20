@@ -1,12 +1,13 @@
 package com.iam.oneom.core.entities.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.entities.DbEntity;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class File extends RealmObject {
+public class File extends RealmObject implements DbEntity {
 
     @PrimaryKey
     @SerializedName("id")

@@ -3,8 +3,8 @@ package com.iam.oneom.pages.main.episode;
 import android.os.Bundle;
 
 import com.iam.oneom.core.DbHelper;
+import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.Tagged;
-import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Source;
 import com.iam.oneom.pages.main.search.online.vodlocker.VodlockerSearchActivity;
 
@@ -24,7 +24,7 @@ public class OnlinePageFragment extends BaseSearchListFragment {
 
     @Override
     protected void startNextActivity(Source source) {
-        VodlockerSearchActivity.start(getActivity(), Util.searchString(getEpisode()), source.getId(), getEpisode().getId());
+        VodlockerSearchActivity.start(getActivity(), DbUtil.searchString(getEpisode()), source.getId(), getEpisode().getId());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class OnlinePageFragment extends BaseSearchListFragment {
 
     @Override
     protected <T extends Tagged> String getRelatedText(T tagged) {
-        return Util.qualityTag(tagged);
+        return DbUtil.qualityTag(tagged);
     }
 
 

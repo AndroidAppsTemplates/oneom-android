@@ -2,14 +2,19 @@ package com.iam.oneom.core.entities.model;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.entities.DbEntity;
+import com.iam.oneom.core.entities.ScheduleItem;
 import com.iam.oneom.core.jsonadapter.DateLongAdapter;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Episode extends RealmObject {
+public class Episode extends RealmObject implements DbEntity, ScheduleItem {
 
+    public static final String AIRDATE = "airdate";
+    public static final String TITLE = "title";
+    public static final String IS_SCHEDULE = "isSchedule";
     @PrimaryKey
     @SerializedName("id")
     private long id;
@@ -30,6 +35,8 @@ public class Episode extends RealmObject {
     private int season;
     @SerializedName("rait")
     private String rait;
+    @SerializedName("serial_id")
+    private long serialId;
     @SerializedName("title")
     private String title;
     @SerializedName("fb_post_id")
@@ -41,7 +48,11 @@ public class Episode extends RealmObject {
     @SerializedName("updated_at")
     private long updatedAt;
     @SerializedName("is_schedule")
-    private boolean isSheldule;
+    private boolean isSchedule;
+
+    public long getSerialId() {
+        return serialId;
+    }
 
     public int getEp() {
         return ep;
@@ -64,7 +75,7 @@ public class Episode extends RealmObject {
     }
 
     public boolean isSheldule() {
-        return isSheldule;
+        return isSchedule;
     }
 
     public void setFbPostId(String fbPostId) {
@@ -80,7 +91,7 @@ public class Episode extends RealmObject {
     }
 
     public void setSheldule(boolean sheldule) {
-        isSheldule = sheldule;
+        isSchedule = sheldule;
     }
 
     public long getId() {
@@ -155,7 +166,12 @@ public class Episode extends RealmObject {
         this.description = description;
     }
 
-    public void setIsSheldule(boolean isSheldule) {
-        this.isSheldule = isSheldule;
+    public void setIsSheldule(boolean isSchedule) {
+        this.isSchedule = isSchedule;
+    }
+
+    @Override
+    public long getScheduleTime() {
+        return airdate;
     }
 }

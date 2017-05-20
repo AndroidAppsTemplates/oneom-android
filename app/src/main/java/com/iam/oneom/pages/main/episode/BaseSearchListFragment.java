@@ -18,9 +18,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
+import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.HasUrl;
 import com.iam.oneom.core.entities.Tagged;
-import com.iam.oneom.core.entities.Util;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Source;
 import com.iam.oneom.core.util.Decorator;
@@ -180,10 +180,10 @@ public abstract class BaseSearchListFragment extends Fragment {
             public void onBind(int position) {
                 Source source = sources.get(isRelatedExists() ? position - 1 : position);
                 textView.setText(source.getName());
-                textView.setTextColor(Util.isEmptySource(source) ? not_active : active);
+                textView.setTextColor(DbUtil.isEmptySource(source) ? not_active : active);
                 divider.setVisibility(position == getItemCount() - 1 ? View.GONE : View.VISIBLE);
                 view.setOnClickListener(v -> {
-                    if (Util.isEmptySource(source)) {
+                    if (DbUtil.isEmptySource(source)) {
                         Toast.makeText(getActivity(), getString(R.string.no_searh_data, source.getName()), Toast.LENGTH_LONG).show();
                     } else {
                         startNextActivity(source);
@@ -215,7 +215,7 @@ public abstract class BaseSearchListFragment extends Fragment {
         @Override
         public void onBindViewHolder(HeaderAdapter.ItemVH holder, int position) {
             Glide.with(getActivity())
-                    .load(Util.posterUrl(episode, Decorator.W480))
+                    .load(DbUtil.posterUrl(episode, Decorator.W480))
                     .asBitmap()
                     .error(R.drawable.ic_movie_black_48dp)
                     .centerCrop()

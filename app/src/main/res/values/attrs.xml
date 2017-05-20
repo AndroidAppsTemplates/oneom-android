@@ -14,7 +14,7 @@
 
     <declare-styleable name="SwipeRefreshLayout">
         <attr name="presenter" format="reference"/>
-        <attr name="viewModel" format="reference"/>
+        <attr name="episodesViewModel" format="reference"/>
         <attr name="image" format="reference"/>
         <attr name="onMenuItemClick" format="reference"/>
     </declare-styleable>

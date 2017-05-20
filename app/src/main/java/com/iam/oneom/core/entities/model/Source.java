@@ -3,13 +3,14 @@ package com.iam.oneom.core.entities.model;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.entities.DbEntity;
 import com.iam.oneom.core.entities.interfaces.Named;
 import com.iam.oneom.core.util.ErrorHandler;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Source extends RealmObject implements Named {
+public class Source extends RealmObject implements Named, DbEntity {
 
     public static final int TORRENT = 1;
     public static final int SUBTITLE = 2;

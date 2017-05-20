@@ -18,6 +18,16 @@ public class VodlockerSearchActivity extends OnlinesSearchActivity<VodlockerSear
     }
 
     @Override
+    public void showProgress() {
+        getViewModel().loading.set(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        getViewModel().loading.set(false);
+    }
+
+    @Override
     public void performAction(VodlockerSearchResult searchResult) {
 
     }

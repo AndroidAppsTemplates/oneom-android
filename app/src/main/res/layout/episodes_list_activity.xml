@@ -10,21 +10,18 @@
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 
-        <import type="com.iam.oneom.core.util.Decorator"/>
+        <import type="com.iam.oneom.core.util.Decorator" />
 
-        <import type="android.support.v7.widget.Toolbar.OnMenuItemClickListener"/>
+        <import type="android.support.v7.widget.Toolbar.OnMenuItemClickListener" />
 
-        <import type="com.iam.oneom.pages.main.episodes.EpisodeListActivity"/>
+        <import type="com.iam.oneom.pages.main.episodes.EpisodeListActivity" />
 
         <import type="com.iam.oneom.core.util.Time" />
 
         <variable
-            name="viewModel"
-            type="com.iam.oneom.pages.main.episodes.ViewModel" />
+            name="episodesViewModel"
+            type="com.iam.oneom.pages.main.episodes.EpisodesViewModel" />
 
-        <variable
-            name="presenter"
-            type="com.iam.oneom.pages.mpd.PagingPresenter" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,10 +34,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:onMenuItemClick="@{(item) -> ((OnMenuItemClickListener)context).onMenuItemClick(item)}"
+            android:subtitle='@{@string/last_updated(episodesViewModel.lastUpdated)}'
+            android:theme="@style/toolbarColored"
             android:title="@{@string/episodes}"
-            android:subtitle='@{@string/last_updated(viewModel.lastUpdated)}'
-            android:theme="@style/toolbarColored" />
+            app:onMenuItemClick="@{(item) -> ((OnMenuItemClickListener)context).onMenuItemClick(item)}" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -62,17 +59,16 @@
                     android:id="@+id/swipe_refresh_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:refreshing="@{viewModel.loading}"
-                    app:presenter="@{presenter}"
-                    app:viewModel="@{viewModel}"
+                    app:episodesViewModel="@{episodesViewModel}"
+                    app:refreshing="@{episodesViewModel.loading}"
                     app:srl_direction="both">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/mainrecycler"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:itemBinding="@{viewModel.itemBinding}"
-                        app:items="@{viewModel.items}"
+                        app:itemBinding="@{episodesViewModel.itemBinding}"
+                        app:items="@{episodesViewModel.items}"
                         app:layoutManager="@{LayoutManagers.grid(3)}" />
                 </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 

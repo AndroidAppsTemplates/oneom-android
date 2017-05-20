@@ -27,7 +27,7 @@ public abstract class OnlineSearchResult implements SearchResult {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override

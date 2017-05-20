@@ -79,6 +79,23 @@ public final class Time {
         return new SimpleDateFormat(out).format(date);
     }
 
+
+    public static String format(long date, String out) {
+        return new SimpleDateFormat(out).format(new Date(date));
+    }
+
+    public static String format(long date, TimeFormat out) {
+        return out.dateFormat().format(new Date(date));
+    }
+
+    public static String format(Long date, String out) {
+        return format(date == null ? 0 : date, out);
+    }
+
+    public static String format(Long date, TimeFormat out) {
+        return format(date == null ? 0 : date, out);
+    }
+
     public static String format(String date, TimeFormat in, TimeFormat out) throws ParseException {
         Date d = in.dateFormat().parse(date);
         return out.dateFormat().format(d);

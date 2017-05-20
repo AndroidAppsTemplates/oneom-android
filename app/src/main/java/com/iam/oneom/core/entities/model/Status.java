@@ -1,12 +1,13 @@
 package com.iam.oneom.core.entities.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.entities.DbEntity;
 import com.iam.oneom.core.entities.interfaces.Named;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Status extends RealmObject implements Named {
+public class Status extends RealmObject implements Named, DbEntity {
 
     @PrimaryKey
     @SerializedName("id")

@@ -1,9 +1,11 @@
 package com.iam.oneom.pages.main.search.online;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.iam.oneom.R;
+import com.iam.oneom.databinding.OnlinesSearchActivityBinding;
 import com.iam.oneom.pages.main.search.BaseSearchActivity;
 
 /**
@@ -17,7 +19,10 @@ public abstract class OnlinesSearchActivity<T extends OnlineSearchResult> extend
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnlinesSearchActivityBinding binding = DataBindingUtil.setContentView(this, getLayout());
         viewModel = createViewModel();
+        viewModel.searchString.set(getSearchString());
+        binding.setVm(viewModel);
     }
 
     @Override

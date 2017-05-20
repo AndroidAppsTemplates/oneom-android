@@ -2,7 +2,11 @@ package com.iam.oneom.pages.main.search.online;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+
+import com.iam.oneom.BR;
+import com.iam.oneom.R;
 
 import java.util.List;
 
@@ -14,9 +18,10 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public abstract class OnlinesSearchViewModel<T extends OnlineSearchResult> {
 
-    private ObservableList<T> items = new ObservableArrayList<>();
-    private ItemBinding<T> binding = getBinding();
-    private ObservableBoolean loading = new ObservableBoolean();
+    public ObservableList<T> items = new ObservableArrayList<>();
+    public ItemBinding<T> binding = ItemBinding.of(BR.result, R.layout.online_grid_item);
+    public ObservableBoolean loading = new ObservableBoolean();
+    public ObservableField<String> searchString = new ObservableField<>();
 
     protected abstract ItemBinding<T> getBinding();
 

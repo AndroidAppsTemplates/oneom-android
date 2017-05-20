@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
-import com.iam.oneom.core.entities.Util;
+import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.rx.EpisodeDataReceivedEvent;
 import com.iam.oneom.core.rx.RxBus;
@@ -81,7 +81,7 @@ public class EpisodePageFragment extends Fragment {
                     this.episode = episodeDataReceivedEvent.getEpisode();
                     description.setText(
                             Html.fromHtml(
-                                    Util.description(episode, getString(R.string.no_description)
+                                    DbUtil.description(episode, getString(R.string.no_description)
                                     )
                             )
                     );
@@ -97,16 +97,16 @@ public class EpisodePageFragment extends Fragment {
         if (episode.getDescription() != null && episode.getDescription().size() > 0) {
             description.setText(
                     Html.fromHtml(
-                            Util.description(episode, getString(R.string.no_description)
+                            DbUtil.description(episode, getString(R.string.no_description)
                             )
                     )
             );
         }
 
-        descTitle.setText(String.format("%s%s", Util.episodeInSeasonString(episode), episode.getTitle() == null ? "" : (" " + episode.getTitle())));
+        descTitle.setText(String.format("%s%s", DbUtil.episodeInSeasonString(episode), episode.getTitle() == null ? "" : (" " + episode.getTitle())));
 
         Glide.with(this)
-                .load(Util.posterUrl(episode, Decorator.W480))
+                .load(DbUtil.posterUrl(episode, Decorator.W480))
                 .asBitmap()
                 .centerCrop()
                 .error(R.drawable.ic_movie_black_48dp)

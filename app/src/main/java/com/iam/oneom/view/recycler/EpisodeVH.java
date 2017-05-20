@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iam.oneom.R;
-import com.iam.oneom.core.entities.Util;
+import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.pages.main.episode.EpisodePageActivityNew;
@@ -49,12 +49,12 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
 
     public void onBind(Episode ep) {
 
-        this.title.setText(Util.title(ep));
-        this.ep.setText(Util.episodeInSeasonString(ep));
+        this.title.setText(DbUtil.title(ep));
+        this.ep.setText(DbUtil.episodeInSeasonString(ep));
 
         Glide
                 .with(view.getContext())
-                .load(Util.posterUrl(ep, Decorator.W480))
+                .load(DbUtil.posterUrl(ep, Decorator.W480))
                 .error(R.drawable.movie_icon_13)
                 .bitmapTransform(new RoundedCornersTransformation(view.getContext(), episode_item_image_corner, 0))
                 .into(image);
@@ -62,10 +62,10 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
         view.setOnClickListener(v -> {
             EpisodePageActivityNew.open(v.getContext(), ep.getId());
         });
-        t_appearance_label.setVisibility(Util.hasTorrents(ep) ? View.VISIBLE : View.GONE);
-        o_appearance_label.setVisibility(Util.hasOnlines(ep) ? View.VISIBLE : View.GONE);
-        t_appearance_text.setText(String.valueOf(Util.torrentsCount(ep)));
-        o_appearance_text.setText(String.valueOf(Util.onlinesCount(ep)));
+        t_appearance_label.setVisibility(DbUtil.hasTorrents(ep) ? View.VISIBLE : View.GONE);
+        o_appearance_label.setVisibility(DbUtil.hasOnlines(ep) ? View.VISIBLE : View.GONE);
+        t_appearance_text.setText(String.valueOf(DbUtil.torrentsCount(ep)));
+        o_appearance_text.setText(String.valueOf(DbUtil.onlinesCount(ep)));
 //        tagbar.setAdapter(new TagAdapter(tagbar.getContext(), tags));
 //        tagbar.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
 

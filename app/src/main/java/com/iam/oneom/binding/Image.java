@@ -2,12 +2,16 @@ package com.iam.oneom.binding;
 
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Dimension;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.iam.oneom.core.util.Decorator;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -16,6 +20,25 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  */
 
 public class Image {
+
+    @BindingAdapter("image")
+    public static void setBackground(ImageView imageView, Bitmap bitmap) {
+        imageView.setImageBitmap(bitmap);
+    }
+
+    @BindingAdapter("blur_image")
+    public static void setBackground(ImageView imageView, String url) {
+        Glide.with(imageView.getContext())
+                .load(url)
+                .asBitmap()
+                .centerCrop()
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        imageView.setImageBitmap(Decorator.fastblur(resource, 1, 50));
+                    }
+                });;
+    }
 
     @BindingAdapter({"url", "rounded"})
     public static void loadImageRounded(ImageView view, String url, boolean rounded) {
@@ -28,6 +51,7 @@ public class Image {
                 .with(view.getContext())
                 .load(url)
                 .asBitmap()
+                .centerCrop()
                 .into(new ImageViewTarget<Bitmap>(view) {
                     @Override
                     protected void setResource(Bitmap resource) {
@@ -40,7 +64,7 @@ public class Image {
     }
 
     @BindingAdapter({"url", "error", "rounded"})
-    public static void loadImageRounded(ImageView view, String url, int error, boolean rounded) {
+    public static void loadImageRounded(ImageView view, String url, Drawable error, boolean rounded) {
 
         if (!rounded) {
             loadImage(view, url, error);
@@ -52,6 +76,7 @@ public class Image {
                 .load(url)
                 .asBitmap()
                 .error(error)
+                .centerCrop()
                 .into(new ImageViewTarget<Bitmap>(view) {
                     @Override
                     protected void setResource(Bitmap resource) {
@@ -68,23 +93,36 @@ public class Image {
         Glide
                 .with(view.getContext())
                 .load(url)
+                .centerCrop()
                 .into(view);
     }
     @BindingAdapter({"url", "error"})
-    public static void loadImage(ImageView view, String url, int error) {
+    public static void loadImage(ImageView view, String url, Drawable error) {
         Glide
                 .with(view.getContext())
                 .load(url)
+                .centerCrop()
                 .error(error)
                 .into(view);
     }
 
-    @BindingAdapter({"url", "error", "posterImageCorner"})
-    public static void loadImage(ImageView view, String url, int error, float posterImageCorner) {
+    @BindingAdapter({"url", "imageCorner"})
+    public static void loadImage(ImageView view, String url, @Dimension float posterImageCorner) {
+        Glide
+                .with(view.getContext())
+                .load(url)
+                .centerCrop()
+                .bitmapTransform(new RoundedCornersTransformation(view.getContext(), (int) posterImageCorner, 0))
+                .into(view);
+    }
+
+    @BindingAdapter({"url", "error", "imageCorner"})
+    public static void loadImage(ImageView view, String url, Drawable error, @Dimension float posterImageCorner) {
         Glide
                 .with(view.getContext())
                 .load(url)
                 .error(error)
+                .centerCrop()
                 .bitmapTransform(new RoundedCornersTransformation(view.getContext(), (int) posterImageCorner, 0))
                 .into(view);
     }

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'me.tatarka.retrolambda'
 
 allprojects {
     repositories {
@@ -12,15 +11,16 @@ buildscript {
     repositories {
         mavenCentral()
     }
-
-//    dependencies {
-//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-//    }
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId "com.iam.oneohm"
@@ -59,13 +59,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-//    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

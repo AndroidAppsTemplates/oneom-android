@@ -1,6 +1,7 @@
 package com.iam.oneom.core.entities;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.iam.oneom.R;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Util {
+public class DbUtil {
 
     // Returns formatted episode in season number EQ: S03E24
     public static String episodeInSeasonString(Episode episode) {
@@ -39,6 +40,47 @@ public class Util {
         }
 
         return String.format("S%02dE%02d", s, e);
+    }
+
+    public static List<Episode> setSchedule(List<Episode> episodes) {
+        for (Episode episode : episodes) {
+            episode.setIsSheldule(true);
+        }
+
+        return episodes;
+    }
+
+    public static <T extends ScheduleItem> T earliest(@NonNull List<T> schedule) {
+        if (schedule.size() == 0) {
+            return null;
+        }
+
+        T min = schedule.get(0);
+
+        for (T item : schedule) {
+            if (item.getScheduleTime() < min.getScheduleTime()) {
+                min = item;
+            }
+        }
+
+        return min;
+    }
+
+
+    public static <T extends ScheduleItem> T latest(@NonNull List<T> schedule) {
+        if (schedule.size() == 0) {
+            return null;
+        }
+
+        T max = schedule.get(0);
+
+        for (T item : schedule) {
+            if (item.getScheduleTime() > max.getScheduleTime()) {
+                max = item;
+            }
+        }
+
+        return max;
     }
 
     public static String period(Context context, Serial serial) {

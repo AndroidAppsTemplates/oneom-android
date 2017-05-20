@@ -2,13 +2,14 @@ package com.iam.oneom.core.entities.model;
 
 
 import com.google.gson.annotations.SerializedName;
+import com.iam.oneom.core.entities.DbEntity;
 import com.iam.oneom.core.entities.HasUrl;
 import com.iam.oneom.core.entities.Tagged;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Subtitle extends RealmObject implements Tagged, HasUrl {
+public class Subtitle extends RealmObject implements Tagged, HasUrl, DbEntity {
 
     @PrimaryKey
     @SerializedName("id")

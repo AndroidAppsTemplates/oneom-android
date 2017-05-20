@@ -71,6 +71,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.serial.SerialSearchActivity" />
+        <activity android:name=".pages.main.episode.EpisodeSearchActivity" />
 
     </application>
 

@@ -32,4 +32,7 @@
     <string name="enter_serial_name">Enter Serial Name</string>
     <string name="unknown">Unknown</string>
     <string name="till_now">Till now</string>
+    <string name="serial_page">Serial page</string>
+    <string name="go_search">Go search</string>
+    <string name="loading">Loading...</string>
 </resources>

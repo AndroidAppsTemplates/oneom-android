@@ -41,6 +41,7 @@ public class VodlockerDataSource extends SearchDataSource<VodlockerSearchResult>
         for (Element e : elements) {
             VodlockerSearchResult result = new VodlockerSearchResult();
             result.parse(e.toString());
+            results.add(result);
         }
 
         return results;
