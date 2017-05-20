@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
 
+        <variable
+            name="vm"
+            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel" />
+
+        <import type="com.iam.oneom.core.entities.DbUtil" />
+
+        <import type="com.iam.oneom.R" />
+
+        <import type="com.iam.oneom.core.util.Time" />
     </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -17,14 +28,22 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/dark"
+                android:theme="@style/toolbarColored"
+                android:subtitle='@{context.getString(R.string.airdate) + ": " + Time.format(vm.episode.airdate, Time.TimeFormat.TEXT)}'
+                android:title="@{DbUtil.title(vm.episode)}" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 style="@style/AppTabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:viewPager="@{pager}"
                 app:tabGravity="fill"
+                app:tabSelectedTextColor="@color/light"
+                app:tabTextColor="@color/middle"
+                app:tabIndicatorColor="@color/light"
                 app:tabMode="fixed"
                 app:tabTextAppearance="@style/AppTabTextAppearance" />
         </android.support.design.widget.AppBarLayout>
@@ -34,16 +53,16 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:blur_image="@{vm.posterUrl}"
                 android:scaleType="centerCrop" />
 
             <FrameLayout
                 android:id="@+id/bluring_area"
-                android:background="@color/dark_transparent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/dark_transparent">
 
 
                 <android.support.v4.view.ViewPager

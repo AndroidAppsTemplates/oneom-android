@@ -14,7 +14,7 @@ import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.databinding.EpisodePageActivityBinding;
 import com.iam.oneom.pages.main.viewmodel.EpisodeViewModel;
 
-public class EpisodePageActivityNew extends AppCompatActivity {
+public class EpisodePageActivity extends AppCompatActivity {
 
     private static final String EP_ID_EXTRA = "EP_ID_EXTRA";
 
@@ -22,7 +22,7 @@ public class EpisodePageActivityNew extends AppCompatActivity {
     EpisodeViewModel episodeViewModel;
 
     public static void open(Context context, long epId) {
-        Intent intent = new Intent(context, EpisodePageActivityNew.class);
+        Intent intent = new Intent(context, EpisodePageActivity.class);
         intent.putExtra(EP_ID_EXTRA, epId);
         context.startActivity(intent);
     }

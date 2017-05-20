@@ -11,7 +11,7 @@ import com.iam.oneom.R;
 import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.util.Decorator;
-import com.iam.oneom.pages.main.episode.EpisodePageActivityNew;
+import com.iam.oneom.pages.main.episode.EpisodePageActivity;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -60,7 +60,7 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
                 .into(image);
 
         view.setOnClickListener(v -> {
-            EpisodePageActivityNew.open(v.getContext(), ep.getId());
+            EpisodePageActivity.open(v.getContext(), ep.getId());
         });
         t_appearance_label.setVisibility(DbUtil.hasTorrents(ep) ? View.VISIBLE : View.GONE);
         o_appearance_label.setVisibility(DbUtil.hasOnlines(ep) ? View.VISIBLE : View.GONE);
