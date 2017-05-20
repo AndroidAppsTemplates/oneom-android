@@ -359,4 +359,15 @@ public class DbUtil {
     public static String searchString(Episode episode) {
         return episode.getSerial().getTitle();
     }
+
+    public static int episodeRelatedCount(Episode episode) {
+        int count = 0;
+        if (episode.getOnline() != null) {
+            count += episode.getOnline().size();
+        }
+        if (episode.getTorrent() != null) {
+            count += episode.getTorrent().size();
+        }
+        return count;
+    }
 }

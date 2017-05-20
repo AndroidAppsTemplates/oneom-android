@@ -43,7 +43,7 @@ public abstract class BaseSearchActivity<T> extends AppCompatActivity implements
                 return VodlockerSearchActivity.class;
         }
 
-        return null;
+        return NoSourceActivity.class;
     }
 
     @Override

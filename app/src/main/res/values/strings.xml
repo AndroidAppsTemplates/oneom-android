@@ -35,4 +35,7 @@
     <string name="serial_page">Serial page</string>
     <string name="go_search">Go search</string>
     <string name="loading">Loading...</string>
+    <string name="no_related_items">There are no related items for this episode</string>
+    <string name="no_source">We\'re sorry, but we don\'t have engine for this source yet. It will coming soon.</string>
+    <string name="back">Back</string>
 </resources>

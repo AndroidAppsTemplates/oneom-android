@@ -5,6 +5,7 @@ import android.databinding.ObservableField;
 import android.view.View;
 import android.widget.Toast;
 
+import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.model.Episode;
@@ -12,6 +13,7 @@ import com.iam.oneom.core.network.Web;
 import com.iam.oneom.core.util.Decorator;
 import com.iam.oneom.core.util.RxUtils;
 import com.iam.oneom.pages.main.SerialPageActivity;
+import com.iam.oneom.pages.main.episode.EpisodeRelatedItemsActivity;
 import com.iam.oneom.pages.main.episode.EpisodeSearchActivity;
 
 import rx.Subscription;
@@ -56,8 +58,13 @@ public class EpisodeViewModel {
     public View.OnClickListener onSerialPageClick = v ->
             SerialPageActivity.start(v.getContext(), episode.get().getSerial().getId());
 
-    public View.OnClickListener onRelatedClick = v ->
-            Toast.makeText(v.getContext(), "Undefined", Toast.LENGTH_SHORT).show();
+    public View.OnClickListener onRelatedClick = v -> {
+        if (DbUtil.episodeRelatedCount(episode.get()) <= 0) {
+            Toast.makeText(v.getContext(), R.string.no_related_items, Toast.LENGTH_SHORT).show();
+        } else {
+            EpisodeRelatedItemsActivity.start(v, episode.get().getId());
+        }
+    };
 
     public View.OnClickListener onGoSearchClick = v ->
             EpisodeSearchActivity.start(v.getContext(), episode.get().getId());

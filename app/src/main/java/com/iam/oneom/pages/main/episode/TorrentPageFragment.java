@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.DbUtil;
-import com.iam.oneom.core.entities.Tagged;
 import com.iam.oneom.core.entities.model.Source;
+import com.iam.oneom.pages.main.search.BaseSearchActivity;
 
 import java.util.List;
 
@@ -23,23 +23,11 @@ public class TorrentPageFragment extends BaseSearchListFragment {
 
     @Override
     protected void startNextActivity(Source source) {
-
-    }
-
-    @Override
-    protected List<? extends Tagged> getRelatedItems() {
-        return getEpisode().getTorrent();
+        BaseSearchActivity.start(getActivity(), DbUtil.searchString(getEpisode()), source.getId(), getEpisode().getId());
     }
 
     @Override
     protected List<Source> getSources() {
         return DbHelper.where(Source.class).equalTo("typeId", Source.TORRENT).findAll();
     }
-
-    @Override
-    protected <T extends Tagged> String getRelatedText(T tagged) {
-        return DbUtil.qualityTag(tagged);
-    }
-
-
 }
