@@ -109,7 +109,7 @@ public class EpisodePageFragment extends Fragment {
                 .load(DbUtil.posterUrl(episode, Decorator.W480))
                 .asBitmap()
                 .centerCrop()
-                .error(R.drawable.ic_movie_black_48dp)
+                .error(R.drawable.ic_movie_dark_24dp)
                 .into(new BitmapImageViewTarget(smallPoster) {
                     @Override
                     protected void setResource(Bitmap resource) {

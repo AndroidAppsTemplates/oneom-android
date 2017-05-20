@@ -41,6 +41,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/middle"
                 app:cardCornerRadius="@dimen/episode_item_image_corner">
 
                 <ImageView
@@ -48,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/episode_item_image_size"
                     android:scaleType="centerCrop"
-                    app:error="@{@drawable/movie_icon_13}"
+                    app:error="@{@drawable/ic_movie_light_24dp}"
                     app:imageCorner="@{@dimen/episode_item_corner}"
                     app:url="@{DbUtil.posterUrl(ep, Decorator.W480)}" />
             </android.support.v7.widget.CardView>

@@ -55,7 +55,7 @@ public class EpisodeVH extends RecyclerView.ViewHolder {
         Glide
                 .with(view.getContext())
                 .load(DbUtil.posterUrl(ep, Decorator.W480))
-                .error(R.drawable.movie_icon_13)
+                .error(R.drawable.ic_movie_dark_24dp)
                 .bitmapTransform(new RoundedCornersTransformation(view.getContext(), episode_item_image_corner, 0))
                 .into(image);
 
