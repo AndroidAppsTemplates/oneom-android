@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Dimension;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +26,15 @@ public class Image {
     @BindingAdapter("image")
     public static void setBackground(ImageView imageView, Bitmap bitmap) {
         imageView.setImageBitmap(bitmap);
+    }
+
+    @BindingAdapter("drawable")
+    public static void setBackgroundDrawable(AppCompatImageView imageView, Drawable drawable) {
+        imageView.setImageDrawable(drawable);
+    }
+    @BindingAdapter("drawable")
+    public static void setBackgroundDrawable(AppCompatImageButton imageView, Drawable drawable) {
+        imageView.setImageDrawable(drawable);
     }
 
     @BindingAdapter("blur_image")

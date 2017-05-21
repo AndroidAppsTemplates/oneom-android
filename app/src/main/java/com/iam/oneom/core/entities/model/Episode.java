@@ -14,6 +14,7 @@ public class Episode extends RealmObject implements DbEntity, ScheduleItem {
 
     public static final String AIRDATE = "airdate";
     public static final String TITLE = "title";
+    public static final String UPDATED_AT = "updatedAt";
     public static final String IS_SCHEDULE = "isSchedule";
     @PrimaryKey
     @SerializedName("id")

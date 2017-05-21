@@ -79,6 +79,10 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.search.NoSourceActivity" />
+        <activity
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".pages.main.episode.EpisodeRelatedItemsActivity" />
 
     </application>
 

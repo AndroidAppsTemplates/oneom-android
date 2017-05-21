@@ -38,4 +38,8 @@
     <string name="no_related_items">There are no related items for this episode</string>
     <string name="no_source">We\'re sorry, but we don\'t have engine for this source yet. It will coming soon.</string>
     <string name="back">Back</string>
+    <string name="select_app">Select app</string>
+    <string name="no_apps">There are no applications for perform this action</string>
+    <string name="no_direct_link_to_video">Sorry, but there is no direct link to this online show. Please use search or try web.</string>
+    <string name="no_direct_link_to_torrent">Sorry, but there is no direct link to this torrent. Please use search or try web.</string>
 </resources>

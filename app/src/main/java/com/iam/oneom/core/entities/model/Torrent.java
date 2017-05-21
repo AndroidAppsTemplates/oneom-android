@@ -21,7 +21,7 @@ public class Torrent extends RealmObject implements Tagged, HasUrl, DbEntity {
     private Source source;
     @SerializedName("url")
     private String url;
-    @SerializedName("tit;e")
+    @SerializedName("title")
     private String title;
     @SerializedName("vk_post_id")
     private String vkPostId;
@@ -33,6 +33,18 @@ public class Torrent extends RealmObject implements Tagged, HasUrl, DbEntity {
     private int seed;
     @SerializedName("leech")
     private int leech;
+
+    public int getSeed() {
+        return seed;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public int getLeech() {
+        return leech;
+    }
 
     public long getId() {
         return id;

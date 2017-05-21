@@ -50,8 +50,10 @@ public class EpisodesViewModel {
         subscription = DbHelper.where(Episode.class)
                 .equalTo(Episode.IS_SCHEDULE, true)
                 .lessThan(Episode.AIRDATE, new Date().getTime())
-                .findAllSortedAsync(new String[]{Episode.AIRDATE, Episode.TITLE},
-                        new Sort[]{Sort.DESCENDING, Sort.ASCENDING})
+                .findAllSortedAsync(
+                        new String[]{Episode.AIRDATE, Episode.UPDATED_AT},
+                        new Sort[]{Sort.DESCENDING, Sort.DESCENDING}
+                )
                 .asObservable()
                 .subscribe(items::update);
     }

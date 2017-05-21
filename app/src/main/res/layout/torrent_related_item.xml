@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.iam.oneom.core.entities.model.Torrent" />
+
+        <variable
+            name="vm"
+            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel"/>
+
+        <import type="com.iam.oneom.core.util.Editor" />
+
+        <import type="com.iam.oneom.core.util.Intents"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="2"
+                android:maxLines="2"
+                android:minLines="2"
+                android:padding="8dp"
+                android:text="@{item.title}"
+                android:textColor="@color/light"
+                android:textSize="16dp" />
+
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageButton
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:padding="8dp"
+                        android:onClick="@{() -> vm.onOnTorrentDownloadClick(context, item)}"
+                        app:srcCompat="@drawable/ic_magnet_light" />
+
+                    <android.support.v7.widget.AppCompatImageButton
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:padding="8dp"
+                        android:onClick="@{() -> Intents.runWeb(context, item.url)}"
+                        app:srcCompat="@drawable/ic_link_light" />
+
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/rounded_corners_4dp_dark_transparent_background"
+                        android:drawableLeft="@drawable/ic_arrow_up_green"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@{String.valueOf(item.seed)}"
+                        android:textColor="@color/greenSeed"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/rounded_corners_4dp_dark_transparent_background"
+                        android:drawableLeft="@drawable/ic_arrow_down_red"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@{String.valueOf(item.leech)}"
+                        android:textColor="@color/redLeach"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/rounded_corners_4dp_dark_transparent_background"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@{Editor.size(item.size)}"
+                        android:textColor="@color/light"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/middle" />
+    </FrameLayout>
+
+</layout>

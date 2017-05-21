@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/episode_item_image_size"
             android:layout_margin="4dp"
-            app:error="@{@drawable/ic_play_circle_filled_black_24px}"
+            app:error="@{@drawable/ic_play_circle_filled_middle}"
             app:imageCorner="@{@dimen/ep_poster_corner_radius}"
             app:url="@{result.posterUrl}" />
 

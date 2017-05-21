@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="vm"
+            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel"/>
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers"/>
+        <import type="com.iam.oneom.core.util.Decorator"/>
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:image="@{Decorator.bluredLogoBackground(context)}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_transparent"
+            app:itemBinding="@{vm.relatedBinding}"
+            app:items="@{vm.relatedItems}"
+            app:layoutManager="@{LayoutManagers.linear()}"/>
+
+    </FrameLayout>
+
+</layout>

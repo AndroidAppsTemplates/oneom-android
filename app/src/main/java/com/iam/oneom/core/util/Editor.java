@@ -75,6 +75,54 @@ public class Editor {
         }
     }
 
+    public static String size(long size) {
+
+//        size = size / 8;
+
+        int ending = 0;
+        int mains = 0;
+        int level = 0;
+
+        while (size / 1024 > 0) {
+            mains = (int) (size / 1024);
+            ending = (int) (size % 1024);
+            size /= 1024;
+            level++;
+        }
+
+        if (mains == 0) {
+            return String.format("%d%s", size, getBytesMultiplier(1));
+        }
+
+        return String.format(String.valueOf(ending).length() <= 1 ?
+                "%d.%s%s" : "%d.%2.2s%s", mains, String.valueOf(ending), getBytesMultiplier(level));
+    }
+
+    private static String getBytesMultiplier(int level) {
+        switch (level) {
+            case 0:
+                return "B";
+            case 1:
+                return "KB";
+            case 2:
+                return "MB";
+            case 3:
+                return "GB";
+            case 4:
+                return "TB";
+            case 5:
+                return "PB";
+            case 6:
+                return "EB";
+            case 7:
+                return "ZB";
+            case 8:
+                return "YB";
+        }
+
+        return "TO MUCH";
+    }
+
     public static String posterLink(String html) {
         Pattern p = Pattern.compile(pattern.imageLink);
         Matcher m = p.matcher(html);

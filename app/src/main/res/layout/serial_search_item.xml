@@ -26,7 +26,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="8dp"
-            app:error="@{@drawable/ic_play_circle_filled_black_24px}"
+            app:error="@{@drawable/ic_play_circle_filled_middle}"
             app:rounded="@{true}"
             app:url="@{DbUtil.posterUrl(serial, Decorator.W480)}" />
 

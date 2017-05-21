@@ -12,13 +12,13 @@
     <color name="half_transparent">#88FFFFFF</color>
     <color name="quatro_transparent">#CCFFFFFF</color>
     <color name="greenFont">#2c682c</color>
-    <color name="greenSeed">#008f0d</color>
+    <color name="greenSeed">#00af0d</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="blueHyperlink">#337ab7</color>
     <color name="blueFont">#1963ff</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="redLeach">#b94309</color>
+    <color name="redLeach">#e94349</color>
 
 
     <!-- named -->

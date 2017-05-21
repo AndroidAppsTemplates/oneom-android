@@ -9,6 +9,7 @@
         <attr name="url" format="string" />
         <attr name="rounded" format="boolean" />
         <attr name="error" format="integer" />
+        <attr name="drawable" format="integer" />
     </declare-styleable>
 
 
