@@ -83,6 +83,10 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.episode.EpisodeRelatedItemsActivity" />
+        <activity
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".pages.main.search.online.naya.NayaSearchActivity" />
 
     </application>
 

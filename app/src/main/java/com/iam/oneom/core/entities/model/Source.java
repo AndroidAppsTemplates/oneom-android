@@ -17,6 +17,7 @@ public class Source extends RealmObject implements Named, DbEntity {
     public static final int ONLINE = 3;
 
     public static final String VODLOCKER = "VodLocker";
+    public static final String NAYA_VIDEO = "NayaVideo";
 
     @PrimaryKey
     @SerializedName("id")

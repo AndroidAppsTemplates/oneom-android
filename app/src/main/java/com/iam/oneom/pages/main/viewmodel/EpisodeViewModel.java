@@ -73,21 +73,7 @@ public class EpisodeViewModel {
             return;
         }
 
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setType("video/*");
-            intent.setData(Uri.parse(online.getVideoUrl()));
-            Intent chooser = Intent.createChooser(intent, context.getString(R.string.select_app));
-            context.startActivity(chooser);
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-            Toast
-                    .makeText(
-                            context,
-                            R.string.no_apps,
-                            Toast.LENGTH_LONG
-                    ).show();
-        }
+        Intents.runOnline(context, online.getVideoUrl());
     }
 
     public void onOnTorrentDownloadClick(Context context, Torrent torrent) {

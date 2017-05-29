@@ -9,20 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.entities.model.Source;
+import com.iam.oneom.pages.main.search.online.naya.NayaSearchActivity;
 import com.iam.oneom.pages.main.search.online.vodlocker.VodlockerSearchActivity;
 
 /**
  * Created by iam on 03.04.17.
  */
 
-public abstract class BaseSearchActivity<T> extends AppCompatActivity implements DisplayView<T> {
+public abstract class BaseSearchActivity extends AppCompatActivity {
 
     private Episode episode;
     private Source source;
     private String searchString;
-
-
-    private Presenter<T> presenter;
 
     public static final String EP_ID_EXTRA = "EP_ID_EXTRA";
     public static final String SOURCE_ID_EXTRA = "SOURCE_ID_EXTRA";
@@ -41,6 +39,8 @@ public abstract class BaseSearchActivity<T> extends AppCompatActivity implements
         switch (source.getName()) {
             case Source.VODLOCKER:
                 return VodlockerSearchActivity.class;
+            case Source.NAYA_VIDEO:
+                return NayaSearchActivity.class;
         }
 
         return NoSourceActivity.class;
@@ -61,27 +61,9 @@ public abstract class BaseSearchActivity<T> extends AppCompatActivity implements
                 .where(Source.class)
                 .equalTo("id", getIntent().getLongExtra(SOURCE_ID_EXTRA, 0))
                 .findFirst();
-
-//        editText.setText(searchString);
-
-        presenter = getPresenter();
     }
 
     protected abstract int getLayout();
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.onResume(getSearchString());
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
-    }
-
-    protected abstract Presenter<T> getPresenter();
 
     public String getSearchString() {
         return searchString;

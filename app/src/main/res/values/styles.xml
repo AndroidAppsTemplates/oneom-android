@@ -12,6 +12,12 @@
         <item name="android:textColor">@color/light</item>
     </style>
 
+    <style name="AppCompatEditTextLightThene" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/light</item>
+        <item name="colorControlActivated">@color/light</item>
+        <item name="colorControlHighlight">@color/light</item>
+    </style>
+
     <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:dropDownHorizontalOffset">-4dp</item>
         <item name="android:dropDownVerticalOffset">48dp</item>

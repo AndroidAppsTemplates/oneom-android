@@ -1,5 +1,7 @@
 package com.iam.oneom.pages.main.search.online;
 
+import android.databinding.ObservableField;
+
 import com.iam.oneom.pages.main.search.SearchResult;
 
 /**
@@ -7,7 +9,6 @@ import com.iam.oneom.pages.main.search.SearchResult;
  */
 
 public abstract class OnlineSearchResult implements SearchResult {
-
 
     private String name;
     private String url;
@@ -38,4 +39,6 @@ public abstract class OnlineSearchResult implements SearchResult {
     public String getPosterUrl() {
         return posterUrl;
     }
+
+    public abstract void loadVideo(ObservableField<Boolean> loading);
 }

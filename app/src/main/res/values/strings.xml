@@ -42,4 +42,9 @@
     <string name="no_apps">There are no applications for perform this action</string>
     <string name="no_direct_link_to_video">Sorry, but there is no direct link to this online show. Please use search or try web.</string>
     <string name="no_direct_link_to_torrent">Sorry, but there is no direct link to this torrent. Please use search or try web.</string>
+    <string name="no_results">No results</string>
+    <string name="just_edit_search">Just edit the search string</string>
+    <string name="parsing_error">There is parsing error. Developer has got error report and will handle it if it possible soon. Now we apologize for inconvenience.</string>
+    <string name="video_was_deleted">File has been deleted.</string>
+    <string name="no_links">No links</string>
 </resources>

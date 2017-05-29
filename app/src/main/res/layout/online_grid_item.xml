@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
-            name="result"
+            name="item"
             type="com.iam.oneom.pages.main.search.online.OnlineSearchResult" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
+        android:layout_margin="4dp"
+        android:clickable="true"
+        android:background="@color/recycler_item_background"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/episode_item_image_size"
-            android:layout_margin="4dp"
-            app:error="@{@drawable/ic_play_circle_filled_middle}"
-            app:imageCorner="@{@dimen/ep_poster_corner_radius}"
-            app:url="@{result.posterUrl}" />
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/episode_item_image_size"
+                android:layout_margin="4dp"
+                android:scaleType="centerCrop"
+                app:error="@{@drawable/ic_play_circle_filled_middle}"
+                app:imageCorner="@{@dimen/ep_poster_corner_radius}"
+                app:url="@{item.posterUrl}" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:gravity="center"
-                android:text="@{result.name}"
-                android:textColor="@color/light" />
-        </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:text="@{item.name}"
+                    android:textColor="@color/light" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </FrameLayout>
 </layout>

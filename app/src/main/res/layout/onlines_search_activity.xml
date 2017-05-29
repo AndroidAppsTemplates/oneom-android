@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,17 +13,19 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_transparent"
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dark" />
+            android:subtitle="@string/just_edit_search"
+            android:theme="@style/toolbarColored"
+            android:title="@{vm.source.name}"
+            tools:title="Vodlocker" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,39 +41,74 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/edit_text"
-                    android:text="@{vm.searchString}"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_search_light"
+                    android:hint="@string/search"
+                    android:text="@{vm.searchString}"
+                    android:textColor="@color/light"
+                    android:theme="@style/AppCompatEditTextLightThene"
+                    app:textWatcher="@{vm.onTextEdit}"
+                    tools:text="Breaking bad" />
             </android.support.design.widget.TextInputLayout>
 
-            <ImageButton
-                app:srcCompat="@drawable/ic_search_black_24dp"
-                android:id="@+id/search_button"
-                android:background="?attr/selectableItemBackground"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/til"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/til"
-                android:text="@string/search"
-                android:textAllCaps="true" />
+            <!--<ImageButton-->
+            <!--android:id="@+id/search_button"-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@+id/til"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignTop="@+id/til"-->
+            <!--android:background="?attr/selectableItemBackground"-->
+            <!--android:text="@string/search"-->
+            <!--android:textAllCaps="true"-->
+            <!--app:srcCompat="@drawable/ic_search_light" />-->
         </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            app:itemBinding="@{vm.binding}"
-            app:items="@{vm.items}"
-            app:layoutManager="@{LayoutManagers.grid(3)}"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-        <com.github.rahatarmanahmed.cpv.CircularProgressView
-            android:id="@+id/cpv"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:visibility="gone"
-            app:cpv_animAutostart="true"
-            app:cpv_indeterminate="true" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                app:itemBinding="@{vm.binding}"
+                app:items="@{vm.items}"
+                app:layoutManager="@{LayoutManagers.grid(3)}"
+                app:onItemClick="@{vm.onItemClick}"
+                app:visible="@{vm.items.size() != 0}"
+                tools:visibility="gone" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:visible="@{vm.items.size() == 0}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/no_results"
+                    android:textAllCaps="true"
+                    android:textColor="@color/light"
+                    android:textSize="24dp"
+                    app:visible="@{!vm.justLoaded &amp;&amp; vm.items.size == 0}" />
+            </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/cpv"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateBehavior="repeat"
+                android:indeterminateTint="@color/light"
+                app:visible="@{vm.loading}" />
+
+        </FrameLayout>
 
     </LinearLayout>
 </layout>
