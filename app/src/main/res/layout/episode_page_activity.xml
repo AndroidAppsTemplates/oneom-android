@@ -5,15 +5,15 @@
 
         <variable
             name="vm"
-            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel" />
+            type="com.iam.oneom.binding.episode.EpisodeViewModel" />
 
-        <import type="com.iam.oneom.core.entities.DbUtil" />
+        <import type="com.iam.oneom.util.OneOmUtil" />
 
         <import type="com.iam.oneom.pages.main.SerialPageActivity" />
 
-        <import type="com.iam.oneom.core.util.Decorator" />
+        <import type="com.iam.oneom.util.Decorator" />
 
-        <import type="com.iam.oneom.core.util.Time" />
+        <import type="com.iam.oneom.util.Time" />
 
         <import type="android.text.Html" />
 
@@ -87,7 +87,7 @@
                         android:background="@drawable/button_stroke_rounded_corners_5dp_background"
                         android:text="@string/serial_page"
                         android:textColor="@color/light"
-                        app:click="@{vm.onSerialPageClick}" />
+                        app:onClick="@{vm.onSerialPageClick}" />
 
                     <Button
                         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                         android:background="@drawable/button_stroke_rounded_corners_5dp_background"
                         android:text="@string/go_search"
                         android:textColor="@color/light"
-                        app:click="@{vm.onGoSearchClick}" />
+                        app:onClick="@{vm.onGoSearchClick}" />
 
                     <Button
                         android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                         android:background="@drawable/button_stroke_rounded_corners_5dp_background"
                         android:text="@string/related"
                         android:textColor="@color/light"
-                        app:click="@{vm.onRelatedClick}" />
+                        app:onClick="@{vm.onRelatedClick}" />
                 </LinearLayout>
 
                 <ScrollView
@@ -134,7 +134,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="8dp"
                             android:lineSpacingExtra="4dp"
-                            android:text='@{vm.loadingEpisode ? @string/loading : Html.fromHtml(DbUtil.description(vm.episode, context.getString(R.string.no_description)))}'
+                            android:text='@{vm.loadingEpisode ? @string/loading : OneOmUtil.description(vm.episode, context.getString(R.string.no_description))}'
                             android:textColor="@color/middle"
                             android:textSize="16dp" />
                     </LinearLayout>

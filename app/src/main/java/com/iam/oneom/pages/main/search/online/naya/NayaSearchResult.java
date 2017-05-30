@@ -5,11 +5,11 @@ import android.widget.Toast;
 
 import com.iam.oneom.R;
 import com.iam.oneom.core.CustomRequest;
-import com.iam.oneom.core.util.Intents;
-import com.iam.oneom.core.util.RxUtils;
+import com.iam.oneom.core.rx.RxUtils;
+import com.iam.oneom.env.listdialog.ListDialog;
 import com.iam.oneom.pages.OneOm;
 import com.iam.oneom.pages.main.search.online.OnlineSearchResult;
-import com.iam.oneom.view.listdialog.ListDialog;
+import com.iam.oneom.util.Intents;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

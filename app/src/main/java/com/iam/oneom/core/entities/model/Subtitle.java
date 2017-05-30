@@ -2,9 +2,9 @@ package com.iam.oneom.core.entities.model;
 
 
 import com.google.gson.annotations.SerializedName;
-import com.iam.oneom.core.entities.DbEntity;
-import com.iam.oneom.core.entities.HasUrl;
-import com.iam.oneom.core.entities.Tagged;
+import com.iam.oneom.core.entities.interfaces.DbEntity;
+import com.iam.oneom.core.entities.interfaces.HasUrl;
+import com.iam.oneom.core.entities.interfaces.Tagged;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

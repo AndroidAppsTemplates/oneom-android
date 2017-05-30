@@ -9,10 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.iam.oneom.R;
+import com.iam.oneom.binding.episode.EpisodeViewModel;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.databinding.EpisodePageActivityBinding;
-import com.iam.oneom.pages.main.viewmodel.EpisodeViewModel;
 
 public class EpisodePageActivity extends AppCompatActivity {
 

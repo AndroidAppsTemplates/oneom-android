@@ -1,6 +1,6 @@
 package com.iam.oneom;
 
-import com.iam.oneom.core.util.Editor;
+import com.iam.oneom.util.Editor;
 
 import org.junit.Test;
 

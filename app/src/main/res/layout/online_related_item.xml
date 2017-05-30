@@ -6,11 +6,11 @@
             type="com.iam.oneom.core.entities.model.Online"/>
         <variable
             name="vm"
-            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel"/>
+            type="com.iam.oneom.binding.episode.EpisodeViewModel"/>
         <variable
             name="isLast"
             type="Boolean"/>
-        <import type="com.iam.oneom.core.util.Intents"/>
+        <import type="com.iam.oneom.util.Intents"/>
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -4,15 +4,15 @@ package com.iam.oneom.core.network;
 import android.util.Log;
 
 import com.iam.oneom.core.GsonMapper;
-import com.iam.oneom.core.network.response.DataConfigResponse;
-import com.iam.oneom.core.network.response.EpResponse;
-import com.iam.oneom.core.network.response.EpsDateResponse;
-import com.iam.oneom.core.network.response.EpsResponse;
-import com.iam.oneom.core.network.response.SerialResponse;
-import com.iam.oneom.core.network.response.SerialsSearchResponse;
-import com.iam.oneom.core.update.UpdateException;
-import com.iam.oneom.core.util.Editor;
-import com.iam.oneom.core.util.Time;
+import com.iam.oneom.core.network.payload.DataConfig;
+import com.iam.oneom.core.network.payload.Ep;
+import com.iam.oneom.core.network.payload.Eps;
+import com.iam.oneom.core.network.payload.EpsByDate;
+import com.iam.oneom.core.network.payload.SerialPayload;
+import com.iam.oneom.core.network.payload.SerialsSearch;
+import com.iam.oneom.core.network.update.UpdateException;
+import com.iam.oneom.util.Editor;
+import com.iam.oneom.util.Time;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -93,11 +93,11 @@ public enum Web {
         }
     }
 
-    public Call<DataConfigResponse> getInitialData() {
+    public Call<DataConfig> getInitialData() {
         return webInterface.getInitialData();
     }
 
-    public DataConfigResponse getInitialDataFlat() throws UpdateException {
+    public DataConfig getInitialDataFlat() throws UpdateException {
         try {
             return webInterface.getInitialData().execute().body();
         } catch (Exception e) {
@@ -105,13 +105,13 @@ public enum Web {
         }
     }
 
-    public Observable<SerialsSearchResponse> searchSerials(String searchString) {
+    public Observable<SerialsSearch> searchSerials(String searchString) {
         return webInterface.searchSerials(Editor.encodeToUTF8(searchString))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<EpsResponse> getLastEpisodes(DownloadProgressListener progressListener) {
+    public Observable<Eps> getLastEpisodes(DownloadProgressListener progressListener) {
         this.progressListener = progressListener;
         return webInterface.getLastEpisodes()
                 .subscribeOn(Schedulers.io())
@@ -119,7 +119,7 @@ public enum Web {
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public EpsResponse getLastEpisodesFlat() throws UpdateException {
+    public Eps getLastEpisodesFlat() throws UpdateException {
         try {
             return webInterface.getLastEpisodesFlat().execute().body();
         } catch (Exception e) {
@@ -141,35 +141,35 @@ public enum Web {
         });
     }
 
-    public Observable<EpsDateResponse> getLastEpisodesByDate(String start, String end) {
+    public Observable<EpsByDate> getLastEpisodesByDate(String start, String end) {
         return webInterface.getEpisodesByDateObservable(start, end)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public Observable<EpsDateResponse> getLastEpisodesByDate(long start, long end) {
+    public Observable<EpsByDate> getLastEpisodesByDate(long start, long end) {
         return webInterface.getEpisodesByDateObservable(Time.toString(start), Time.toString(end))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public Observable<SerialResponse> getSerial(long id) {
+    public Observable<SerialPayload> getSerial(long id) {
         return webInterface.getSerial(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public Observable<EpResponse> getEpisode(long id) {
+    public Observable<Ep> getEpisode(long id) {
         return webInterface.getEpisode(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
     }
 
-    public EpsDateResponse getDateEpisodesFlat(String start) throws UpdateException {
+    public EpsByDate getDateEpisodesFlat(String start) throws UpdateException {
         try {
             return webInterface.getEpisodesByDate(start, null).execute().body();
         } catch (Exception e) {

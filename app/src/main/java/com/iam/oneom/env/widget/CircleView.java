@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.iam.oneom.core.util.Decorator;
+import com.iam.oneom.util.Decorator;
 
 public class CircleView extends View {
 

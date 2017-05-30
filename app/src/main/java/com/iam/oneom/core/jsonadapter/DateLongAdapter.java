@@ -4,7 +4,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.iam.oneom.core.util.Time;
+import com.iam.oneom.util.Time;
 
 import java.io.IOException;
 import java.text.ParseException;

@@ -1,12 +1,12 @@
 package com.iam.oneom.core.network;
 
 
-import com.iam.oneom.core.network.response.DataConfigResponse;
-import com.iam.oneom.core.network.response.EpResponse;
-import com.iam.oneom.core.network.response.EpsDateResponse;
-import com.iam.oneom.core.network.response.EpsResponse;
-import com.iam.oneom.core.network.response.SerialResponse;
-import com.iam.oneom.core.network.response.SerialsSearchResponse;
+import com.iam.oneom.core.network.payload.DataConfig;
+import com.iam.oneom.core.network.payload.Ep;
+import com.iam.oneom.core.network.payload.Eps;
+import com.iam.oneom.core.network.payload.EpsByDate;
+import com.iam.oneom.core.network.payload.SerialPayload;
+import com.iam.oneom.core.network.payload.SerialsSearch;
 
 import java.util.Map;
 
@@ -25,28 +25,28 @@ public interface WebInterface {
     String HOST = "https://oneom.tk";
 
     @GET("/data/config")
-    Call<DataConfigResponse> getInitialData();
+    Call<DataConfig> getInitialData();
 
     @GET("/ep")
-    Observable<EpsResponse> getLastEpisodes();
+    Observable<Eps> getLastEpisodes();
 
     @GET("/ep")
-    Call<EpsResponse> getLastEpisodesFlat();
+    Call<Eps> getLastEpisodesFlat();
 
     @GET("search/ep")
-    Observable<EpsDateResponse> getEpisodesByDateObservable(@Query("start") String start, @Query("end") String end);
+    Observable<EpsByDate> getEpisodesByDateObservable(@Query("start") String start, @Query("end") String end);
 
     @GET("search/ep")
-    Call<EpsDateResponse> getEpisodesByDate(@Query("start") String start, @Query("end") String end);
+    Call<EpsByDate> getEpisodesByDate(@Query("start") String start, @Query("end") String end);
 
     @GET("/serial/{id}")
-    Observable<SerialResponse> getSerial(@Path("id") long id);
+    Observable<SerialPayload> getSerial(@Path("id") long id);
 
     @GET("/search/serial")
-    Observable<SerialsSearchResponse> searchSerials(@Query("title") String searchString);
+    Observable<SerialsSearch> searchSerials(@Query("title") String searchString);
 
     @GET("/ep/{id}")
-    Observable<EpResponse> getEpisode(@Path("id") long id);
+    Observable<Ep> getEpisode(@Path("id") long id);
 
     @FormUrlEncoded
     @POST("/errors/java")

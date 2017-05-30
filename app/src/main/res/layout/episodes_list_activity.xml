@@ -12,13 +12,13 @@
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 
-        <import type="com.iam.oneom.core.util.Decorator" />
+        <import type="com.iam.oneom.util.Decorator" />
 
         <import type="android.support.v7.widget.Toolbar.OnMenuItemClickListener" />
 
         <import type="com.iam.oneom.pages.main.episodes.EpisodeListActivity" />
 
-        <import type="com.iam.oneom.core.util.Time" />
+        <import type="com.iam.oneom.util.Time" />
 
         <variable
             name="episodesViewModel"

@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.iam.oneom.R;
-import com.iam.oneom.core.util.Decorator;
+import com.iam.oneom.util.Decorator;
 
 public class CircleProgressBar extends FrameLayout {
 

@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="4dp">
-    <com.iam.oneom.env.widget.text.Text
+    <TextView
         android:layout_margin="8dp"
         android:padding="4dp"
         android:background="@drawable/hyperlink_rounded_corners_background"

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="item"
-            type="com.iam.oneom.view.listdialog.ClickableListItem"/>
+            type="com.iam.oneom.env.listdialog.ClickableListItem"/>
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"

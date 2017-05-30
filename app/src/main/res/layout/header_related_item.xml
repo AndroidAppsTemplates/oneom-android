@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.iam.oneom.binding.RelatedHeader" />
+            type="com.iam.oneom.binding.payload.RelatedHeader" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

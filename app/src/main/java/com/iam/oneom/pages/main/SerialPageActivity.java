@@ -23,18 +23,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
-import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.model.Serial;
 import com.iam.oneom.core.network.Web;
-import com.iam.oneom.core.util.Decorator;
-import com.iam.oneom.core.util.Editor;
-import com.iam.oneom.core.util.Time;
 import com.iam.oneom.env.handling.recycler.BindableViewHolder;
 import com.iam.oneom.env.handling.recycler.itemdecorations.SpacesBetweenItemsDecoration;
 import com.iam.oneom.env.handling.recycler.layoutmanagers.GridLayoutManager;
 import com.iam.oneom.env.widget.CircleProgressBar;
-import com.iam.oneom.env.widget.text.Text;
-import com.iam.oneom.view.recycler.EpisodeVH;
+import com.iam.oneom.pages.main.serial.EpisodeVH;
+import com.iam.oneom.util.Decorator;
+import com.iam.oneom.util.Editor;
+import com.iam.oneom.util.OneOmUtil;
+import com.iam.oneom.util.Time;
 
 import java.util.Date;
 
@@ -86,7 +85,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 .subscribe(serialResponse -> {
                     DbHelper.insert(serialResponse.getSerial());
                     this.serial = serialResponse.getSerial();
-                    loadBackground(DbUtil.posterUrl(serial, Decorator.W480));
+                    loadBackground(OneOmUtil.posterUrl(serial, Decorator.W480));
                     configureRecycler();
                     hideProgressBar();
                 });
@@ -144,7 +143,7 @@ public class SerialPageActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof EpisodeVH) {
-                ((EpisodeVH) holder).onBind(DbUtil.episodesForSeasonList(serial, selected).get(position - 2));
+                ((EpisodeVH) holder).onBind(OneOmUtil.episodesForSeasonList(serial, selected).get(position - 2));
             } else if (holder instanceof SerialHeaderVH) {
                 ((SerialHeaderVH) holder).onBind();
             } else if (holder instanceof SeasonSelectorVH) {
@@ -154,7 +153,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 2 + DbUtil.episodesCountForSeason(serial, selected);
+            return 2 + OneOmUtil.episodesCountForSeason(serial, selected);
         }
 
         @Override
@@ -178,7 +177,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
         @Override
         public void refresh() {
-            serialAdapter.notifyItemRangeChanged(2, DbUtil.episodesCountForSeason(serial, selected));
+            serialAdapter.notifyItemRangeChanged(2, OneOmUtil.episodesCountForSeason(serial, selected));
         }
 
         class SerialHeaderVH extends RecyclerView.ViewHolder {
@@ -315,7 +314,7 @@ public class SerialPageActivity extends AppCompatActivity {
                                 value.setText(Editor.namesByComma(serial.getCountry()));
                                 break;
                             case STATUS:
-                                value.setText(DbUtil.serialStatusName(serial));
+                                value.setText(OneOmUtil.serialStatusName(serial));
                                 break;
                             case AIR_START:
                                 value.setText(Time.format(new Date(serial.getStart()), Time.TimeFormat.IDN));
@@ -329,12 +328,12 @@ public class SerialPageActivity extends AppCompatActivity {
 
                 class HyperlinkVH extends BindableViewHolder {
 
-                    Text hyperlink;
+                    TextView hyperlink;
                     String id;
 
                     public HyperlinkVH(View itemView) {
                         super(itemView);
-                        hyperlink = (Text) itemView.findViewById(R.id.hyperlink);
+                        hyperlink = (TextView) itemView.findViewById(R.id.hyperlink);
                     }
 
                     @Override
@@ -361,7 +360,7 @@ public class SerialPageActivity extends AppCompatActivity {
                 pager.setAdapter(new SeasonNumberAdapter(getSupportFragmentManager()));
                 prev.setOnClickListener(v -> pager.setCurrentItem(selected - 1 < 1 ? 0 : selected - 2));
                 next.setOnClickListener(v -> {
-                    int seasonsCount = DbUtil.seasonsCountForSerial(serial);
+                    int seasonsCount = OneOmUtil.seasonsCountForSerial(serial);
                     pager.setCurrentItem(selected + 1 >= seasonsCount ? seasonsCount - 1 : selected);
                 });
             }
@@ -392,7 +391,7 @@ public class SerialPageActivity extends AppCompatActivity {
 
                 @Override
                 public int getCount() {
-                    return DbUtil.seasonsCountForSerial(serial);
+                    return OneOmUtil.seasonsCountForSerial(serial);
                 }
             }
         }

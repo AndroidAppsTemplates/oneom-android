@@ -5,8 +5,8 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 
-import com.iam.oneom.core.util.Intents;
-import com.iam.oneom.view.listdialog.ClickableListItem;
+import com.iam.oneom.env.listdialog.ClickableListItem;
+import com.iam.oneom.util.Intents;
 
 import org.jsoup.nodes.Element;
 

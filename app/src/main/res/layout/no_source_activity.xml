@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="com.iam.oneom.core.util.Decorator" />
+        <import type="com.iam.oneom.util.Decorator" />
 
         <import type="android.app.Activity" />
     </data>
@@ -52,7 +52,7 @@
                 android:text="@string/back"
                 android:textColor="@color/light"
                 android:textSize="20sp"
-                app:click='@{(view) -> ((Activity)view.getContext()).finish()}' />
+                app:onClick='@{(view) -> ((Activity)view.getContext()).finish()}' />
 
         </LinearLayout>
     </FrameLayout>

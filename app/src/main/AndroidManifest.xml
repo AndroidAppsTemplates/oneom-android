@@ -16,7 +16,7 @@
         android:configChanges="orientation|keyboardHidden"
         android:theme="@style/AppTheme">
 
-        <service android:name=".core.update.Updater" />
+        <service android:name=".core.network.update.Updater" />
 
 
         <activity
@@ -53,20 +53,10 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.episode.EpisodePageActivity" />
         <activity
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:name="com.iam.oneom.pages.main.PlayerActivity" />
-        <activity
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.SerialPageActivity" />
-        <activity
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.WebViewActivity" />
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -74,7 +64,7 @@
         <activity
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.episode.EpisodeSearchActivity" />
+            android:name=".pages.main.episode.sources.EpisodeSearchActivity" />
         <activity
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"

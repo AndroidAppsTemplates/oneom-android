@@ -12,11 +12,11 @@ import android.widget.TextView;
 import com.iam.oneom.R;
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.core.entities.model.Episode;
+import com.iam.oneom.core.network.update.Updater;
 import com.iam.oneom.core.rx.RxBus;
-import com.iam.oneom.core.rx.UpdateFinishedEvent;
-import com.iam.oneom.core.update.Updater;
-import com.iam.oneom.core.util.Decorator;
+import com.iam.oneom.core.rx.event.UpdateFinishedEvent;
 import com.iam.oneom.pages.main.episodes.EpisodeListActivity;
+import com.iam.oneom.util.Decorator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

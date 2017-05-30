@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.iam.oneom.core.DbHelper;
-import com.iam.oneom.core.util.Device;
-import com.iam.oneom.core.util.ErrorHandler;
+import com.iam.oneom.util.Device;
+import com.iam.oneom.util.ErrorHandler;
 import com.orhanobut.hawk.Hawk;
 
 import java.lang.ref.WeakReference;

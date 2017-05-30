@@ -3,9 +3,9 @@ package com.iam.oneom.core.entities.model;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
-import com.iam.oneom.core.entities.DbEntity;
+import com.iam.oneom.core.entities.interfaces.DbEntity;
 import com.iam.oneom.core.entities.interfaces.Named;
-import com.iam.oneom.core.util.ErrorHandler;
+import com.iam.oneom.util.ErrorHandler;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

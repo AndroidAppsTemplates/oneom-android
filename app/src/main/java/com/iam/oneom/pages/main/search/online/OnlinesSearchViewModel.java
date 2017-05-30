@@ -10,7 +10,7 @@ import com.iam.oneom.BR;
 import com.iam.oneom.binding.ItemClickSupport;
 import com.iam.oneom.core.CustomRequest;
 import com.iam.oneom.core.entities.model.Source;
-import com.iam.oneom.core.util.RxUtils;
+import com.iam.oneom.core.rx.RxUtils;
 
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import me.tatarka.bindingcollectionadapter2.collections.DiffObservableList;

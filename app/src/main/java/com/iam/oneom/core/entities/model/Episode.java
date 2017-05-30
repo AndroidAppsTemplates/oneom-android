@@ -2,8 +2,8 @@ package com.iam.oneom.core.entities.model;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.iam.oneom.core.entities.DbEntity;
-import com.iam.oneom.core.entities.ScheduleItem;
+import com.iam.oneom.core.entities.interfaces.DbEntity;
+import com.iam.oneom.core.entities.interfaces.ScheduleItem;
 import com.iam.oneom.core.jsonadapter.DateLongAdapter;
 
 import io.realm.RealmList;

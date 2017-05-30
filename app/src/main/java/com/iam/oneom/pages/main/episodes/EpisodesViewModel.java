@@ -8,13 +8,13 @@ import android.support.v7.widget.Toolbar;
 
 import com.iam.oneom.BR;
 import com.iam.oneom.R;
+import com.iam.oneom.binding.episode.EpisodeDiffObservableDbCallback;
 import com.iam.oneom.core.DbHelper;
-import com.iam.oneom.core.entities.DbUtil;
 import com.iam.oneom.core.entities.model.Episode;
 import com.iam.oneom.core.network.Web;
-import com.iam.oneom.core.util.DiffObservableDbCallback;
-import com.iam.oneom.core.util.RxUtils;
-import com.iam.oneom.core.util.Time;
+import com.iam.oneom.core.rx.RxUtils;
+import com.iam.oneom.util.OneOmUtil;
+import com.iam.oneom.util.Time;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
@@ -41,7 +41,7 @@ public class EpisodesViewModel {
 
     public EpisodesViewModel(Context context) {
         lastUpdated = new ObservableField<>(Time.episodesLastUpdated(context));
-        items = new DiffObservableList<>(new DiffObservableDbCallback());
+        items = new DiffObservableList<>(new EpisodeDiffObservableDbCallback());
     }
 
     public void onResume() {
@@ -74,7 +74,7 @@ public class EpisodesViewModel {
                         Web.instance.getLastEpisodesByDate(latestDate + 1, latestDate + Time.MONTH)
                                 .onErrorReturn(throwable -> null)
                                 .subscribe(epsDateResponse -> {
-                                    DbHelper.insertAll(DbUtil.setSchedule(epsDateResponse.getEps()));
+                                    DbHelper.insertAll(OneOmUtil.setSchedule(epsDateResponse.getEps()));
                                     episodesViewModel.loading.set(false);
                                 });
             } else {
@@ -83,7 +83,7 @@ public class EpisodesViewModel {
                         Web.instance.getLastEpisodesByDate(earliestDate - Time.MONTH, earliestDate - 1)
                                 .onErrorReturn(throwable -> null)
                                 .subscribe(epsDateResponse -> {
-                                    DbHelper.insertAll(DbUtil.setSchedule(epsDateResponse.getEps()));
+                                    DbHelper.insertAll(OneOmUtil.setSchedule(epsDateResponse.getEps()));
                                     episodesViewModel.loading.set(false);
                                 });
             }
@@ -91,12 +91,12 @@ public class EpisodesViewModel {
     }
 
     private long getEarliestDate() {
-        return DbUtil.earliest(items) == null ? 0 : DbUtil.earliest(items).getAirdate();
+        return OneOmUtil.earliest(items) == null ? 0 : OneOmUtil.earliest(items).getAirdate();
     }
 
 
     private long getLatestDate() {
-        return DbUtil.latest(items) == null ? Long.MAX_VALUE : DbUtil.latest(items).getAirdate();
+        return OneOmUtil.latest(items) == null ? Long.MAX_VALUE : OneOmUtil.latest(items).getAirdate();
     }
 
     @BindingAdapter("onMenuItemClick")

@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.iam.oneom.view.listdialog.ListDialogViewModel" />
+            type="com.iam.oneom.env.listdialog.ListDialogViewModel" />
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
     </data>

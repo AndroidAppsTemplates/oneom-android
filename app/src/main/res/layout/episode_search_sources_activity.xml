@@ -5,13 +5,13 @@
 
         <variable
             name="vm"
-            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel" />
+            type="com.iam.oneom.binding.episode.EpisodeViewModel" />
 
-        <import type="com.iam.oneom.core.entities.DbUtil" />
+        <import type="com.iam.oneom.util.OneOmUtil" />
 
         <import type="com.iam.oneom.R" />
 
-        <import type="com.iam.oneom.core.util.Time" />
+        <import type="com.iam.oneom.util.Time" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,7 +32,7 @@
                 android:background="@color/dark"
                 android:theme="@style/toolbarColored"
                 android:subtitle='@{context.getString(R.string.airdate) + ": " + Time.format(vm.episode.airdate, Time.TimeFormat.TEXT)}'
-                android:title="@{DbUtil.title(vm.episode)}" />
+                android:title="@{OneOmUtil.title(vm.episode)}" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"

@@ -3,9 +3,9 @@
     <data>
         <variable
             name="vm"
-            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel"/>
+            type="com.iam.oneom.binding.episode.EpisodeViewModel"/>
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers"/>
-        <import type="com.iam.oneom.core.util.Decorator"/>
+        <import type="com.iam.oneom.util.Decorator"/>
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

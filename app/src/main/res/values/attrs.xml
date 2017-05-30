@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="RoundedCornersImageView">
-        <attr name="rcl_cornerRadius" format="dimension" />
-    </declare-styleable>
 
     <declare-styleable name="image">
         <attr name="imageCorner" format="dimension" />

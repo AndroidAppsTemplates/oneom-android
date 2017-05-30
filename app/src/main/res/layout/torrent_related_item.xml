@@ -10,11 +10,11 @@
 
         <variable
             name="vm"
-            type="com.iam.oneom.pages.main.viewmodel.EpisodeViewModel"/>
+            type="com.iam.oneom.binding.episode.EpisodeViewModel"/>
 
-        <import type="com.iam.oneom.core.util.Editor" />
+        <import type="com.iam.oneom.util.Editor" />
 
-        <import type="com.iam.oneom.core.util.Intents"/>
+        <import type="com.iam.oneom.util.Intents"/>
     </data>
 
     <FrameLayout
