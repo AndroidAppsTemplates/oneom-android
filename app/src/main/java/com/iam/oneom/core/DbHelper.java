@@ -11,7 +11,7 @@ import io.realm.RealmQuery;
 
 public class DbHelper {
 
-    private static final long SCHEMA_VERSION = 12;
+    private static final long SCHEMA_VERSION = 13;
 
     static Realm getRealm() {
         return Realm.getDefaultInstance();

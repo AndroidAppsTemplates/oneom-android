@@ -55,7 +55,9 @@ public class EpisodesViewModel {
                         new Sort[]{Sort.DESCENDING, Sort.DESCENDING}
                 )
                 .asObservable()
-                .subscribe(items::update);
+                .subscribe(episodes -> {
+                    items.update(episodes);
+                });
     }
 
     public void onDestroy() {

@@ -11,6 +11,6 @@ public class NayaSearchActivity extends OnlinesSearchActivity<NayaSearchResult> 
 
     @Override
     protected OnlinesSearchViewModel<NayaSearchResult> createViewModel() {
-        return new NayaSearchResultsViewModel(new NayaParser(), getSource(), getSearchString());
+        return new NayaSearchResultsViewModel(new NayaParser(), getSource(), getSearchString().replaceAll(" ", "."));
     }
 }

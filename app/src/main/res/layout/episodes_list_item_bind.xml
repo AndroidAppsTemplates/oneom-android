@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -45,6 +46,8 @@
                 app:cardCornerRadius="@dimen/episode_item_image_corner">
 
                 <ImageView
+                    tools:src="@drawable/logo"
+                    tools:padding="48dp"
                     android:id="@+id/image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/episode_item_image_size"
@@ -63,10 +66,9 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="bottom|center_horizontal"
                 android:lines="2"
+                tools:text="Breaking Bad"
                 android:text="@{OneOmUtil.title(ep)}"
-                android:textColor="@color/light"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                style="@style/headerTextLight" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -75,7 +77,8 @@
                 android:gravity="center"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/light"
-                android:textSize="12dp"
+                tools:text="(01 aug 2012)"
+                android:textSize="@dimen/text_small"
                 android:text='@{Time.format(ep.airdate, "(dd MMM, yyyy)")}'/>
 
 
@@ -90,9 +93,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
+                    tools:text="S05E03"
                     android:text='@{String.format("S%02dE%02d", ep.season, ep.ep)}'
                     android:textColor="@color/light"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/text_middle" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -122,10 +126,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                tools:text="23"
                                 android:fontFamily="sans-serif-medium"
                                 android:text="@{String.valueOf(OneOmUtil.torrentsCount(ep))}"
                                 android:textColor="@color/light"
-                                android:textSize="8sp" />
+                                android:textSize="@dimen/text_tiny" />
                         </FrameLayout>
                     </FrameLayout>
 
@@ -152,10 +157,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                tools:text="16"
                                 android:fontFamily="sans-serif-medium"
                                 android:text="@{String.valueOf(OneOmUtil.onlinesCount(ep))}"
                                 android:textColor="@color/light"
-                                android:textSize="8sp" />
+                                android:textSize="@dimen/text_tiny" />
                         </FrameLayout>
                     </FrameLayout>
                 </LinearLayout>

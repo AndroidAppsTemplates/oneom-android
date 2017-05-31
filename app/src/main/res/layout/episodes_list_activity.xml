@@ -50,12 +50,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:image="@{Decorator.bluredLogoBackground(context)}" />
+                android:padding="48dp"
+                android:tint="@color/dark_transparent"
+                app:srcCompat="@drawable/pic_logo" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/dark_transparent">
+                android:layout_height="match_parent">
 
                 <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
                     android:id="@+id/swipe_refresh_layout"

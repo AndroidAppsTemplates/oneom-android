@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="text_big">20sp</dimen>
+    <dimen name="text_middle">16sp</dimen>
+    <dimen name="text_regular">14sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_tiny">8sp</dimen>
+
     <dimen name="episode_item_corner">4dp</dimen>
     <dimen name="episode_item_image_corner">@dimen/episode_item_corner</dimen>
     <dimen name="episode_item_image_size">200dp</dimen>

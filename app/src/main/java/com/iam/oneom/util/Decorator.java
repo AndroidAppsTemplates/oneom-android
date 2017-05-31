@@ -3,15 +3,12 @@ package com.iam.oneom.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.iam.oneom.R;
 
 public final class Decorator {
 
@@ -72,11 +69,6 @@ public final class Decorator {
 
         return averageColor;
     }
-
-    public static Bitmap bluredLogoBackground(Context context) {
-        return Decorator.fastblur(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_bg, null), 1, 100);
-    }
-
 
     public static Bitmap fastblur(Bitmap sentBitmap, float scale, int radius) {
 

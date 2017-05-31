@@ -59,8 +59,9 @@ public class EpisodeViewModel {
                     .map(RelatedHeader.class, BR.item, R.layout.header_related_item);
 
     public EpisodeViewModel(Episode episode) {
+
         this.episode.set(episode);
-        posterUrl = OneOmUtil.posterUrl(episode, Decorator.MAX);
+        posterUrl = OneOmUtil.posterUrl(this.episode.get(), Decorator.MAX);
         relatedItems
                 .insertList(onlinesList())
                 .insertList(torrentsList());
@@ -155,4 +156,5 @@ public class EpisodeViewModel {
 
     public View.OnClickListener onGoSearchClick = v ->
             EpisodeSearchActivity.start(v.getContext(), episode.get().getId());
+
 }

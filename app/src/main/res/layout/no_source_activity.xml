@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            app:image="@{Decorator.bluredLogoBackground(context)}" />
+            android:padding="48dp"
+            android:src="@drawable/logo" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -37,21 +38,22 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
+                style="@style/headerTextLight"
                 android:fontFamily="sans-serif-thin"
                 android:text="@string/no_source"
-                android:textColor="@color/light"
-                android:textSize="20sp" />
+                android:textColor="@color/light" />
 
             <Button
+                style="@style/headerTextLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
                 android:layout_marginTop="16dp"
-                android:background="@android:color/transparent"
+                android:background="@drawable/button_stroke_rounded_corners_5dp_background"
                 android:drawableLeft="@drawable/ic_arrow_back_black_24dp"
                 android:text="@string/back"
-                android:textColor="@color/light"
-                android:textSize="20sp"
                 app:onClick='@{(view) -> ((Activity)view.getContext()).finish()}' />
 
         </LinearLayout>

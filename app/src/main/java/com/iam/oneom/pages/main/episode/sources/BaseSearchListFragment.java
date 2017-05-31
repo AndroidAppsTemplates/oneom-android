@@ -109,7 +109,7 @@ public abstract class BaseSearchListFragment extends Fragment {
             ImageView iconNext;
             @BindColor(R.color.white)
             int active;
-            @BindColor(R.color.half_gray)
+            @BindColor(R.color.middle)
             int not_active;
 
             private View view;

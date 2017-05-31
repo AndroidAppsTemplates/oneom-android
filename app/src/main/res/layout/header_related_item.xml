@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -8,29 +9,31 @@
             type="com.iam.oneom.binding.payload.RelatedHeader" />
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/middle"
+        android:background="@color/darker"
         android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/light" />
+            android:background="@color/dark" />
 
         <TextView
+            tools:text="Online"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@{item.title}"
+            android:textSize="@dimen/text_regular"
             android:textColor="@color/light" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_gravity="bottom"
-            android:background="@color/light" />
+            android:background="@color/dark" />
 
     </FrameLayout>
 </layout>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="item"
@@ -13,7 +15,7 @@
         <import type="com.iam.oneom.util.Intents"/>
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,6 +23,9 @@
         <ImageView
             android:layout_margin="8dp"
             android:src="@color/middle"
+            tools:src="@drawable/logo"
+            tools:padding="8dp"
+            tools:background="@drawable/rounded_corners_miidle_background_drawable"
             app:error="@{@drawable/ic_movie_light_24dp}"
             app:imageCorner="@{@dimen/episode_item_corner}"
             app:url="@{vm.posterUrl}"
@@ -36,7 +41,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                tools:text="Once upon a time "
+                android:textSize="@dimen/text_middle"
                 android:text="@{item.title}"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/light"
@@ -46,7 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="16sp"
+                tools:text="1080p"
+                android:textSize="@dimen/text_middle"
                 android:textStyle="bold"
                 android:text="@{item.quality.name}"
                 android:fontFamily="sans-serif-medium"
@@ -78,10 +85,11 @@
         </LinearLayout>
 
         <View
+            android:layout_marginLeft="8dp"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/middle"
+            android:background="@color/darker"
             app:visible='@{!isLast}'/>
 
 

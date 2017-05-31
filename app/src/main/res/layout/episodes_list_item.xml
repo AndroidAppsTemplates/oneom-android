@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/recycler_item_background"
@@ -23,6 +22,8 @@
             app:cardCornerRadius="@dimen/episode_item_image_corner">
 
             <ImageView
+                tools:src="@drawable/logo"
+                tools:padding="48dp"
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/episode_item_image_size"
@@ -38,9 +39,9 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:lines="2"
+            tools:text="Breaking bad"
             android:textColor="@color/light"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            style="@style/headerTextLight" />
 
 
         <TextView
@@ -50,8 +51,9 @@
             android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
+            tools:text="S05E03 Hazard Pay"
             android:textColor="@color/light"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_middle" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -76,13 +78,14 @@
                     android:background="@drawable/green_round_6dp">
 
                     <TextView
+                        tools:text="23"
                         android:id="@+id/t_appearance_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="sans-serif-medium"
                         android:textColor="@color/light"
-                        android:textSize="8sp" />
+                        android:textSize="@dimen/text_tiny" />
                 </FrameLayout>
             </FrameLayout>
 
@@ -104,13 +107,14 @@
                     android:background="@drawable/green_round_6dp">
 
                     <TextView
+                        tools:text="16"
                         android:id="@+id/o_appearance_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="sans-serif-medium"
                         android:textColor="@color/light"
-                        android:textSize="8sp" />
+                        android:textSize="@dimen/text_tiny" />
                 </FrameLayout>
             </FrameLayout>
         </LinearLayout>

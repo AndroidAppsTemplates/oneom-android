@@ -1,81 +1,71 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iam.oneom">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
-    <application android:allowBackup="true"
+    <application
         android:name=".pages.OneOm"
-        android:label="@string/app_name"
+        android:allowBackup="true"
+        android:configChanges="orientation|keyboardHidden"
         android:icon="@drawable/one_om"
-        android:supportsRtl="true"
+        android:label="@string/app_name"
         android:largeHeap="true"
         android:screenOrientation="landscape"
-        android:configChanges="orientation|keyboardHidden"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true"
+        android:theme="@style/NoActionBar">
 
         <service android:name=".core.network.update.Updater" />
 
-
         <activity
             android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.episodes.EpisodeListActivity">
+            android:name=".pages.main.episodes.EpisodeListActivity"
+            android:configChanges="orientation|keyboardHidden">
 
         </activity>
 
         <activity
             android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.SplashActivity" >
+            android:name=".pages.main.SplashActivity"
+            android:configChanges="orientation|keyboardHidden">Z
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!--<activity-->
-            <!--android:screenOrientation="landscape"-->
-            <!--android:configChanges="orientation|keyboardHidden"-->
-            <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
-            <!--android:name=".pages.main.episode.EpisodePageActivity" />-->
+        <!--android:screenOrientation="landscape"-->
+        <!--android:configChanges="orientation|keyboardHidden"-->
+        <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
+        <!--android:name=".pages.main.episode.EpisodePageActivity" />-->
         <activity
             android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.search.online.vodlocker.VodlockerSearchActivity" />
+            android:name=".pages.main.search.online.vodlocker.VodlockerSearchActivity"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.episode.EpisodePageActivity" />
+            android:name=".pages.main.episode.EpisodePageActivity"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.SerialPageActivity" />
+            android:name=".pages.main.SerialPageActivity"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".pages.main.serial.SerialSearchActivity" />
+            android:name=".pages.main.serial.SerialSearchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.episode.sources.EpisodeSearchActivity" />
         <activity
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.search.NoSourceActivity" />
         <activity
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.episode.EpisodeRelatedItemsActivity" />
         <activity
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".pages.main.search.online.naya.NayaSearchActivity" />
 
     </application>

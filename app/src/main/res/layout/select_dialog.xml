@@ -12,16 +12,25 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <TextView
+            style="@style/headerText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/dark"
             android:layout_margin="8dp"
-            android:textSize="18dp"
-            android:text="Select resolution"/>
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/select_resolution"
+            android:textSize="@dimen/text_big" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light" />
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

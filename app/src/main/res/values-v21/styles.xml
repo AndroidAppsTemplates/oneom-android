@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/dark</item>
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/dark_transparent</item>
+        <item name="android:colorBackground">@color/dark_transparent</item>
+        <item name="android:screenOrientation">landscape</item>
+        <item name="android:colorAccent">@color/light</item>
     </style>
 </resources>

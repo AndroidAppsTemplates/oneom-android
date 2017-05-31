@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            app:image="@{Decorator.bluredLogoBackground(context)}" />
+            android:padding="48dp"
+            android:src="@drawable/logo" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

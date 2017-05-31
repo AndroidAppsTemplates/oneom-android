@@ -32,8 +32,8 @@
             android:background="@color/dark"
             android:subtitle='@{context.getString(R.string.airdate) + ": " + Time.format(vm.episode.airdate, Time.TimeFormat.TEXT)}'
             android:subtitleTextColor="@color/middle"
-            android:theme="@style/toolbarColored"
             android:title="@{vm.episode.serial.title}"
+            android:theme="@style/toolbarColored"
             android:titleTextColor="@color/light" />
 
         <FrameLayout
@@ -85,6 +85,7 @@
                         android:layout_height="36dp"
                         android:layout_margin="4dp"
                         android:background="@drawable/button_stroke_rounded_corners_5dp_background"
+                        android:textSize="@dimen/text_regular"
                         android:text="@string/serial_page"
                         android:textColor="@color/light"
                         app:onClick="@{vm.onSerialPageClick}" />
@@ -95,6 +96,7 @@
                         android:layout_margin="4dp"
                         android:background="@drawable/button_stroke_rounded_corners_5dp_background"
                         android:text="@string/go_search"
+                        android:textSize="@dimen/text_regular"
                         android:textColor="@color/light"
                         app:onClick="@{vm.onGoSearchClick}" />
 
@@ -102,6 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="36dp"
                         android:layout_margin="4dp"
+                        android:textSize="@dimen/text_regular"
                         android:background="@drawable/button_stroke_rounded_corners_5dp_background"
                         android:text="@string/related"
                         android:textColor="@color/light"
@@ -136,7 +139,7 @@
                             android:lineSpacingExtra="4dp"
                             android:text='@{vm.loadingEpisode ? @string/loading : OneOmUtil.description(vm.episode, context.getString(R.string.no_description))}'
                             android:textColor="@color/middle"
-                            android:textSize="16dp" />
+                            android:textSize="@dimen/text_middle" />
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>

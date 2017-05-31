@@ -47,4 +47,5 @@
     <string name="parsing_error">There is parsing error. Developer has got error report and will handle it if it possible soon. Now we apologize for inconvenience.</string>
     <string name="video_was_deleted">File has been deleted.</string>
     <string name="no_links">No links</string>
+    <string name="select_resolution">Select resolution</string>
 </resources>

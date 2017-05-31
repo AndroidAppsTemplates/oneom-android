@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -33,11 +34,12 @@
                 android:ellipsize="end"
                 android:lines="2"
                 android:maxLines="2"
+                tools:text="breaking.bad.ep.03.season.4.hdtv-rip"
                 android:minLines="2"
                 android:padding="8dp"
                 android:text="@{item.title}"
                 android:textColor="@color/light"
-                android:textSize="16dp" />
+                android:textSize="@dimen/text_middle" />
 
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -81,6 +83,8 @@
                         android:drawableLeft="@drawable/ic_arrow_up_green"
                         android:gravity="center"
                         android:padding="8dp"
+                        android:textSize="@dimen/text_regular"
+                        tools:text="567"
                         android:text="@{String.valueOf(item.seed)}"
                         android:textColor="@color/greenSeed"
                         android:textStyle="bold" />
@@ -93,6 +97,8 @@
                         android:drawableLeft="@drawable/ic_arrow_down_red"
                         android:gravity="center"
                         android:padding="8dp"
+                        tools:text="32"
+                        android:textSize="@dimen/text_regular"
                         android:text="@{String.valueOf(item.leech)}"
                         android:textColor="@color/redLeach"
                         android:textStyle="bold" />
@@ -104,6 +110,9 @@
                         android:background="@drawable/rounded_corners_4dp_dark_transparent_background"
                         android:gravity="center"
                         android:padding="8dp"
+                        android:textAllCaps="true"
+                        tools:text="432mb"
+                        android:textSize="@dimen/text_regular"
                         android:text="@{Editor.size(item.size)}"
                         android:textColor="@color/light"
                         android:textStyle="bold" />
@@ -113,10 +122,11 @@
         </LinearLayout>
 
         <View
+            android:layout_marginLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_gravity="bottom"
-            android:background="@color/middle" />
+            android:background="@color/darker" />
     </FrameLayout>
 
 </layout>
