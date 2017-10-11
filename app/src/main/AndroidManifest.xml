@@ -68,6 +68,11 @@
             android:screenOrientation="landscape"
             android:name=".pages.main.search.online.naya.NayaSearchActivity" />
 
+        <service
+            android:isolatedProcess="true"
+            android:enabled="true"
+            android:process=":proxy"
+            android:name=".proxy.ProxyFetchService" />
     </application>
 
 </manifest>

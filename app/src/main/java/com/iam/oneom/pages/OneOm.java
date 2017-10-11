@@ -1,7 +1,10 @@
 package com.iam.oneom.pages;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
+import android.os.Process;
 
 import com.iam.oneom.core.DbHelper;
 import com.iam.oneom.util.Device;
@@ -38,7 +41,10 @@ public class OneOm extends Application {
 
         Hawk.init(this).build();
         Device.init(this);
-        DbHelper.init(this);
+
+        if (getFilesDir().exists()) {
+            DbHelper.init(this);
+        }
 
         Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> {
             new ErrorHandler().handleError(thread, ex, true);

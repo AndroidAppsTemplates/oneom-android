@@ -1,9 +1,15 @@
 package com.iam.oneom.pages.main;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,6 +22,8 @@ import com.iam.oneom.core.network.update.Updater;
 import com.iam.oneom.core.rx.RxBus;
 import com.iam.oneom.core.rx.event.UpdateFinishedEvent;
 import com.iam.oneom.pages.main.episodes.EpisodeListActivity;
+import com.iam.oneom.proxy.IProxyFetchInterface;
+import com.iam.oneom.proxy.ProxyFetchService;
 import com.iam.oneom.util.Decorator;
 
 import butterknife.BindView;
@@ -24,9 +32,24 @@ import butterknife.OnClick;
 import io.realm.RealmResults;
 import rx.Subscription;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements ServiceConnection {
 
     private String TAG = SplashActivity.class.getSimpleName();
+
+    IProxyFetchInterface mIRemoteService;
+
+    // Called when the connection with the service is established
+    public void onServiceConnected(ComponentName className, IBinder service) {
+        // Following the example above for an AIDL interface,
+        // this gets an instance of the IRemoteInterface, which we can use to call on the service
+        mIRemoteService = IProxyFetchInterface.Stub.asInterface(service);
+    }
+
+    // Called when the connection with the service disconnects unexpectedly
+    public void onServiceDisconnected(ComponentName className) {
+        Log.e(TAG, "Service has unexpectedly disconnected");
+        mIRemoteService = null;
+    }
 
     @BindView(R.id.logo)
     ImageView imageView;
@@ -51,6 +74,10 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Decorator.init(this);
+
+//        AsyncTask.execute(() -> {
+            startService(new Intent(this, ProxyFetchService.class));
+//        });
 
         subscription = RxBus.INSTANCE.register(UpdateFinishedEvent.class, updateFinishedEvent -> {
             if (updateFinishedEvent.getThrowable() != null) {
